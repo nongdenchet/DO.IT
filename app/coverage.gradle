@@ -17,13 +17,13 @@ def coverageSourceDirs = [
         '../app/src/main/java'
 ]
 
-task jacocoTestReport(type: JacocoReport, dependsOn: "test") {
+task jacocoTestReport(type: JacocoReport, dependsOn: "testDebugUnitTest") {
     group = "Reporting"
 
     description = "Generate Jacoco coverage reports"
 
     classDirectories = fileTree(
-            dir: '../app/build/intermediates/classes/prod',
+            dir: '../app/build/intermediates/classes/debug',
             excludes: ['**/R.class',
                        '**/R$*.class',
                        '**/*$ViewInjector*.*',
@@ -41,7 +41,7 @@ task jacocoTestReport(type: JacocoReport, dependsOn: "test") {
 
     additionalSourceDirs = files(coverageSourceDirs)
     sourceDirectories = files(coverageSourceDirs)
-    executionData = files('../app/build/jacoco/test.exec')
+    executionData = files('../app/build/jacoco/testDebugUnitTest.exec')
 
     reports {
         xml.enabled = true

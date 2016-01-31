@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.neenbedankt.android-apt'
-apply plugin: 'jacoco'
 apply plugin: 'com.github.kt3k.coveralls'
 apply from: '../app/coverage.gradle'
 
@@ -10,7 +9,7 @@ android {
     buildToolsVersion '23.0.2'
 
     defaultConfig {
-        applicationId "apidez.com.databinding"
+        applicationId "apidez.com.doit"
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
