@@ -17,7 +17,7 @@ def coverageSourceDirs = [
         '../app/src/main/java'
 ]
 
-task jacocoTestReport(type: JacocoReport, dependsOn: "testProdDebugUnitTest") {
+task jacocoTestReport(type: JacocoReport, dependsOn: "test") {
     group = "Reporting"
 
     description = "Generate Jacoco coverage reports"
@@ -41,7 +41,7 @@ task jacocoTestReport(type: JacocoReport, dependsOn: "testProdDebugUnitTest") {
 
     additionalSourceDirs = files(coverageSourceDirs)
     sourceDirectories = files(coverageSourceDirs)
-    executionData = files('../app/build/jacoco/testProdDebugUnitTest.exec')
+    executionData = files('../app/build/jacoco/test.exec')
 
     reports {
         xml.enabled = true
