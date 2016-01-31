@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/transforms/instantRunSlicer/debug/jars/1/1a/dependencies.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="0cc0ded1abf219dd7b9f26af77ddd3e9af70976d">
+        <dex dex="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/transforms/dex/debug/folders/1000/1a/dependencies_ed51232614a1350a0bc9d837850b82cdc7092cdd/classes.dex" />
+    </item>
+
+</items>

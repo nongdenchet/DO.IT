@@ -1,0 +1,52 @@
+android.testOptions.unitTests.all {
+    // configure the set of classes for JUnit tests
+    include '**/*Test.class'
+    //exclude '**/espresso/**/*.class'
+
+    // configure max heap size of the test JVM
+    maxHeapSize = "2048m"
+}
+
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = "0.7.1.201405082137"
+}
+
+def coverageSourceDirs = [
+        '../app/src/main/java'
+]
+
+task jacocoTestReport(type: JacocoReport, dependsOn: "testProdDebugUnitTest") {
+    group = "Reporting"
+
+    description = "Generate Jacoco coverage reports"
+
+    classDirectories = fileTree(
+            dir: '../app/build/intermediates/classes/prod',
+            excludes: ['**/R.class',
+                       '**/R$*.class',
+                       '**/*$ViewInjector*.*',
+                       '**/*$ViewBinder*.*',
+                       '**/BuildConfig.*',
+                       '**/Manifest*.*',
+                       '**/view/**',
+                       '**/databinding/**',
+                       '**/*$Lambda$*.*',
+                       '**/*Module.*',
+                       '**/*Dagger*.*',
+                       '**/*MembersInjector*.*',
+                       '**/*_Provide*Factory*.*']
+    )
+
+    additionalSourceDirs = files(coverageSourceDirs)
+    sourceDirectories = files(coverageSourceDirs)
+    executionData = files('../app/build/jacoco/testProdDebugUnitTest.exec')
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+        xml.destination = "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
+        html.destination = "${buildDir}/reports/jacoco/test/html"
+    }
+}
