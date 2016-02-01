@@ -53,9 +53,6 @@ dependencies {
     compile "com.android.support:design:$rootProject.supportLibraryVersion"
     compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
-
-    // Other
-    compile "com.jakewharton:butterknife:$rootProject.butterknifeVersion"
     compile "com.android.support.test.espresso:espresso-idling-resource:$rootProject.espressoVersion"
 
     // Dagger
@@ -63,16 +60,11 @@ dependencies {
     compile "com.google.dagger:dagger:$rootProject.daggerVersion"
     apt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
 
-    // Immutables
-    apt 'org.immutables:value:2.1.9'
-    provided 'org.immutables:value:2.1.9'
-    provided 'org.immutables:builder:2.1.9'
-    provided 'org.immutables:gson:2.1.9'
-
     // Others
-    compile 'com.google.code.gson:gson:2.4'
-    compile 'io.reactivex:rxandroid:1.1.0'
-    compile 'de.greenrobot:eventbus:2.4.0'
+    compile "com.jakewharton:butterknife:$rootProject.butterknifeVersion"
+    compile "com.google.code.gson:gson:$rootProject.gsonVersion"
+    compile "io.reactivex:rxandroid:$rootProject.rxandroidVersion"
+    compile "de.greenrobot:eventbus:$rootProject.eventbusVersion"
 
     // Unit Test
     testCompile "org.assertj:assertj-core:$rootProject.assertjVersion"

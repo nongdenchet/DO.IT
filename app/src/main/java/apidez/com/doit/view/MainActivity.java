@@ -1,4 +1,4 @@
-package apidez.com.doit;
+package apidez.com.doit.view;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import apidez.com.doit.R;
 
 public class MainActivity extends AppCompatActivity {
 
