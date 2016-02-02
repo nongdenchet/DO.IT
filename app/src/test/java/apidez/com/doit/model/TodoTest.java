@@ -20,14 +20,14 @@ import static junit.framework.Assert.assertTrue;
 @RunWith(JUnit4.class)
 public class TodoTest {
     private Todo mTodo;
-    private long milisecond = (24L * 60 * 60 * 1000) * 1000;
+    private long milliseconds = (24L * 60 * 60 * 1000) * 1000;
 
     @Before
     public void setUp() throws Exception {
         mTodo = new Todo.Builder("title", Priority.LOW)
                 .note("note")
                 .completed(true)
-                .dueDate(new Date(milisecond))
+                .dueDate(new Date(milliseconds))
                 .build();
     }
 
@@ -66,7 +66,7 @@ public class TodoTest {
 
     @Test
     public void testGetDueDate() throws Exception {
-        assertEquals(milisecond, mTodo.getDueDate().getTime());
+        assertEquals(milliseconds, mTodo.getDueDate().getTime());
     }
 
     @Test
