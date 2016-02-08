@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">DO.IT</string>
     <string name="action_settings">Settings</string>
+    <string name="loading_message">Loading…</string>
 </resources>

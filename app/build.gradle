@@ -16,10 +16,12 @@ android {
         versionName "1.0"
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
+
     lintOptions {
         checkReleaseBuilds false
         abortOnError false
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -29,12 +31,43 @@ android {
             testCoverageEnabled true
         }
     }
+
+    productFlavors {
+        prod {
+            applicationIdSuffix = ".prod"
+            resValue "string", "app_name", "DO.IT"
+        }
+        mock {
+            applicationIdSuffix = ".mock"
+            resValue "string", "app_name", "DO.IT Mock"
+        }
+    }
+
+    // Remove mockRelease as it's not needed.
+    android.variantFilter { variant ->
+        if (variant.buildType.name.equals('release') && variant.getFlavors().get(0).name.equals('mock')) {
+            variant.setIgnore(true);
+        }
+    }
+
     dataBinding {
         enabled = true
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    sourceSets {
+        // Prod source
+        prod.java.srcDirs = ['src/main/java', 'src/data/java']
+
+        // Unit tests
+        test.java.srcDir 'src/unitTest/java'
+
+        // Functional tests
+        androidTest.java.srcDir 'src/functionalTest/java'
     }
 }
 

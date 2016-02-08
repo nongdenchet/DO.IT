@@ -2,22 +2,29 @@ package apidez.com.doit.model;
 
 import java.util.Date;
 
+import apidez.com.doit.utils.StringUtils;
+
 /**
  * Created by nongdenchet on 2/2/16.
  */
 public class Todo {
+    private String id;
     private Priority priority;
     private String title;
     private String note;
     private Date dueDate;
     private boolean completed;
 
-    private Todo(Priority priority, String title, String note, Date dueDate, boolean completed) {
+    private Todo(String id, String title, String note, Date dueDate, boolean completed, Priority priority) {
         this.priority = priority;
         this.title = title;
         this.note = note;
         this.dueDate = dueDate;
         this.completed = completed;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public Priority getPriority() {
@@ -90,8 +97,12 @@ public class Todo {
             return this;
         }
 
+        private String generateId() {
+            return StringUtils.nextSessionId();
+        }
+
         public Todo build() {
-            return new Todo(priority, title, note, dueDate, completed);
+            return new Todo(generateId(), title, note, dueDate, completed, priority);
         }
     }
 }
