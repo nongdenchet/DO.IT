@@ -97,6 +97,7 @@ dependencies {
     compile "com.google.code.gson:gson:$rootProject.gsonVersion"
     compile "io.reactivex:rxandroid:$rootProject.rxandroidVersion"
     compile "de.greenrobot:eventbus:$rootProject.eventbusVersion"
+    compile "de.hdodenhof:circleimageview:$rootProject.circleImageViewVersion"
 
     // Unit Test
     testCompile "org.assertj:assertj-core:$rootProject.assertjVersion"

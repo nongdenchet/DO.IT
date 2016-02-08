@@ -44,4 +44,5 @@ ext {
     gsonVersion = '2.4'
     rxandroidVersion = '1.1.0'
     eventbusVersion = '2.4.0'
+    circleImageViewVersion = '2.0.0'
 }
