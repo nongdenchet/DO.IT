@@ -19,6 +19,7 @@ import apidez.com.doit.R;
 import apidez.com.doit.databinding.FragmentTodoListBinding;
 import apidez.com.doit.dependency.module.TodoListModule;
 import apidez.com.doit.view.adapter.TodoListAdapter;
+import apidez.com.doit.view.viewholder.TodoItemViewHolder;
 import apidez.com.doit.viewmodel.TodoListViewModel;
 import butterknife.InjectView;
 
@@ -81,7 +82,8 @@ public class TodoListFragment extends BaseFragment {
         mAddButton.setOnClickListener(v -> Log.d("Quan", getClass().getSimpleName()));
 
         // Fetch data
-        startObserve(mViewModel.fetchAllTodo()).subscribe(response -> {});
+        startObserve(mViewModel.fetchAllTodo()).subscribe(response -> {
+        });
     }
 
     private void setUpRecyclerView() {
@@ -100,12 +102,12 @@ public class TodoListFragment extends BaseFragment {
     }
 
     // Events
-    public void onEvent(TodoListAdapter.CheckItemEvent event) {
-        startObserve(mViewModel.checkChangeItem(event.position))
-            .subscribe(checked -> {
-                event.callBack.onCheckChange(checked);
-            }, throwable -> {
-                showShortToast(throwable.getMessage());
-            });
+    public void onEvent(TodoItemViewHolder.CheckItemEvent event) {
+        startObserve(mViewModel.checkChangeItem(event.decorator))
+                .subscribe(checked -> {
+                    event.callBack.onCheckChange(checked);
+                }, throwable -> {
+                    showShortToast(throwable.getMessage());
+                });
     }
 }

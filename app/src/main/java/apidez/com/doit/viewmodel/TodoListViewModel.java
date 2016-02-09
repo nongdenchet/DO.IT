@@ -22,5 +22,5 @@ public interface TodoListViewModel {
     /**
      * Check complete
      */
-    Observable<Boolean> checkChangeItem(int position);
+    Observable<Boolean> checkChangeItem(TodoDecorator decorator);
 }

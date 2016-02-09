@@ -54,19 +54,18 @@ public class TodoListViewModelImpl extends BaseViewModel implements TodoListView
     }
 
     @Override
-    public Observable<Boolean> checkChangeItem(int position) {
+    public Observable<Boolean> checkChangeItem(TodoDecorator decorator) {
         return configWithScheduler(Observable.create((Observable.OnSubscribe<Boolean>) subscriber -> {
-            Todo todo = mTodoItems.get(position).getTodo();
-            boolean isComplete = todo.isCompleted();
+            boolean isComplete = decorator.isCompleted();
             try {
                 // update check
-                todo.setCompleted(!isComplete);
-                mRepository.update(todo);
-                subscriber.onNext(todo.isCompleted());
+                decorator.setChecked(!isComplete);
+                mRepository.update(decorator.getTodo());
+                subscriber.onNext(decorator.getChecked());
                 subscriber.onCompleted();
             } catch (Exception ex) {
                 // reverse check
-                todo.setCompleted(isComplete);
+                decorator.setChecked(isComplete);
                 subscriber.onError(ex);
             }
         }));

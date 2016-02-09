@@ -1,7 +1,6 @@
 package apidez.com.doit.decorator;
 
 import android.databinding.BaseObservable;
-import android.databinding.ObservableFloat;
 import android.text.format.DateFormat;
 
 import apidez.com.doit.R;
@@ -26,7 +25,6 @@ public class TodoDecorator extends BaseObservable {
     };
 
     private Todo mTodo;
-    private ObservableFloat mOpacity = new ObservableFloat(1.0f);
 
     public TodoDecorator(Todo todo) {
         this.mTodo = todo;
@@ -36,13 +34,16 @@ public class TodoDecorator extends BaseObservable {
         return mTodo;
     }
 
-    public ObservableFloat getOpacity() {
-        return mOpacity;
+    public float getOpacity() {
+        return mTodo.isCompleted() ? 0.5f : 1.0f;
     }
 
-    public void updateCheck(boolean complete) {
+    public void setChecked(boolean complete) {
         mTodo.setCompleted(complete);
-        mOpacity.set(complete ? 0.5f : 1.0f);
+    }
+
+    public boolean getChecked() {
+        return mTodo.isCompleted();
     }
 
     public boolean isCompleted() {

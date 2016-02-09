@@ -4,6 +4,9 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.View;
+import android.view.ViewPropertyAnimator;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -13,6 +16,11 @@ import apidez.com.doit.R;
  * Created by nongdenchet on 2/8/16.
  */
 public class PopCheckBox extends RelativeLayout {
+    private final float SCALE_MIN = 0.0f;
+    private final float SCALE_MAX = 1.0f;
+    private final int DELAY_DURATION = 75;
+    private final int ANIM_DURATION = 75;
+
     private boolean mCheck = false;
     private ImageView mCheckBox;
     private ImageView mCheckBoxFill;
@@ -54,9 +62,42 @@ public class PopCheckBox extends RelativeLayout {
     }
 
     public void animateChecked(boolean isChecked) {
-        mCheck = isChecked;
+        if (mCheck != isChecked) {
+            mCheck = isChecked;
+            doAnimation();
+        }
+    }
 
-        // TODO: do the animation
-        mCheckBoxFill.setVisibility(isChecked ? VISIBLE : INVISIBLE);
+    private void doAnimation() {
+        if (mCheck) {
+            checkAnimation();
+        } else {
+            unCheckAnimation();
+        }
+    }
+
+    private void prepareCheckBoxFill() {
+        mCheckBoxFill.setScaleX(SCALE_MIN);
+        mCheckBoxFill.setScaleY(SCALE_MIN);
+        mCheckBoxFill.setVisibility(VISIBLE);
+    }
+
+    private void checkAnimation() {
+        prepareCheckBoxFill();
+        scaleAnimation(mCheckBox, 0, SCALE_MIN).start();
+        scaleAnimation(mCheckBoxFill, DELAY_DURATION, SCALE_MAX).start();
+    }
+
+    private void unCheckAnimation() {
+        scaleAnimation(mCheckBoxFill, 0, SCALE_MIN).start();
+        scaleAnimation(mCheckBox, DELAY_DURATION, SCALE_MAX).start();
+    }
+
+    private ViewPropertyAnimator scaleAnimation(View view, int delay, float scale) {
+        return view.animate().setInterpolator(new AccelerateInterpolator())
+                .scaleX(scale)
+                .scaleY(scale)
+                .setStartDelay(delay)
+                .setDuration(ANIM_DURATION);
     }
 }

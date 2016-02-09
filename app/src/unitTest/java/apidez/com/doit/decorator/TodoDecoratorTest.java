@@ -45,24 +45,24 @@ public class TodoDecoratorTest {
 
     @Test
     public void testOpacityEnable() throws Exception {
-        mDecorator.updateCheck(false);
-        assertEquals(1.0f, mDecorator.getOpacity().get());
+        mDecorator.setChecked(false);
+        assertEquals(1.0f, mDecorator.getOpacity());
     }
 
     @Test
     public void testOpacityDefault() throws Exception {
-        assertEquals(1.0f, mDecorator.getOpacity().get());
+        assertEquals(1.0f, mDecorator.getOpacity());
     }
 
     @Test
     public void testOpacityDisable() throws Exception {
-        mDecorator.updateCheck(false);
-        assertEquals(1.0f, mDecorator.getOpacity().get());
+        mDecorator.setChecked(false);
+        assertEquals(1.0f, mDecorator.getOpacity());
     }
 
     @Test
     public void testUpdateCheck() throws Exception {
-        mDecorator.updateCheck(true);
+        mDecorator.setChecked(true);
         verify(mTodo).setCompleted(true);
     }
 
