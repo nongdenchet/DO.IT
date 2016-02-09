@@ -17,7 +17,6 @@ import apidez.com.doit.model.Priority;
 import apidez.com.doit.model.Todo;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -64,12 +63,6 @@ public class TodoDecoratorTest {
     public void testUpdateCheck() throws Exception {
         mDecorator.setChecked(true);
         verify(mTodo).setCompleted(true);
-    }
-
-    @Test
-    public void testIsCompleted() throws Exception {
-        when(mTodo.isCompleted()).thenReturn(true);
-        assertTrue(mDecorator.isCompleted());
     }
 
     @Test

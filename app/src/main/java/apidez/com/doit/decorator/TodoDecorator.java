@@ -46,10 +46,6 @@ public class TodoDecorator extends BaseObservable {
         return mTodo.isCompleted();
     }
 
-    public boolean isCompleted() {
-        return mTodo.isCompleted();
-    }
-
     public String getTitle() {
         return mTodo.getTitle();
     }

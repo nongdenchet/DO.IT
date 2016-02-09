@@ -58,7 +58,11 @@ public class PopCheckBox extends RelativeLayout {
 
     public void setCheck(boolean isChecked) {
         mCheck = isChecked;
-        mCheckBoxFill.setVisibility(isChecked ? VISIBLE : INVISIBLE);
+        if (mCheck) {
+            stateCheck();
+        } else {
+            stateUnCheck();
+        }
     }
 
     public void animateChecked(boolean isChecked) {
@@ -76,14 +80,21 @@ public class PopCheckBox extends RelativeLayout {
         }
     }
 
-    private void prepareCheckBoxFill() {
+    private void stateUnCheck() {
         mCheckBoxFill.setScaleX(SCALE_MIN);
         mCheckBoxFill.setScaleY(SCALE_MIN);
-        mCheckBoxFill.setVisibility(VISIBLE);
+        mCheckBox.setScaleX(SCALE_MAX);
+        mCheckBox.setScaleY(SCALE_MAX);
+    }
+
+    private void stateCheck() {
+        mCheckBoxFill.setScaleX(SCALE_MAX);
+        mCheckBoxFill.setScaleY(SCALE_MAX);
+        mCheckBox.setScaleX(SCALE_MIN);
+        mCheckBox.setScaleY(SCALE_MIN);
     }
 
     private void checkAnimation() {
-        prepareCheckBoxFill();
         scaleAnimation(mCheckBox, 0, SCALE_MIN).start();
         scaleAnimation(mCheckBoxFill, DELAY_DURATION, SCALE_MAX).start();
     }

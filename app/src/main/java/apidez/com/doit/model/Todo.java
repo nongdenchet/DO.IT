@@ -16,11 +16,12 @@ public class Todo {
     private boolean completed;
 
     private Todo(String id, String title, String note, Date dueDate, boolean completed, Priority priority) {
-        this.priority = priority;
+        this.id = id;
         this.title = title;
         this.note = note;
         this.dueDate = dueDate;
         this.completed = completed;
+        this.priority = priority;
     }
 
     public String getId() {
