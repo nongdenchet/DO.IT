@@ -26,5 +26,5 @@ public interface TodoRepository {
     /**
      * Update a to-do item
      */
-    boolean update(Todo todo);
+    boolean update(Todo todo) throws Exception;
 }

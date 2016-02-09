@@ -17,6 +17,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class PriorityView extends RelativeLayout {
     private TextView mTitle;
     private CircleImageView mBackground;
+    private boolean isChecked = false;
 
     public PriorityView(Context context) {
         super(context);
@@ -49,7 +50,7 @@ public class PriorityView extends RelativeLayout {
         mBackground = (CircleImageView) findViewById(R.id.background);
     }
 
-    public void setTitleColor(int color) {
+    public void setPriorityTitleColor(int color) {
         mTitle.setTextColor(ContextCompat.getColor(getContext(), color));
     }
 

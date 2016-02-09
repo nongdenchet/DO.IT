@@ -88,7 +88,7 @@ public class TodoTest {
 
     @Test
     public void testDefaultCompleted() throws Exception {
-        mTodo = new Todo.Builder("title", Priority.MEDIUM)
+        mTodo = new Todo.Builder("title", Priority.MED)
                 .build();
         assertFalse(mTodo.isCompleted());
     }

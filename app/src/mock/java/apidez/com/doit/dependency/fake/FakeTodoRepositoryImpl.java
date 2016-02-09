@@ -1,6 +1,7 @@
 package apidez.com.doit.dependency.fake;
 
 import java.util.List;
+import java.util.Random;
 
 import apidez.com.doit.model.Todo;
 import apidez.com.doit.repository.TodoRepository;
@@ -18,7 +19,7 @@ public class FakeTodoRepositoryImpl implements TodoRepository {
 
     @Override
     public List<Todo> getAll() {
-        return DataUtils.provideMockTodoList();
+        return DataUtils.provideLongMockTodoList();
     }
 
     @Override
@@ -27,7 +28,12 @@ public class FakeTodoRepositoryImpl implements TodoRepository {
     }
 
     @Override
-    public boolean update(Todo todo) {
+    public boolean update(Todo todo) throws Exception {
+        Random random = new Random();
+        boolean result = random.nextBoolean();
+        if (!result) {
+            throw new Exception("Some error occurs");
+        }
         return true;
     }
 }
