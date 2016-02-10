@@ -1,19 +1,18 @@
 package apidez.com.doit.decorator;
 
 import android.databinding.BaseObservable;
+import android.databinding.ObservableBoolean;
 import android.text.format.DateFormat;
 
 import apidez.com.doit.R;
 import apidez.com.doit.model.Todo;
-import rx.Observable;
-import rx.subjects.BehaviorSubject;
 
 /**
  * Created by nongdenchet on 2/8/16.
  */
 public class TodoDecorator extends BaseObservable {
     private final String NO_DUE_DATE = "No due date";
-    private BehaviorSubject<Boolean> mCheckChange;
+    private ObservableBoolean mEnableState = new ObservableBoolean(true);
     private Todo mTodo;
 
     private int[] mPriorityColor = new int[]{
@@ -30,7 +29,6 @@ public class TodoDecorator extends BaseObservable {
 
     public TodoDecorator(Todo todo) {
         this.mTodo = todo;
-        this.mCheckChange = BehaviorSubject.create(todo.isCompleted());
     }
 
     public Todo getTodo() {
@@ -41,17 +39,17 @@ public class TodoDecorator extends BaseObservable {
         return mTodo.isCompleted() ? 0.5f : 1.0f;
     }
 
-    public void setChecked(boolean complete) {
+    public void setCompleted(boolean complete) {
         mTodo.setCompleted(complete);
-        mCheckChange.onNext(complete);
+        mEnableState.set(!complete);
     }
 
-    public Observable<Boolean> checkChange() {
-        return mCheckChange.asObservable();
-    }
-
-    public boolean getChecked() {
+    public boolean isCompleted() {
         return mTodo.isCompleted();
+    }
+
+    public ObservableBoolean getEnableState() {
+        return mEnableState;
     }
 
     public String getTitle() {

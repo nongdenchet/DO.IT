@@ -38,6 +38,12 @@ public class TodoTest {
     }
 
     @Test
+    public void testSwitchComplete() throws Exception {
+        mTodo.switchComplete();
+        assertFalse(mTodo.isCompleted());
+    }
+
+    @Test
     public void testGetPriority() throws Exception {
         assertEquals(Priority.LOW, mTodo.getPriority());
     }

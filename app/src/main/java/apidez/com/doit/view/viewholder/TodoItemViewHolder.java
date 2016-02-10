@@ -37,8 +37,10 @@ public class TodoItemViewHolder extends RecyclerView.ViewHolder {
         binding.executePendingBindings();
     }
 
-    public void animateCheck(boolean complete) {
+    public void animateCheckChange(boolean complete) {
         popCheckBox.animateChecked(complete);
-        AnimationUtils.animateAlpha(todoView, decorator.getOpacity(), ALPHA_ANIM_DURATION);
+        decorator.setCompleted(complete);
+        AnimationUtils.animateAlpha(todoView,
+                decorator.getOpacity(), ALPHA_ANIM_DURATION);
     }
 }

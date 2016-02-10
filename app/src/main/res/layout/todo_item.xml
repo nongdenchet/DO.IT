@@ -10,13 +10,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground">
+        android:background="?attr/selectableItemBackground"
+        app:enabled="@{decorator.enableState}">
 
         <RelativeLayout
             android:id="@+id/todo"
-            android:alpha="@{decorator.opacity}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:alpha="@{decorator.opacity}"
             android:paddingLeft="@dimen/large_space"
             android:paddingRight="@dimen/large_space"
             android:paddingTop="@dimen/large_space">
@@ -71,6 +72,6 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:padding="@dimen/large_space"
-            app:check="@{decorator.checked}"/>
+            app:check="@{decorator.isCompleted}"/>
     </RelativeLayout>
 </layout>

@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import apidez.com.doit.R;
 import apidez.com.doit.databinding.TodoItemBinding;
 import apidez.com.doit.decorator.TodoDecorator;
+import apidez.com.doit.model.Todo;
 import apidez.com.doit.view.viewholder.TodoItemViewHolder;
 import de.greenrobot.event.EventBus;
-import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by nongdenchet on 2/8/16.
@@ -43,16 +43,9 @@ public class TodoListAdapter extends SlideInAnimationAdapter<TodoDecorator> {
             // TODO: implement this
         });
 
-        // bind state
-        decorator.checkChange()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(complete -> {
-                    viewHolder.itemView.setEnabled(!complete);
-                });
-
         // bind click checkbox
         viewHolder.popCheckBox.setOnClickListener(v -> EventBus.getDefault().post(
-                new CheckItemEvent(decorator, viewHolder::animateCheck)));
+                new CheckItemEvent(decorator.getTodo(), viewHolder::animateCheckChange)));
     }
 
     // Callbacks
@@ -63,10 +56,10 @@ public class TodoListAdapter extends SlideInAnimationAdapter<TodoDecorator> {
     // Events
     public class CheckItemEvent {
         public CheckCallBack callBack;
-        public TodoDecorator decorator;
+        public Todo todo;
 
-        public CheckItemEvent(TodoDecorator decorator, CheckCallBack callBack) {
-            this.decorator = decorator;
+        public CheckItemEvent(Todo todo, CheckCallBack callBack) {
+            this.todo = todo;
             this.callBack = callBack;
         }
     }

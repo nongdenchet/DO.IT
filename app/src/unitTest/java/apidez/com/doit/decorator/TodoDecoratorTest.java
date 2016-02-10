@@ -8,7 +8,6 @@ import org.mockito.MockitoAnnotations;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
-import java.util.Collections;
 import java.util.Date;
 
 import apidez.com.doit.BuildConfig;
@@ -16,11 +15,10 @@ import apidez.com.doit.DefaultConfig;
 import apidez.com.doit.R;
 import apidez.com.doit.model.Priority;
 import apidez.com.doit.model.Todo;
-import rx.observers.TestSubscriber;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -58,15 +56,15 @@ public class TodoDecoratorTest {
     }
 
     @Test
-    public void testGetChecked() throws Exception {
-        when(mTodo.isCompleted()).thenReturn(true);
-        assertTrue(mDecorator.getChecked());
+    public void testOpacityEnable() throws Exception {
+        mDecorator.setCompleted(false);
+        assertEquals(1.0f, mDecorator.getOpacity());
     }
 
     @Test
-    public void testOpacityEnable() throws Exception {
-        mDecorator.setChecked(false);
-        assertEquals(1.0f, mDecorator.getOpacity());
+    public void testIsComplete() throws Exception {
+        when(mTodo.isCompleted()).thenReturn(true);
+        assertTrue(mDecorator.isCompleted());
     }
 
     @Test
@@ -76,17 +74,14 @@ public class TodoDecoratorTest {
 
     @Test
     public void testOpacityDisable() throws Exception {
-        mDecorator.setChecked(false);
+        mDecorator.setCompleted(false);
         assertEquals(1.0f, mDecorator.getOpacity());
     }
 
     @Test
     public void testUpdateCheck() throws Exception {
-        mDecorator.setChecked(true);
-        verify(mTodo).setCompleted(true);
-        TestSubscriber testSubscriber = TestSubscriber.create();
-        mDecorator.checkChange().subscribe(testSubscriber);
-        testSubscriber.assertReceivedOnNext(Collections.singletonList(true));
+        mDecorator.setCompleted(true);
+        assertFalse(mDecorator.getEnableState().get());
     }
 
     @Test

@@ -28,6 +28,10 @@ public class Todo {
         return id;
     }
 
+    public void switchComplete() {
+        completed = !completed;
+    }
+
     public Priority getPriority() {
         return priority;
     }

@@ -123,7 +123,7 @@ public class TodoListFragment extends BaseFragment {
 
     // Events
     public void onEvent(TodoListAdapter.CheckItemEvent event) {
-        startObserve(mViewModel.checkChangeItem(event.decorator)).subscribe(checked -> {
+        startObserve(mViewModel.checkChangeItem(event.todo)).subscribe(checked -> {
             event.callBack.onCheckChange(checked);
         }, throwable -> {
             showShortToast(throwable.getMessage());

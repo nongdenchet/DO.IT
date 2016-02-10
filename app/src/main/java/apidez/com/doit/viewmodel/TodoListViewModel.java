@@ -3,6 +3,7 @@ package apidez.com.doit.viewmodel;
 import android.databinding.ObservableList;
 
 import apidez.com.doit.decorator.TodoDecorator;
+import apidez.com.doit.model.Todo;
 import rx.Observable;
 
 /**
@@ -22,5 +23,5 @@ public interface TodoListViewModel {
     /**
      * Check complete
      */
-    Observable<Boolean> checkChangeItem(TodoDecorator decorator);
+    Observable<Boolean> checkChangeItem(Todo todo);
 }
