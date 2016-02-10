@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#ffc107</color>
     <color name="colorPrimaryDark">#CC9A05</color>
-    <color name="colorAccent">#F44336</color>
+    <color name="colorAccent">#009688</color>
     <color name="textColorPrimary">#303030</color>
     <color name="bg_priority_high">#F44336</color>
     <color name="bg_priority_medium">#FFEB3B</color>
@@ -10,4 +10,7 @@
     <color name="title_text_color">#000000</color>
     <color name="subtitle_text_color">#616161</color>
     <color name="todo_item_divider">#D3D3D3</color>
+    <color name="update_text_color">#2196f3</color>
+    <color name="delete_text_color">#f44336</color>
+    <color name="disable_color">#80B1B1B1</color>
 </resources>

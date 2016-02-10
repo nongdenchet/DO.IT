@@ -1,5 +1,7 @@
 package apidez.com.doit.decorator;
 
+import android.view.View;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,6 +41,62 @@ public class TodoDecoratorTest {
     }
 
     @Test
+    public void testDefaultState() throws Exception {
+        assertResetState();
+    }
+
+    @Test
+    public void testSwitchEnableWhenNotChooseDisable() throws Exception {
+        mDecorator.switchEnableWhenNotChoose();
+        assertEquals(View.VISIBLE, mDecorator.getDisableVisibility().get());
+        assertFalse(mDecorator.getEnableState().get());
+    }
+
+    @Test
+    public void testSwitchEnableWhenNotChooseEnable() throws Exception {
+        mDecorator.switchEnableWhenNotChoose();
+        mDecorator.switchEnableWhenNotChoose();
+        assertEquals(View.INVISIBLE, mDecorator.getDisableVisibility().get());
+        assertTrue(mDecorator.getEnableState().get());
+    }
+
+    @Test
+    public void testSwitchActionVisibilityEnable() throws Exception {
+        mDecorator.switchActionVisibility();
+        assertEquals(View.VISIBLE, mDecorator.getActionVisibility().get());
+        assertEquals(View.INVISIBLE, mDecorator.getDividerVisibility().get());
+    }
+
+    @Test
+    public void testSwitchActionVisibilityDisable() throws Exception {
+        mDecorator.switchActionVisibility();
+        mDecorator.switchActionVisibility();
+        assertEquals(View.GONE, mDecorator.getActionVisibility().get());
+        assertEquals(View.VISIBLE, mDecorator.getDividerVisibility().get());
+    }
+
+    @Test
+    public void testResetStateFromDisable() throws Exception {
+        mDecorator.switchEnableWhenNotChoose();
+        mDecorator.resetState();
+        assertResetState();
+    }
+
+    @Test
+    public void testResetStateFromEnable() throws Exception {
+        mDecorator.switchActionVisibility();
+        mDecorator.resetState();
+        assertResetState();
+    }
+
+    private void assertResetState() {
+        assertEquals(View.INVISIBLE, mDecorator.getDisableVisibility().get());
+        assertEquals(View.GONE, mDecorator.getActionVisibility().get());
+        assertEquals(View.VISIBLE, mDecorator.getDividerVisibility().get());
+        assertTrue(mDecorator.getEnableState().get());
+    }
+
+    @Test
     public void testGetTodo() throws Exception {
         assertEquals(mTodo, mDecorator.getTodo());
     }
@@ -56,12 +114,6 @@ public class TodoDecoratorTest {
     }
 
     @Test
-    public void testOpacityEnable() throws Exception {
-        mDecorator.setCompleted(false);
-        assertEquals(1.0f, mDecorator.getOpacity());
-    }
-
-    @Test
     public void testIsComplete() throws Exception {
         when(mTodo.isCompleted()).thenReturn(true);
         assertTrue(mDecorator.isCompleted());
@@ -70,18 +122,6 @@ public class TodoDecoratorTest {
     @Test
     public void testOpacityDefault() throws Exception {
         assertEquals(1.0f, mDecorator.getOpacity());
-    }
-
-    @Test
-    public void testOpacityDisable() throws Exception {
-        mDecorator.setCompleted(false);
-        assertEquals(1.0f, mDecorator.getOpacity());
-    }
-
-    @Test
-    public void testUpdateCheck() throws Exception {
-        mDecorator.setCompleted(true);
-        assertFalse(mDecorator.getEnableState().get());
     }
 
     @Test

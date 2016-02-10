@@ -26,7 +26,6 @@ public class TodoTest {
     @Before
     public void setUp() throws Exception {
         mTodo = new Todo.Builder("title", Priority.LOW)
-                .note("note")
                 .completed(true)
                 .dueDate(new Date(milliseconds))
                 .build();
@@ -65,16 +64,6 @@ public class TodoTest {
         assertEquals("new title", mTodo.getTitle());
     }
 
-    @Test
-    public void testGetNote() throws Exception {
-        assertEquals("note", mTodo.getNote());
-    }
-
-    @Test
-    public void testSetNote() throws Exception {
-        mTodo.setNote("new note");
-        assertEquals("new note", mTodo.getNote());
-    }
 
     @Test
     public void testGetDueDate() throws Exception {

@@ -31,6 +31,7 @@ task jacocoTestReport(type: JacocoReport, dependsOn: "testProdDebugUnitTest") {
                        '**/BuildConfig.*',
                        '**/Manifest*.*',
                        '**/view/**',
+                       '**/utils/**',
                        '**/databinding/**',
                        '**/*$Lambda$*.*',
                        '**/*Module.*',

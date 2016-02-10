@@ -25,6 +25,15 @@ public class TodoItemViewHolder extends RecyclerView.ViewHolder {
     @InjectView(R.id.todo)
     public View todoView;
 
+    @InjectView(R.id.edit_button)
+    public View editButton;
+
+    @InjectView(R.id.delete_button)
+    public View deleteButton;
+
+    @InjectView(R.id.disable_layer)
+    public View disableLayer;
+
     public TodoItemViewHolder(TodoItemBinding binding) {
         super(binding.getRoot());
         this.binding = binding;
@@ -39,7 +48,6 @@ public class TodoItemViewHolder extends RecyclerView.ViewHolder {
 
     public void animateCheckChange(boolean complete) {
         popCheckBox.animateChecked(complete);
-        decorator.setCompleted(complete);
         AnimationUtils.animateAlpha(todoView,
                 decorator.getOpacity(), ALPHA_ANIM_DURATION);
     }

@@ -7,71 +7,165 @@
             type="apidez.com.doit.decorator.TodoDecorator"/>
     </data>
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
-        app:enabled="@{decorator.enableState}">
+        android:orientation="vertical">
 
         <RelativeLayout
-            android:id="@+id/todo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:alpha="@{decorator.opacity}"
-            android:paddingLeft="@dimen/large_space"
-            android:paddingRight="@dimen/large_space"
-            android:paddingTop="@dimen/large_space">
+            android:layout_height="wrap_content">
 
-            <apidez.com.doit.view.custom.PriorityView
-                android:id="@+id/priority"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/todo"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:priorityColor="@{decorator.priorityColor}"
-                app:priorityTitleColor="@{decorator.priorityTitleColor}"
-                app:title="@{decorator.priority}"/>
+                android:alpha="@{decorator.opacity}"
+                android:background="?attr/selectableItemBackground"
+                android:paddingLeft="@dimen/large_space"
+                android:paddingRight="@dimen/large_space"
+                android:paddingTop="@dimen/large_space"
+                app:enabled="@{decorator.enableState}">
 
-            <LinearLayout
-                android:id="@+id/content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/large_space"
-                android:layout_toRightOf="@+id/priority"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/title"
+                <apidez.com.doit.view.custom.PriorityView
+                    android:id="@+id/priority"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{decorator.title}"
-                    android:textColor="@color/title_text_color"
-                    android:textSize="@dimen/title_size"/>
+                    app:priorityColor="@{decorator.priorityColor}"
+                    app:priorityTitleColor="@{decorator.priorityTitleColor}"
+                    app:title="@{decorator.priority}"/>
 
-                <TextView
-                    android:id="@+id/subtitle"
+                <LinearLayout
+                    android:id="@+id/content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
-                    android:text="@{decorator.dueDate}"
-                    android:textColor="@color/subtitle_text_color"
-                    android:textSize="@dimen/subtitle_size"/>
-            </LinearLayout>
+                    android:layout_marginLeft="@dimen/large_space"
+                    android:layout_toRightOf="@+id/priority"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{decorator.title}"
+                        android:textColor="@color/title_text_color"
+                        android:textSize="@dimen/title_size"/>
+
+                    <TextView
+                        android:id="@+id/subtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="@{decorator.dueDate}"
+                        android:textColor="@color/subtitle_text_color"
+                        android:textSize="@dimen/subtitle_size"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/content"
+                    android:layout_marginTop="@dimen/large_space"
+                    android:layout_toRightOf="@id/priority"
+                    android:background="@color/todo_item_divider"
+                    android:visibility="@{decorator.dividerVisibility}"/>
+
+            </RelativeLayout>
+
+            <apidez.com.doit.view.custom.PopCheckBox
+                android:id="@+id/pop_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/large_space"
+                app:check="@{decorator.isCompleted}"/>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@id/content"
-                android:layout_marginTop="@dimen/large_space"
-                android:layout_toRightOf="@id/priority"
-                android:background="@color/todo_item_divider"/>
+                android:layout_height="78dp"
+                android:id="@+id/disable_layer"
+                android:background="@color/disable_color"
+                android:visibility="@{decorator.disableVisibility}"/>
         </RelativeLayout>
 
-        <apidez.com.doit.view.custom.PopCheckBox
-            android:id="@+id/pop_checkbox"
-            android:layout_width="wrap_content"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/todo_item_divider"
+            android:visibility="@{decorator.actionVisibility}"/>
+
+        <LinearLayout
+            android:id="@+id/actions"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:padding="@dimen/large_space"
-            app:check="@{decorator.isCompleted}"/>
-    </RelativeLayout>
+            android:baselineAligned="false"
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:visibility="@{decorator.actionVisibility}">
+
+            <RelativeLayout
+                android:id="@+id/edit_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:padding="@dimen/large_space">
+
+                <ImageView
+                    android:id="@+id/update_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/large_space"
+                    android:contentDescription="update"
+                    android:src="@drawable/ic_update_blue"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/update_image"
+                    android:text="EDIT"
+                    android:textColor="@color/update_text_color"
+                    android:textSize="@dimen/subtitle_size"
+                    android:textStyle="bold"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/delete_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:padding="@dimen/large_space">
+
+                <ImageView
+                    android:id="@+id/delete_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/large_space"
+                    android:contentDescription="update"
+                    android:src="@drawable/ic_delete_red"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/delete_image"
+                    android:text="DELETE"
+                    android:textColor="@color/delete_text_color"
+                    android:textSize="@dimen/subtitle_size"
+                    android:textStyle="bold"/>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="@drawable/shadow"
+            android:visibility="@{decorator.actionVisibility}"/>
+    </LinearLayout>
 </layout>

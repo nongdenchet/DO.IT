@@ -17,18 +17,12 @@
         android:fitsSystemWindows="true"
         tools:context=".view.activity.TodoActivity">
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipeContainer"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/todoList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/todoList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:items="@{viewModel.todoItems}"/>
-        </android.support.v4.widget.SwipeRefreshLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="?attr/actionBarSize"
+            app:items="@{viewModel.todoItems}"/>
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"

@@ -3,7 +3,6 @@ package apidez.com.doit.view.fragment;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,9 +32,6 @@ public class TodoListFragment extends BaseFragment {
     @InjectView(R.id.todoList)
     RecyclerView mTodoList;
 
-    @InjectView(R.id.swipeContainer)
-    SwipeRefreshLayout mSwipeRefreshLayout;
-
     @Inject
     TodoListViewModel mViewModel;
 
@@ -64,7 +60,6 @@ public class TodoListFragment extends BaseFragment {
     protected void onSetUpView(View rootView) {
         bindViewModel(rootView);
         setUpRecyclerView();
-        setUpSwipe();
     }
 
     private void setUpRecyclerView() {
@@ -72,14 +67,8 @@ public class TodoListFragment extends BaseFragment {
         mTodoListAdapter = new TodoListAdapter(getContext());
         mTodoList.setAdapter(mTodoListAdapter);
         startObserve(mTodoListAdapter.animationEnd()).subscribe(done -> {
-            if (done) {
-                mTodoList.setLayoutManager(new LinearLayoutManager(getContext()));
-            }
+            if (done) mTodoList.setLayoutManager(new LinearLayoutManager(getContext()));
         });
-    }
-
-    private void setUpSwipe() {
-        mSwipeRefreshLayout.setOnRefreshListener(this::fetchData);
     }
 
     private void bindViewModel(View rootView) {
@@ -105,20 +94,13 @@ public class TodoListFragment extends BaseFragment {
 
     private void addAction() {
         // TODO: implement this
-        mViewModel.getTodoItems().remove(0);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ((AppCompatActivity) getActivity()).setSupportActionBar(mBinding.toolbar);
-        fetchData();
-    }
-
-    private void fetchData() {
-        startObserve(mViewModel.fetchAllTodo()).subscribe(response -> {
-            mSwipeRefreshLayout.setRefreshing(false);
-        });
+        startObserve(mViewModel.fetchAllTodo()).subscribe(response -> {});
     }
 
     // Events
@@ -128,5 +110,9 @@ public class TodoListFragment extends BaseFragment {
         }, throwable -> {
             showShortToast(throwable.getMessage());
         });
+    }
+
+    public void onEvent(TodoListAdapter.ShowActionItemEvent event) {
+        mTodoList.getLayoutManager().smoothScrollToPosition(mTodoList, null, event.position);
     }
 }

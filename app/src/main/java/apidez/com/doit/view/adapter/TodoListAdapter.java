@@ -4,7 +4,9 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
 import apidez.com.doit.R;
 import apidez.com.doit.databinding.TodoItemBinding;
@@ -38,14 +40,47 @@ public class TodoListAdapter extends SlideInAnimationAdapter<TodoDecorator> {
     }
 
     public void bindAction(TodoItemViewHolder viewHolder, TodoDecorator decorator) {
-        // click item
-        viewHolder.itemView.setOnClickListener(v -> {
+        // Item click
+        viewHolder.todoView.setOnClickListener(v -> handleChooseItem(viewHolder.itemView, decorator));
+
+        // Disable layer click
+        viewHolder.disableLayer.setOnClickListener(v -> resetState());
+
+        // Checkbox click
+        viewHolder.popCheckBox.setOnClickListener(v -> EventBus.getDefault()
+                .post(new CheckItemEvent(decorator.getTodo(), viewHolder::animateCheckChange)));
+
+        // Update click
+        viewHolder.editButton.setOnClickListener(v -> {
             // TODO: implement this
         });
 
-        // bind click checkbox
-        viewHolder.popCheckBox.setOnClickListener(v -> EventBus.getDefault().post(
-                new CheckItemEvent(decorator.getTodo(), viewHolder::animateCheckChange)));
+        // Delete click
+        viewHolder.deleteButton.setOnClickListener(v -> {
+            // TODO: implement this
+        });
+    }
+
+    private void resetState() {
+        for (TodoDecorator todoDecorator : mItems) {
+            todoDecorator.resetState();
+        }
+    }
+
+    private void handleChooseItem(View itemView, TodoDecorator decorator) {
+        decorator.switchActionVisibility();
+        for (TodoDecorator todoDecorator : mItems) {
+            if (todoDecorator != decorator) {
+                todoDecorator.switchEnableWhenNotChoose();
+            }
+        }
+        itemView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                EventBus.getDefault().post(new ShowActionItemEvent(indexOf(decorator)));
+                itemView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
     }
 
     // Callbacks
@@ -61,6 +96,13 @@ public class TodoListAdapter extends SlideInAnimationAdapter<TodoDecorator> {
         public CheckItemEvent(Todo todo, CheckCallBack callBack) {
             this.todo = todo;
             this.callBack = callBack;
+        }
+    }
+
+    public class ShowActionItemEvent extends ItemEvent {
+
+        public ShowActionItemEvent(int position) {
+            super(position);
         }
     }
 }

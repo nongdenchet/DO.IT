@@ -2,7 +2,9 @@ package apidez.com.doit.decorator;
 
 import android.databinding.BaseObservable;
 import android.databinding.ObservableBoolean;
+import android.databinding.ObservableInt;
 import android.text.format.DateFormat;
+import android.view.View;
 
 import apidez.com.doit.R;
 import apidez.com.doit.model.Todo;
@@ -13,6 +15,9 @@ import apidez.com.doit.model.Todo;
 public class TodoDecorator extends BaseObservable {
     private final String NO_DUE_DATE = "No due date";
     private ObservableBoolean mEnableState = new ObservableBoolean(true);
+    private ObservableInt mActionVisibility = new ObservableInt(View.GONE);
+    private ObservableInt mDividerVisibility = new ObservableInt(View.VISIBLE);
+    private ObservableInt mDisableVisibility = new ObservableInt(View.INVISIBLE);
     private Todo mTodo;
 
     private int[] mPriorityColor = new int[]{
@@ -35,21 +40,51 @@ public class TodoDecorator extends BaseObservable {
         return mTodo;
     }
 
-    public float getOpacity() {
-        return mTodo.isCompleted() ? 0.5f : 1.0f;
+    // Observable properties
+
+    public ObservableInt getActionVisibility() {
+        return mActionVisibility;
     }
 
-    public void setCompleted(boolean complete) {
-        mTodo.setCompleted(complete);
-        mEnableState.set(!complete);
+    public ObservableInt getDisableVisibility() {
+        return mDisableVisibility;
+    }
+
+    public ObservableBoolean getEnableState() {
+        return mEnableState;
+    }
+
+    public ObservableInt getDividerVisibility() {
+        return mDividerVisibility;
+    }
+
+    // Action
+
+    public void resetState() {
+        mEnableState.set(true);
+        mActionVisibility.set(View.GONE);
+        mDividerVisibility.set(View.VISIBLE);
+        mDisableVisibility.set(View.INVISIBLE);
+    }
+
+    public void switchEnableWhenNotChoose() {
+        mDisableVisibility.set(mDisableVisibility.get() == View.INVISIBLE ? View.VISIBLE : View.INVISIBLE);
+        mEnableState.set(!mEnableState.get());
+    }
+
+    public void switchActionVisibility() {
+        mActionVisibility.set(mActionVisibility.get() == View.GONE ? View.VISIBLE : View.GONE);
+        mDividerVisibility.set(mDividerVisibility.get() == View.VISIBLE ? View.INVISIBLE : View.VISIBLE);
     }
 
     public boolean isCompleted() {
         return mTodo.isCompleted();
     }
 
-    public ObservableBoolean getEnableState() {
-        return mEnableState;
+    // Properties
+
+    public float getOpacity() {
+        return mTodo.isCompleted() ? 0.5f : 1.0f;
     }
 
     public String getTitle() {
