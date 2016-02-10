@@ -33,7 +33,7 @@ public abstract class SlideInAnimationAdapter<T> extends BaseRecyclerViewAdapter
 
     @Override
     public void setItems(List<T> items) {
-        if (mLastPosition == lastAnimatePosition()) { // Animation end
+        if (mLastPosition == lastAnimatePosition() || mAnimationEndEvent.getValue()) { // Animation end
             super.setItems(items);
         } else {
             this.mItems = items;
