@@ -57,8 +57,8 @@ public abstract class SlideInAnimationAdapter<T> extends BaseRecyclerViewAdapter
                 mItemViewHeight = view.getHeight();
                 if (position > mLastPosition && position <= lastAnimatePosition()) {
                     mLastPosition = position;
-                    runFadeInAnimation(view, position, FADE_DURATION);
-                    runSlideInAnimation(view, position, SLIDE_DURATION, slideAnimListener());
+                    runFadeInAnimation(view, position);
+                    runSlideInAnimation(view, position, slideAnimListener());
                 }
                 view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
@@ -77,25 +77,28 @@ public abstract class SlideInAnimationAdapter<T> extends BaseRecyclerViewAdapter
         };
     }
 
-    private void runSlideInAnimation(View view, int position, int duration, Animator.AnimatorListener listener) {
+    private void runSlideInAnimation(View view, int position, Animator.AnimatorListener listener) {
         view.setTranslationY(view.getHeight());
         view.animate().setInterpolator(new DecelerateInterpolator(3.f))
                 .setStartDelay(position * OFFSET + DELAY)
                 .setListener(listener)
-                .setDuration(duration)
+                .setDuration(SLIDE_DURATION)
                 .translationY(0)
                 .start();
     }
 
-    private void runFadeInAnimation(View view, int position, int duration) {
+    private void runFadeInAnimation(View view, int position) {
         view.setAlpha(0.0f);
         view.animate().setInterpolator(new LinearInterpolator())
                 .setStartDelay(position * OFFSET + DELAY)
-                .setDuration(duration)
+                .setDuration(FADE_DURATION)
                 .alpha(1.0f)
                 .start();
     }
 
+    /**
+     * Calculate the last item position (from 0) that the recycler view can display at the beginning
+     */
     private int lastAnimatePosition() {
         if (mItemViewHeight == 0) return getItemCount() - 1;
         return Math.min(getItemCount(), (int) Math.ceil(
