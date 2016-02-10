@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import static junit.framework.Assert.assertEquals;
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 /**
  * Created by nongdenchet on 2/9/16.
@@ -18,6 +19,16 @@ public class PriorityTest {
     @Test
     public void testHighOrdinal() throws Exception {
         assertEquals(2, Priority.HIGH.ordinal());
+    }
+
+    @Test
+    public void testValueOf() throws Exception {
+        assertEquals(Priority.HIGH, Priority.valueOf("HIGH"));
+    }
+
+    @Test
+    public void testValues() throws Exception {
+        assertThat(Priority.values()).contains(Priority.LOW, Priority.MED, Priority.HIGH);
     }
 
     @Test

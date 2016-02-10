@@ -19,6 +19,7 @@ import apidez.com.doit.model.Todo;
 import rx.observers.TestSubscriber;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -42,6 +43,24 @@ public class TodoDecoratorTest {
     @Test
     public void testGetTodo() throws Exception {
         assertEquals(mTodo, mDecorator.getTodo());
+    }
+
+    @Test
+    public void testOpacityCompleted() throws Exception {
+        when(mTodo.isCompleted()).thenReturn(true);
+        assertEquals(0.5f, mDecorator.getOpacity());
+    }
+
+    @Test
+    public void testOpacityInCompleted() throws Exception {
+        when(mTodo.isCompleted()).thenReturn(false);
+        assertEquals(1.0f, mDecorator.getOpacity());
+    }
+
+    @Test
+    public void testGetChecked() throws Exception {
+        when(mTodo.isCompleted()).thenReturn(true);
+        assertTrue(mDecorator.getChecked());
     }
 
     @Test
