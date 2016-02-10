@@ -36,8 +36,8 @@ public class TodoListViewModelImpl extends BaseViewModel implements TodoListView
     }
 
     @Override
+    @SuppressWarnings("Anonymous2MethodRef")
     public Observable fetchAllTodo() {
-        //noinspection Anonymous2MethodRef
         return configWithScheduler(Observable.create(new Observable.OnSubscribe<List<Todo>>() {
             @Override
             public void call(Subscriber<? super List<Todo>> subscriber) {
@@ -45,12 +45,15 @@ public class TodoListViewModelImpl extends BaseViewModel implements TodoListView
                 subscriber.onNext(items);
                 subscriber.onCompleted();
             }
-        })).doOnNext(items -> mTodoItems.addAll(TransformUtils.map(items, new TransformUtils.Map<Todo>() {
-            @Override
-            public TodoDecorator map(Todo todo) {
-                return new TodoDecorator(todo);
-            }
-        })));
+        })).doOnNext(items -> {
+            mTodoItems.clear();
+            mTodoItems.addAll(TransformUtils.map(items, new TransformUtils.Map<Todo>() {
+                @Override
+                public TodoDecorator map(Todo todo) {
+                    return new TodoDecorator(todo);
+                }
+            }));
+        });
     }
 
     @Override

@@ -1,6 +1,7 @@
 package apidez.com.doit.dependency.module;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import apidez.com.doit.dependency.scope.ViewScope;
 import apidez.com.doit.repository.TodoRepository;
@@ -18,7 +19,8 @@ public class TodoListModule {
 
     @Provides
     @ViewScope
-    public TodoListViewModel provideTodoListViewModel(Context context, TodoRepository todoRepository, RxUtils.SchedulerHolder schedulerHolder) {
+    public TodoListViewModel provideTodoListViewModel(@NonNull Context context, @NonNull TodoRepository todoRepository,
+                                                      @NonNull RxUtils.SchedulerHolder schedulerHolder) {
         return new TodoListViewModelImpl(context, todoRepository, schedulerHolder);
     }
 }

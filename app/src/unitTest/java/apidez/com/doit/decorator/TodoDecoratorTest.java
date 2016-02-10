@@ -8,6 +8,7 @@ import org.mockito.MockitoAnnotations;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
+import java.util.Collections;
 import java.util.Date;
 
 import apidez.com.doit.BuildConfig;
@@ -15,6 +16,7 @@ import apidez.com.doit.DefaultConfig;
 import apidez.com.doit.R;
 import apidez.com.doit.model.Priority;
 import apidez.com.doit.model.Todo;
+import rx.observers.TestSubscriber;
 
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
@@ -63,6 +65,9 @@ public class TodoDecoratorTest {
     public void testUpdateCheck() throws Exception {
         mDecorator.setChecked(true);
         verify(mTodo).setCompleted(true);
+        TestSubscriber testSubscriber = TestSubscriber.create();
+        mDecorator.checkChange().subscribe(testSubscriber);
+        testSubscriber.assertReceivedOnNext(Collections.singletonList(true));
     }
 
     @Test

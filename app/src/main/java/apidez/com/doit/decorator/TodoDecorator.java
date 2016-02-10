@@ -5,12 +5,16 @@ import android.text.format.DateFormat;
 
 import apidez.com.doit.R;
 import apidez.com.doit.model.Todo;
+import rx.Observable;
+import rx.subjects.BehaviorSubject;
 
 /**
  * Created by nongdenchet on 2/8/16.
  */
 public class TodoDecorator extends BaseObservable {
     private final String NO_DUE_DATE = "No due date";
+    private BehaviorSubject<Boolean> mCheckChange;
+    private Todo mTodo;
 
     private int[] mPriorityColor = new int[]{
             R.color.bg_priority_low,
@@ -24,10 +28,9 @@ public class TodoDecorator extends BaseObservable {
             android.R.color.white
     };
 
-    private Todo mTodo;
-
     public TodoDecorator(Todo todo) {
         this.mTodo = todo;
+        this.mCheckChange = BehaviorSubject.create(todo.isCompleted());
     }
 
     public Todo getTodo() {
@@ -40,6 +43,11 @@ public class TodoDecorator extends BaseObservable {
 
     public void setChecked(boolean complete) {
         mTodo.setCompleted(complete);
+        mCheckChange.onNext(complete);
+    }
+
+    public Observable<Boolean> checkChange() {
+        return mCheckChange.asObservable();
     }
 
     public boolean getChecked() {

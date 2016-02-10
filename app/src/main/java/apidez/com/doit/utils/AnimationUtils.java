@@ -1,6 +1,7 @@
 package apidez.com.doit.utils;
 
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 
 /**

@@ -10,27 +10,20 @@ import apidez.com.doit.utils.AnimationUtils;
 import apidez.com.doit.view.custom.PopCheckBox;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by nongdenchet on 2/9/16.
  */
 public class TodoItemViewHolder extends RecyclerView.ViewHolder {
     private final int ALPHA_ANIM_DURATION = 150;
-
-    // Callbacks
-    public interface CheckCallBack {
-        void onCheckChange(boolean complete);
-    }
-
     public TodoItemBinding binding;
     public TodoDecorator decorator;
 
     @InjectView(R.id.pop_checkbox)
-    PopCheckBox popCheckBox;
+    public PopCheckBox popCheckBox;
 
     @InjectView(R.id.todo)
-    View todoView;
+    public View todoView;
 
     public TodoItemViewHolder(TodoItemBinding binding) {
         super(binding.getRoot());
@@ -40,39 +33,12 @@ public class TodoItemViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(TodoDecorator decorator) {
         this.decorator = decorator;
-        bindDecorator();
-        bindAction();
-    }
-
-    private void bindDecorator() {
         binding.setDecorator(decorator);
         binding.executePendingBindings();
     }
 
-    public void bindAction() {
-        // Item click
-        itemView.setOnClickListener(v -> {
-            // TODO: implement this
-        });
-
-        // Check box
-        popCheckBox.setOnClickListener(v -> EventBus.getDefault().post(
-                new CheckItemEvent(decorator, this::animateCheck)));
-    }
-
-    private void animateCheck(boolean complete) {
+    public void animateCheck(boolean complete) {
         popCheckBox.animateChecked(complete);
         AnimationUtils.animateAlpha(todoView, decorator.getOpacity(), ALPHA_ANIM_DURATION);
-    }
-
-    // Events
-    public class CheckItemEvent {
-        public CheckCallBack callBack;
-        public TodoDecorator decorator;
-
-        public CheckItemEvent(TodoDecorator decorator, CheckCallBack callBack) {
-            this.decorator = decorator;
-            this.callBack = callBack;
-        }
     }
 }

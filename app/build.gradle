@@ -35,11 +35,11 @@ android {
     productFlavors {
         prod {
             applicationIdSuffix = ".prod"
-            resValue "string", "app_name", "DO.IT"
+            resValue "string", "app_name", "Do.it"
         }
         mock {
             applicationIdSuffix = ".mock"
-            resValue "string", "app_name", "DO.IT Mock"
+            resValue "string", "app_name", "Do.it Mock"
         }
     }
 
