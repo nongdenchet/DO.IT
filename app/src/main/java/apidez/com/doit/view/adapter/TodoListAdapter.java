@@ -17,6 +17,7 @@ import rx.android.schedulers.AndroidSchedulers;
  * Created by nongdenchet on 2/8/16.
  */
 public class TodoListAdapter extends SlideInAnimationAdapter<TodoDecorator> {
+    private boolean isAnimate = true;
 
     public TodoListAdapter(Context context) {
         super(context);

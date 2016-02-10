@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,7 +27,6 @@ import butterknife.InjectView;
  * Created by nongdenchet on 2/8/16.
  */
 public class TodoListFragment extends BaseFragment {
-    private DisableLinearLayoutManager mLayoutManager;
     private TodoListAdapter mTodoListAdapter;
     private FragmentTodoListBinding mBinding;
 
@@ -68,12 +68,13 @@ public class TodoListFragment extends BaseFragment {
     }
 
     private void setUpRecyclerView() {
-        mLayoutManager = new DisableLinearLayoutManager(getContext(), false);
-        mTodoList.setLayoutManager(mLayoutManager);
+        mTodoList.setLayoutManager(new DisableLinearLayoutManager(getContext(), false));
         mTodoListAdapter = new TodoListAdapter(getContext());
         mTodoList.setAdapter(mTodoListAdapter);
         startObserve(mTodoListAdapter.animationEnd()).subscribe(done -> {
-            mLayoutManager.setScrollEnabled(done);
+            if (done) {
+                mTodoList.setLayoutManager(new LinearLayoutManager(getContext()));
+            }
         });
     }
 
@@ -104,7 +105,7 @@ public class TodoListFragment extends BaseFragment {
 
     private void addAction() {
         // TODO: implement this
-        mViewModel.getTodoItems().remove(3);
+        mViewModel.getTodoItems().remove(0);
     }
 
     @Override
@@ -122,11 +123,10 @@ public class TodoListFragment extends BaseFragment {
 
     // Events
     public void onEvent(TodoListAdapter.CheckItemEvent event) {
-        startObserve(mViewModel.checkChangeItem(event.decorator))
-                .subscribe(checked -> {
-                    event.callBack.onCheckChange(checked);
-                }, throwable -> {
-                    showShortToast(throwable.getMessage());
-                });
+        startObserve(mViewModel.checkChangeItem(event.decorator)).subscribe(checked -> {
+            event.callBack.onCheckChange(checked);
+        }, throwable -> {
+            showShortToast(throwable.getMessage());
+        });
     }
 }

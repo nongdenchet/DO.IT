@@ -19,9 +19,9 @@ import rx.subjects.BehaviorSubject;
  */
 public abstract class SlideInAnimationAdapter<T> extends BaseRecyclerViewAdapter<T> {
     private final int OFFSET = 100;
-    private final int DELAY = 400;
-    private final int SLIDE_DURATION = 900;
-    private final int FADE_DURATION = 500;
+    private final int DELAY = 300;
+    private final int SLIDE_DURATION = 300;
+    private final int FADE_DURATION = 300;
 
     private int mLastPosition = -1;
     private int mItemViewHeight = 0;
@@ -78,7 +78,7 @@ public abstract class SlideInAnimationAdapter<T> extends BaseRecyclerViewAdapter
     }
 
     private void runSlideInAnimation(View view, int position, int duration, Animator.AnimatorListener listener) {
-        view.setTranslationY(UiUtils.dpToPx(mContext, mItemViewHeight));
+        view.setTranslationY(view.getHeight());
         view.animate().setInterpolator(new DecelerateInterpolator(3.f))
                 .setStartDelay(position * OFFSET + DELAY)
                 .setListener(listener)

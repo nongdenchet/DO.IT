@@ -13,7 +13,7 @@ import java.util.List;
  * Credit to <a href="https://github.com/evant/binding-collection-adapter"/>
  */
 public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    public List<T> mItems = new ArrayList<>();
+    protected List<T> mItems = new ArrayList<>();
     private int mRecyclerViewRefCount = 0;
     private final WeakReferenceOnListChangedCallback<T> callback = new WeakReferenceOnListChangedCallback<>(this);
 
