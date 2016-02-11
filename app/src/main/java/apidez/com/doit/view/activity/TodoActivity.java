@@ -29,8 +29,8 @@ public class TodoActivity extends AppCompatActivity {
         content.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                content.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 UiUtils.CONTENT_HEIGHT = content.getHeight();
+                content.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
     }

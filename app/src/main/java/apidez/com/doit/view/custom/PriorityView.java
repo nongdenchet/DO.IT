@@ -1,24 +1,25 @@
 package apidez.com.doit.view.custom;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import apidez.com.doit.R;
+import apidez.com.doit.model.Priority;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by nongdenchet on 2/8/16.
  */
 public class PriorityView extends RelativeLayout {
-    private int mTitleColor = R.color.bg_priority_high;
+    private int mTitleColor;
     private boolean isChecked = false;
     private boolean isSelected = true;
+    private Priority mPriority;
+
     private TextView mTitle;
     private CircleImageView mBackgroundDisable;
     private CircleImageView mBackground;
@@ -30,12 +31,6 @@ public class PriorityView extends RelativeLayout {
 
     public PriorityView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initialize(attrs);
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public PriorityView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
         initialize(attrs);
     }
 
@@ -53,9 +48,14 @@ public class PriorityView extends RelativeLayout {
         attributes.recycle();
     }
 
+    public Priority getPriority() {
+        return mPriority;
+    }
+
     private void initViews() {
         mTitle = (TextView) findViewById(R.id.title);
         mBackground = (CircleImageView) findViewById(R.id.background);
+        mBackgroundDisable = (CircleImageView) findViewById(R.id.background_disable);
     }
 
     public void select() {
@@ -73,10 +73,12 @@ public class PriorityView extends RelativeLayout {
     }
 
     public void setPriorityTitleColor(int color) {
+        mTitleColor = color;
         mTitle.setTextColor(ContextCompat.getColor(getContext(), color));
     }
 
     public void setTitle(String title) {
+        mPriority = Priority.valueOf(title);
         mTitle.setText(title);
     }
 

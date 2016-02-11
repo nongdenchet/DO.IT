@@ -16,7 +16,7 @@
         app:priorityTitle="@string/high_priority"/>
 
     <apidez.com.doit.view.custom.PriorityView
-        android:id="@+id/priority_med"
+        android:id="@+id/priority_medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/extra_space"
