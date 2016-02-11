@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     app:priorityColor="@{decorator.priorityColor}"
                     app:priorityTitleColor="@{decorator.priorityTitleColor}"
-                    app:title="@{decorator.priority}"/>
+                    app:priority="@{decorator.priority}"/>
 
                 <LinearLayout
                     android:id="@+id/content"
@@ -76,7 +76,6 @@
                     android:layout_toRightOf="@id/priority"
                     android:background="@color/todo_item_divider"
                     android:visibility="@{decorator.dividerVisibility}"/>
-
             </RelativeLayout>
 
             <apidez.com.doit.view.custom.PopCheckBox

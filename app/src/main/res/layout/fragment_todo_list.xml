@@ -36,8 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:visibility="@{viewModel.alertVisibility}"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="@{viewModel.alertVisibility}">
 
             <TextView
                 android:layout_width="wrap_content"

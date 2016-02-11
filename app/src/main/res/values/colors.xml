@@ -16,4 +16,5 @@
     <color name="border_priority">#E4E4E4</color>
     <color name="empty_title_color">#9E9E9E</color>
     <color name="empty_subtitle_color">#BDBDBD</color>
+    <color name="hint_color">#757575</color>
 </resources>

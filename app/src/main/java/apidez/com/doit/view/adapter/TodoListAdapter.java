@@ -47,18 +47,16 @@ public class TodoListAdapter extends SlideInAnimationAdapter<TodoDecorator> {
         viewHolder.disableLayer.setOnClickListener(v -> resetState());
 
         // Checkbox click
-        viewHolder.popCheckBox.setOnClickListener(v -> EventBus.getDefault()
-                .post(new CheckItemEvent(decorator.getTodo(), viewHolder::animateCheckChange)));
+        viewHolder.popCheckBox.setOnClickListener(v ->
+                EventBus.getDefault().post(new CheckItemEvent(decorator.getTodo(), viewHolder::animateCheckChange)));
 
         // Update click
-        viewHolder.editButton.setOnClickListener(v -> {
-            // TODO: implement this
-        });
+        viewHolder.editButton.setOnClickListener(v ->
+                EventBus.getDefault().post(new UpdateActionItemEvent(indexOf(decorator), decorator.getTodo())));
 
         // Delete click
-        viewHolder.deleteButton.setOnClickListener(v -> {
-            // TODO: implement this
-        });
+        viewHolder.deleteButton.setOnClickListener(v ->
+                EventBus.getDefault().post(new DeleteActionItemEvent(indexOf(decorator))));
     }
 
     private void resetState() {
@@ -99,8 +97,22 @@ public class TodoListAdapter extends SlideInAnimationAdapter<TodoDecorator> {
         }
     }
 
-    public class ShowActionItemEvent extends ItemEvent {
+    public class UpdateActionItemEvent extends ItemEvent {
+        public Todo todo;
 
+        public UpdateActionItemEvent(int position, Todo todo) {
+            super(position);
+            this.todo = todo;
+        }
+    }
+
+    public class DeleteActionItemEvent extends ItemEvent {
+        public DeleteActionItemEvent(int position) {
+            super(position);
+        }
+    }
+
+    public class ShowActionItemEvent extends ItemEvent {
         public ShowActionItemEvent(int position) {
             super(position);
         }

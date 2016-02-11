@@ -7,4 +7,9 @@
     <string name="high_priority">HIGH</string>
     <string name="medium_priority">MED</string>
     <string name="low_priority">LOW</string>
+    <string name="hint_title">Title</string>
+    <string name="due_date">Deal date</string>
+    <string name="priority">Priority</string>
+    <string name="discard">DISCARD</string>
+    <string name="save">SAVE</string>
 </resources>

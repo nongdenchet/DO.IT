@@ -7,6 +7,7 @@ import android.text.format.DateFormat;
 import android.view.View;
 
 import apidez.com.doit.R;
+import apidez.com.doit.model.Priority;
 import apidez.com.doit.model.Todo;
 
 /**
@@ -95,8 +96,8 @@ public class TodoDecorator extends BaseObservable {
         return mTodo.getDueDate() == null ? NO_DUE_DATE : DateFormat.format("dd/MM/yyyy", mTodo.getDueDate()).toString();
     }
 
-    public String getPriority() {
-        return mTodo.getPriority().name();
+    public Priority getPriority() {
+        return mTodo.getPriority();
     }
 
     public int getPriorityColor() {

@@ -17,6 +17,7 @@ import apidez.com.doit.DoItApp;
 import apidez.com.doit.R;
 import apidez.com.doit.databinding.FragmentTodoListBinding;
 import apidez.com.doit.dependency.module.TodoListModule;
+import apidez.com.doit.model.Todo;
 import apidez.com.doit.view.adapter.TodoListAdapter;
 import apidez.com.doit.view.custom.DisableLinearLayoutManager;
 import apidez.com.doit.viewmodel.TodoListViewModel;
@@ -85,15 +86,15 @@ public class TodoListFragment extends BaseFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add:
-                addAction();
+                showTodoDialog();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void addAction() {
-        // TODO: implement this
+    private void showTodoDialog() {
+        TodoDialogFragment.newInstance().show(getFragmentManager(), TodoDialogFragment.TAG);
     }
 
     @Override
@@ -114,5 +115,17 @@ public class TodoListFragment extends BaseFragment {
 
     public void onEvent(TodoListAdapter.ShowActionItemEvent event) {
         mTodoList.getLayoutManager().smoothScrollToPosition(mTodoList, null, event.position);
+    }
+
+    public void onEvent(TodoListAdapter.UpdateActionItemEvent event) {
+        showTodoDialog(event.todo);
+    }
+
+    private void showTodoDialog(Todo todo) {
+        TodoDialogFragment.newInstance(todo).show(getFragmentManager(), TodoDialogFragment.TAG);
+    }
+
+    public void onEvent(TodoListAdapter.DeleteActionItemEvent event) {
+        mViewModel.getTodoItems().remove(event.position);
     }
 }

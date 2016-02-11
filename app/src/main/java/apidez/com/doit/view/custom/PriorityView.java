@@ -42,7 +42,7 @@ public class PriorityView extends RelativeLayout {
 
     private void initStyles(AttributeSet attrs) {
         TypedArray attributes = getContext().obtainStyledAttributes(attrs, R.styleable.PriorityView);
-        setTitle(attributes.getString(R.styleable.PriorityView_priorityTitle));
+        mTitle.setText(attributes.getString(R.styleable.PriorityView_priorityTitle));
         setPriorityColor(attributes.getResourceId(R.styleable.PriorityView_priorityColor, R.color.bg_priority_high));
         setPriorityTitleColor(attributes.getResourceId(R.styleable.PriorityView_priorityTitleColor, android.R.color.white));
         attributes.recycle();
@@ -77,9 +77,9 @@ public class PriorityView extends RelativeLayout {
         mTitle.setTextColor(ContextCompat.getColor(getContext(), color));
     }
 
-    public void setTitle(String title) {
-        mPriority = Priority.valueOf(title);
-        mTitle.setText(title);
+    public void setPriority(Priority priority) {
+        mPriority = priority;
+        mTitle.setText(priority.toString());
     }
 
     public void setPriorityColor(int color) {

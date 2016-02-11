@@ -29,5 +29,5 @@
         android:layout_centerInParent="true"
         android:text="HIGH"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/priority_size"/>
+        android:textSize="@dimen/small_sub_size"/>
 </RelativeLayout>
