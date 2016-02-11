@@ -2,8 +2,10 @@ package apidez.com.doit.viewmodel;
 
 import android.content.Context;
 import android.databinding.ObservableArrayList;
+import android.databinding.ObservableInt;
 import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
+import android.view.View;
 
 import java.util.List;
 
@@ -22,6 +24,8 @@ public class TodoListViewModelImpl extends BaseViewModel implements TodoListView
     private Context mContext;
     private TodoRepository mRepository;
     private ObservableList<TodoDecorator> mTodoItems = new ObservableArrayList<>();
+
+    private ObservableInt mAlertVisibility = new ObservableInt(View.GONE);
 
     public TodoListViewModelImpl(@NonNull Context mContext, @NonNull TodoRepository todoRepository,
                                  @NonNull RxUtils.SchedulerHolder schedulerHolder) {
@@ -53,6 +57,7 @@ public class TodoListViewModelImpl extends BaseViewModel implements TodoListView
                     return new TodoDecorator(todo);
                 }
             }));
+            checkEmptyAndShowAlert();
         });
     }
 
@@ -69,5 +74,14 @@ public class TodoListViewModelImpl extends BaseViewModel implements TodoListView
                 subscriber.onError(ex);
             }
         }));
+    }
+
+    private void checkEmptyAndShowAlert() {
+        mAlertVisibility.set(mTodoItems.isEmpty() ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public ObservableInt getAlertVisibility() {
+        return mAlertVisibility;
     }
 }

@@ -1,5 +1,6 @@
 package apidez.com.doit.viewmodel;
 
+import android.databinding.ObservableInt;
 import android.databinding.ObservableList;
 
 import apidez.com.doit.decorator.TodoDecorator;
@@ -24,4 +25,9 @@ public interface TodoListViewModel {
      * Check complete
      */
     Observable<Boolean> checkChangeItem(Todo todo);
+
+    /**
+     * Alert visibility
+     */
+    ObservableInt getAlertVisibility();
 }

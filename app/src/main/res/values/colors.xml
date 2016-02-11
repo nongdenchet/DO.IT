@@ -14,4 +14,6 @@
     <color name="delete_text_color">#f44336</color>
     <color name="disable_color">#80B1B1B1</color>
     <color name="border_priority">#E4E4E4</color>
+    <color name="empty_title_color">#9E9E9E</color>
+    <color name="empty_subtitle_color">#BDBDBD</color>
 </resources>

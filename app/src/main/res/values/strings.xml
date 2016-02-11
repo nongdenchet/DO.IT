@@ -1,6 +1,8 @@
 <resources>
     <string name="action_settings">Settings</string>
     <string name="loading_message">Loading…</string>
+    <string name="alert_title">There are no note</string>
+    <string name="alert_subtitle">Press the + button to \n add a new note</string>
     <string name="toolbarTitle">Do.it</string>
     <string name="high_priority">HIGH</string>
     <string name="medium_priority">MED</string>
