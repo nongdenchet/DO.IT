@@ -142,18 +142,18 @@
         <dex dex="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/transforms/dex/mock/debug/folders/1000/10/com.android.support.test.espresso-espresso-idling-resource-2.2.1_edd88df17946ff2008c199bd5020dd5d5847af27/classes.dex" />
     </item>
     <item
-        jar="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/exploded-aar/com.android.databinding/adapters/1.0-rc5/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="09804ef3ea3b68a21f819f06e68877fe441f958c">
-        <dex dex="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/transforms/dex/mock/debug/folders/1000/10/com.android.databinding-adapters-1.0-rc5_d1db6ca087bb9701c8a955974febe1cef265ec37/classes.dex" />
-    </item>
-    <item
         jar="/Users/nongdenchet/.gradle/caches/modules-2/files-2.1/de.greenrobot/eventbus/2.4.0/ddd166d01b3158d1c00576d29f7ed15c030df719/eventbus-2.4.0.jar"
         jumboMode="false"
         revision="23.0.2"
         sha1="ddd166d01b3158d1c00576d29f7ed15c030df719">
         <dex dex="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/transforms/dex/mock/debug/folders/1000/10/eventbus-2.4.0_582e120e7a33b1dd102cfda21b3a0b6954b86a82/classes.dex" />
+    </item>
+    <item
+        jar="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/exploded-aar/com.android.databinding/adapters/1.0-rc5/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="09804ef3ea3b68a21f819f06e68877fe441f958c">
+        <dex dex="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/transforms/dex/mock/debug/folders/1000/10/com.android.databinding-adapters-1.0-rc5_d1db6ca087bb9701c8a955974febe1cef265ec37/classes.dex" />
     </item>
     <item
         jar="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/libs/internal_impl-23.1.1.jar"
