@@ -20,6 +20,18 @@ public class PriorityView extends RelativeLayout {
     private boolean isSelected = true;
     private Priority mPriority;
 
+    private int[] mPriorityColor = new int[]{
+            R.color.bg_priority_low,
+            R.color.bg_priority_medium,
+            R.color.bg_priority_high
+    };
+
+    private int[] mPriorityTitleColor = new int[]{
+            android.R.color.black,
+            android.R.color.black,
+            android.R.color.white
+    };
+
     private TextView mTitle;
     private CircleImageView mBackgroundDisable;
     private CircleImageView mBackground;
@@ -72,17 +84,23 @@ public class PriorityView extends RelativeLayout {
         isSelected = false;
     }
 
-    public void setPriorityTitleColor(int color) {
+    public void setPriority(Priority priority) {
+        mPriority = priority;
+        setTitle(priority.toString());
+        setPriorityColor(mPriorityColor[priority.ordinal()]);
+        setPriorityTitleColor(mPriorityTitleColor[priority.ordinal()]);
+    }
+
+    private void setTitle(String title) {
+        mTitle.setText(title);
+    }
+
+    private void setPriorityTitleColor(int color) {
         mTitleColor = color;
         mTitle.setTextColor(ContextCompat.getColor(getContext(), color));
     }
 
-    public void setPriority(Priority priority) {
-        mPriority = priority;
-        mTitle.setText(priority.toString());
-    }
-
-    public void setPriorityColor(int color) {
+    private void setPriorityColor(int color) {
         mBackground.setImageResource(color);
     }
 }

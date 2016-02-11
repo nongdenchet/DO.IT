@@ -2,15 +2,9 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <solid android:color="#ffffffff"/>
 
-    <padding
-        android:bottom="2dp"
-        android:left="2dp"
-        android:right="2dp"
-        android:top="2dp"/>
-
     <corners
-        android:bottomLeftRadius="2dp"
-        android:bottomRightRadius="2dp"
-        android:topLeftRadius="2dp"
-        android:topRightRadius="2dp"/>
+        android:bottomLeftRadius="@dimen/dialog_corner_radius"
+        android:bottomRightRadius="@dimen/dialog_corner_radius"
+        android:topLeftRadius="@dimen/dialog_corner_radius"
+        android:topRightRadius="@dimen/dialog_corner_radius"/>
 </shape>

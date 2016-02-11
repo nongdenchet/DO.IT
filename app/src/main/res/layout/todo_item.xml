@@ -38,8 +38,6 @@
                     android:id="@+id/priority"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:priorityColor="@{decorator.priorityColor}"
-                    app:priorityTitleColor="@{decorator.priorityTitleColor}"
                     app:priority="@{decorator.priority}"/>
 
                 <LinearLayout

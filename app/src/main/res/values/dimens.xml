@@ -11,4 +11,5 @@
     <dimen name="extra_space">24dp</dimen>
     <dimen name="medium_space">12dp</dimen>
     <dimen name="small_space">8dp</dimen>
+    <dimen name="dialog_corner_radius">2dp</dimen>
 </resources>

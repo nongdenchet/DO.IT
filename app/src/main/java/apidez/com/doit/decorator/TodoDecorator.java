@@ -6,7 +6,6 @@ import android.databinding.ObservableInt;
 import android.text.format.DateFormat;
 import android.view.View;
 
-import apidez.com.doit.R;
 import apidez.com.doit.model.Priority;
 import apidez.com.doit.model.Todo;
 
@@ -15,23 +14,13 @@ import apidez.com.doit.model.Todo;
  */
 public class TodoDecorator extends BaseObservable {
     private final String NO_DUE_DATE = "No due date";
+
     private ObservableBoolean mEnableState = new ObservableBoolean(true);
     private ObservableInt mActionVisibility = new ObservableInt(View.GONE);
     private ObservableInt mDividerVisibility = new ObservableInt(View.VISIBLE);
     private ObservableInt mDisableVisibility = new ObservableInt(View.INVISIBLE);
+
     private Todo mTodo;
-
-    private int[] mPriorityColor = new int[]{
-            R.color.bg_priority_low,
-            R.color.bg_priority_medium,
-            R.color.bg_priority_high
-    };
-
-    private int[] mPriorityTitleColor = new int[]{
-            android.R.color.black,
-            android.R.color.black,
-            android.R.color.white
-    };
 
     public TodoDecorator(Todo todo) {
         this.mTodo = todo;
@@ -98,13 +87,5 @@ public class TodoDecorator extends BaseObservable {
 
     public Priority getPriority() {
         return mTodo.getPriority();
-    }
-
-    public int getPriorityColor() {
-        return mPriorityColor[mTodo.getPriority().ordinal()];
-    }
-
-    public int getPriorityTitleColor() {
-        return mPriorityTitleColor[mTodo.getPriority().ordinal()];
     }
 }
