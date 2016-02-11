@@ -14,6 +14,7 @@ import apidez.com.doit.decorator.TodoDecorator;
 import apidez.com.doit.model.Todo;
 import apidez.com.doit.view.viewholder.TodoItemViewHolder;
 import de.greenrobot.event.EventBus;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by nongdenchet on 2/8/16.
@@ -35,8 +36,12 @@ public class TodoListAdapter extends SlideInAnimationAdapter<TodoDecorator> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         TodoItemViewHolder viewHolder = (TodoItemViewHolder) holder;
         viewHolder.bind(mItems.get(position));
-        bindAction(viewHolder, mItems.get(position));
         animateItem(viewHolder.itemView, position);
+        animationEnd().observeOn(AndroidSchedulers.mainThread()).subscribe(done -> {
+            if (done) {
+                bindAction(viewHolder, mItems.get(position));
+            }
+        });
     }
 
     public void bindAction(TodoItemViewHolder viewHolder, TodoDecorator decorator) {
