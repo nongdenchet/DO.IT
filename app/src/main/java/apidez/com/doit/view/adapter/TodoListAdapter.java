@@ -10,7 +10,7 @@ import android.view.ViewTreeObserver;
 
 import apidez.com.doit.R;
 import apidez.com.doit.databinding.TodoItemBinding;
-import apidez.com.doit.decorator.TodoDecorator;
+import apidez.com.doit.viewmodel.TodoItemViewModel;
 import apidez.com.doit.model.Todo;
 import apidez.com.doit.view.viewholder.TodoItemViewHolder;
 import de.greenrobot.event.EventBus;
@@ -19,7 +19,7 @@ import rx.android.schedulers.AndroidSchedulers;
 /**
  * Created by nongdenchet on 2/8/16.
  */
-public class TodoListAdapter extends SlideInAnimationAdapter<TodoDecorator> {
+public class TodoListAdapter extends SlideInAnimationAdapter<TodoItemViewModel> {
     private boolean isAnimate = true;
 
     public TodoListAdapter(Context context) {
@@ -44,37 +44,37 @@ public class TodoListAdapter extends SlideInAnimationAdapter<TodoDecorator> {
         });
     }
 
-    public void bindAction(TodoItemViewHolder viewHolder, TodoDecorator decorator) {
+    public void bindAction(TodoItemViewHolder viewHolder, TodoItemViewModel viewModel) {
         // Item click
-        viewHolder.todoView.setOnClickListener(v -> handleChooseItem(viewHolder.itemView, decorator));
+        viewHolder.todoView.setOnClickListener(v -> handleChooseItem(viewHolder.itemView, viewModel));
 
         // Disable layer click
         viewHolder.disableLayer.setOnClickListener(v -> resetState());
 
         // Checkbox click
         viewHolder.popCheckBox.setOnClickListener(v ->
-                EventBus.getDefault().post(new CheckItemEvent(decorator.getTodo(), viewHolder::animateCheckChange)));
+                EventBus.getDefault().post(new CheckItemEvent(viewModel.getTodo(), viewHolder::animateCheckChange)));
 
         // Update click
         viewHolder.editButton.setOnClickListener(v ->
-                EventBus.getDefault().post(new UpdateActionItemEvent(indexOf(decorator), decorator.getTodo())));
+                EventBus.getDefault().post(new UpdateActionItemEvent(indexOf(viewModel), viewModel.getTodo())));
 
         // Delete click
         viewHolder.deleteButton.setOnClickListener(v ->
-                EventBus.getDefault().post(new DeleteActionItemEvent(indexOf(decorator))));
+                EventBus.getDefault().post(new DeleteActionItemEvent(indexOf(viewModel))));
     }
 
     public void resetState() {
-        for (TodoDecorator todoDecorator : mItems) {
-            todoDecorator.resetState();
+        for (TodoItemViewModel todoItemViewModel : mItems) {
+            todoItemViewModel.resetState();
         }
     }
 
-    private void handleChooseItem(View itemView, TodoDecorator decorator) {
+    private void handleChooseItem(View itemView, TodoItemViewModel decorator) {
         decorator.switchActionVisibility();
-        for (TodoDecorator todoDecorator : mItems) {
-            if (todoDecorator != decorator) {
-                todoDecorator.switchEnableWhenNotChoose();
+        for (TodoItemViewModel todoItemViewModel : mItems) {
+            if (todoItemViewModel != decorator) {
+                todoItemViewModel.switchEnableWhenNotChoose();
             }
         }
         itemView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

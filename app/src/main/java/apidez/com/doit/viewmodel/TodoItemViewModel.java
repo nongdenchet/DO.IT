@@ -1,4 +1,4 @@
-package apidez.com.doit.decorator;
+package apidez.com.doit.viewmodel;
 
 import android.databinding.BaseObservable;
 import android.databinding.ObservableBoolean;
@@ -12,7 +12,7 @@ import apidez.com.doit.model.Todo;
 /**
  * Created by nongdenchet on 2/8/16.
  */
-public class TodoDecorator extends BaseObservable {
+public class TodoItemViewModel extends BaseObservable {
     private final String NO_DUE_DATE = "No due date";
 
     private ObservableBoolean mEnableState = new ObservableBoolean(true);
@@ -22,7 +22,7 @@ public class TodoDecorator extends BaseObservable {
 
     private Todo mTodo;
 
-    public TodoDecorator(Todo todo) {
+    public TodoItemViewModel(Todo todo) {
         this.mTodo = todo;
     }
 

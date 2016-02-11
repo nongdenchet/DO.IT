@@ -5,7 +5,7 @@ import android.view.View;
 
 import apidez.com.doit.R;
 import apidez.com.doit.databinding.TodoItemBinding;
-import apidez.com.doit.decorator.TodoDecorator;
+import apidez.com.doit.viewmodel.TodoItemViewModel;
 import apidez.com.doit.utils.AnimationUtils;
 import apidez.com.doit.view.custom.PopCheckBox;
 import butterknife.ButterKnife;
@@ -17,7 +17,7 @@ import butterknife.InjectView;
 public class TodoItemViewHolder extends RecyclerView.ViewHolder {
     private final int ALPHA_ANIM_DURATION = 150;
     public TodoItemBinding binding;
-    public TodoDecorator decorator;
+    public TodoItemViewModel decorator;
 
     @InjectView(R.id.pop_checkbox)
     public PopCheckBox popCheckBox;
@@ -40,9 +40,9 @@ public class TodoItemViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.inject(this, binding.getRoot());
     }
 
-    public void bind(TodoDecorator decorator) {
-        this.decorator = decorator;
-        binding.setDecorator(decorator);
+    public void bind(TodoItemViewModel viewModel) {
+        this.decorator = viewModel;
+        binding.setDecorator(viewModel);
         binding.executePendingBindings();
     }
 

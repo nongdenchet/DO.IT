@@ -4,7 +4,7 @@
     <data>
         <variable
             name="decorator"
-            type="apidez.com.doit.decorator.TodoDecorator"/>
+            type="apidez.com.doit.viewmodel.TodoItemViewModel"/>
     </data>
 
     <LinearLayout
@@ -88,7 +88,7 @@
             <View
                 android:id="@+id/disable_layer"
                 android:layout_width="match_parent"
-                android:layout_height="78dp"
+                android:layout_height="72sp"
                 android:background="@color/disable_color"
                 android:visibility="@{decorator.disableVisibility}"/>
         </RelativeLayout>

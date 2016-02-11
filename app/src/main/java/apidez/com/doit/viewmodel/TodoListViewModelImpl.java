@@ -9,7 +9,6 @@ import android.view.View;
 
 import java.util.List;
 
-import apidez.com.doit.decorator.TodoDecorator;
 import apidez.com.doit.model.Todo;
 import apidez.com.doit.repository.TodoRepository;
 import apidez.com.doit.utils.RxUtils;
@@ -23,7 +22,7 @@ import rx.Subscriber;
 public class TodoListViewModelImpl extends BaseViewModel implements TodoListViewModel {
     private Context mContext;
     private TodoRepository mRepository;
-    private ObservableList<TodoDecorator> mTodoItems = new ObservableArrayList<>();
+    private ObservableList<TodoItemViewModel> mTodoItems = new ObservableArrayList<>();
 
     private ObservableInt mAlertVisibility = new ObservableInt(View.GONE);
 
@@ -35,7 +34,7 @@ public class TodoListViewModelImpl extends BaseViewModel implements TodoListView
     }
 
     @Override
-    public ObservableList<TodoDecorator> getTodoItems() {
+    public ObservableList<TodoItemViewModel> getTodoItems() {
         return mTodoItems;
     }
 
@@ -53,8 +52,8 @@ public class TodoListViewModelImpl extends BaseViewModel implements TodoListView
             mTodoItems.clear();
             mTodoItems.addAll(TransformUtils.map(items, new TransformUtils.Map<Todo>() {
                 @Override
-                public TodoDecorator map(Todo todo) {
-                    return new TodoDecorator(todo);
+                public TodoItemViewModel map(Todo todo) {
+                    return new TodoItemViewModel(todo);
                 }
             }));
             checkEmptyAndShowAlert();

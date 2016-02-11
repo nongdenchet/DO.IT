@@ -13,4 +13,5 @@
     <dimen name="small_space">8dp</dimen>
     <dimen name="dialog_corner_radius">2dp</dimen>
     <dimen name="dute_date_item_height">72dp</dimen>
+    <dimen name="priority_dimen">40dp</dimen>
 </resources>

@@ -1,4 +1,4 @@
-package apidez.com.doit.decorator;
+package apidez.com.doit.viewmodel;
 
 import android.view.View;
 
@@ -27,8 +27,8 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = DefaultConfig.EMULATE_SDK)
-public class TodoDecoratorTest {
-    private TodoDecorator mDecorator;
+public class TodoItemViewModelTest {
+    private TodoItemViewModel mViewModel;
 
     @Mock
     private Todo mTodo;
@@ -36,7 +36,7 @@ public class TodoDecoratorTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        mDecorator = new TodoDecorator(mTodo);
+        mViewModel = new TodoItemViewModel(mTodo);
     }
 
     @Test
@@ -46,141 +46,141 @@ public class TodoDecoratorTest {
 
     @Test
     public void testSwitchEnableWhenNotChooseDisable() throws Exception {
-        mDecorator.switchEnableWhenNotChoose();
-        assertEquals(View.VISIBLE, mDecorator.getDisableVisibility().get());
-        assertFalse(mDecorator.getEnableState().get());
+        mViewModel.switchEnableWhenNotChoose();
+        assertEquals(View.VISIBLE, mViewModel.getDisableVisibility().get());
+        assertFalse(mViewModel.getEnableState().get());
     }
 
     @Test
     public void testSwitchEnableWhenNotChooseEnable() throws Exception {
-        mDecorator.switchEnableWhenNotChoose();
-        mDecorator.switchEnableWhenNotChoose();
-        assertEquals(View.INVISIBLE, mDecorator.getDisableVisibility().get());
-        assertTrue(mDecorator.getEnableState().get());
+        mViewModel.switchEnableWhenNotChoose();
+        mViewModel.switchEnableWhenNotChoose();
+        assertEquals(View.INVISIBLE, mViewModel.getDisableVisibility().get());
+        assertTrue(mViewModel.getEnableState().get());
     }
 
     @Test
     public void testSwitchActionVisibilityEnable() throws Exception {
-        mDecorator.switchActionVisibility();
-        assertEquals(View.VISIBLE, mDecorator.getActionVisibility().get());
-        assertEquals(View.INVISIBLE, mDecorator.getDividerVisibility().get());
+        mViewModel.switchActionVisibility();
+        assertEquals(View.VISIBLE, mViewModel.getActionVisibility().get());
+        assertEquals(View.INVISIBLE, mViewModel.getDividerVisibility().get());
     }
 
     @Test
     public void testSwitchActionVisibilityDisable() throws Exception {
-        mDecorator.switchActionVisibility();
-        mDecorator.switchActionVisibility();
-        assertEquals(View.GONE, mDecorator.getActionVisibility().get());
-        assertEquals(View.VISIBLE, mDecorator.getDividerVisibility().get());
+        mViewModel.switchActionVisibility();
+        mViewModel.switchActionVisibility();
+        assertEquals(View.GONE, mViewModel.getActionVisibility().get());
+        assertEquals(View.VISIBLE, mViewModel.getDividerVisibility().get());
     }
 
     @Test
     public void testResetStateFromDisable() throws Exception {
-        mDecorator.switchEnableWhenNotChoose();
-        mDecorator.resetState();
+        mViewModel.switchEnableWhenNotChoose();
+        mViewModel.resetState();
         assertResetState();
     }
 
     @Test
     public void testResetStateFromEnable() throws Exception {
-        mDecorator.switchActionVisibility();
-        mDecorator.resetState();
+        mViewModel.switchActionVisibility();
+        mViewModel.resetState();
         assertResetState();
     }
 
     private void assertResetState() {
-        assertEquals(View.INVISIBLE, mDecorator.getDisableVisibility().get());
-        assertEquals(View.GONE, mDecorator.getActionVisibility().get());
-        assertEquals(View.VISIBLE, mDecorator.getDividerVisibility().get());
-        assertTrue(mDecorator.getEnableState().get());
+        assertEquals(View.INVISIBLE, mViewModel.getDisableVisibility().get());
+        assertEquals(View.GONE, mViewModel.getActionVisibility().get());
+        assertEquals(View.VISIBLE, mViewModel.getDividerVisibility().get());
+        assertTrue(mViewModel.getEnableState().get());
     }
 
     @Test
     public void testGetTodo() throws Exception {
-        assertEquals(mTodo, mDecorator.getTodo());
+        assertEquals(mTodo, mViewModel.getTodo());
     }
 
     @Test
     public void testOpacityCompleted() throws Exception {
         when(mTodo.isCompleted()).thenReturn(true);
-        assertEquals(0.5f, mDecorator.getOpacity());
+        assertEquals(0.5f, mViewModel.getOpacity());
     }
 
     @Test
     public void testOpacityInCompleted() throws Exception {
         when(mTodo.isCompleted()).thenReturn(false);
-        assertEquals(1.0f, mDecorator.getOpacity());
+        assertEquals(1.0f, mViewModel.getOpacity());
     }
 
     @Test
     public void testIsComplete() throws Exception {
         when(mTodo.isCompleted()).thenReturn(true);
-        assertTrue(mDecorator.isCompleted());
+        assertTrue(mViewModel.isCompleted());
     }
 
     @Test
     public void testOpacityDefault() throws Exception {
-        assertEquals(1.0f, mDecorator.getOpacity());
+        assertEquals(1.0f, mViewModel.getOpacity());
     }
 
     @Test
     public void testGetTitle() throws Exception {
         when(mTodo.getTitle()).thenReturn("title");
-        assertEquals("title", mDecorator.getTitle());
+        assertEquals("title", mViewModel.getTitle());
     }
 
     @Test
     public void testGetDueDate() throws Exception {
         Date date = new Date(1454994901327L);
         when(mTodo.getDueDate()).thenReturn(date);
-        assertEquals("09/02/2016", mDecorator.getDueDate());
+        assertEquals("09/02/2016", mViewModel.getDueDate());
     }
 
     @Test
     public void testNoDueDate() throws Exception {
         when(mTodo.getDueDate()).thenReturn(null);
-        assertEquals("No due date", mDecorator.getDueDate());
+        assertEquals("No due date", mViewModel.getDueDate());
     }
 
     @Test
     public void testGetPriorityHigh() throws Exception {
         when(mTodo.getPriority()).thenReturn(Priority.HIGH);
-        assertEquals(Priority.HIGH, mDecorator.getPriority());
+        assertEquals(Priority.HIGH, mViewModel.getPriority());
     }
 
 //    @Test
 //    public void testGetPriorityMediumColor() throws Exception {
 //        when(mTodo.getPriority()).thenReturn(Priority.MED);
-//        assertEquals(R.color.bg_priority_medium, mDecorator.getPriorityColor());
+//        assertEquals(R.color.bg_priority_medium, mViewModel.getPriorityColor());
 //    }
 //
 //    @Test
 //    public void testGetPriorityHighColor() throws Exception {
 //        when(mTodo.getPriority()).thenReturn(Priority.HIGH);
-//        assertEquals(R.color.bg_priority_high, mDecorator.getPriorityColor());
+//        assertEquals(R.color.bg_priority_high, mViewModel.getPriorityColor());
 //    }
 //
 //    @Test
 //    public void testGetPriorityLowColor() throws Exception {
 //        when(mTodo.getPriority()).thenReturn(Priority.LOW);
-//        assertEquals(R.color.bg_priority_low, mDecorator.getPriorityColor());
+//        assertEquals(R.color.bg_priority_low, mViewModel.getPriorityColor());
 //    }
 //
 //    @Test
 //    public void testGetPriorityLowTitleColor() throws Exception {
 //        when(mTodo.getPriority()).thenReturn(Priority.LOW);
-//        assertEquals(android.R.color.black, mDecorator.getPriorityTitleColor());
+//        assertEquals(android.R.color.black, mViewModel.getPriorityTitleColor());
 //    }
 //
 //    @Test
 //    public void testGetPriorityMediumTitleColor() throws Exception {
 //        when(mTodo.getPriority()).thenReturn(Priority.MED);
-//        assertEquals(android.R.color.black, mDecorator.getPriorityTitleColor());
+//        assertEquals(android.R.color.black, mViewModel.getPriorityTitleColor());
 //    }
 //
 //    @Test
 //    public void testGetPriorityHighTitleColor() throws Exception {
 //        when(mTodo.getPriority()).thenReturn(Priority.HIGH);
-//        assertEquals(android.R.color.white, mDecorator.getPriorityTitleColor());
+//        assertEquals(android.R.color.white, mViewModel.getPriorityTitleColor());
 //    }
 }
