@@ -146,7 +146,7 @@ public class TodoDecoratorTest {
     @Test
     public void testGetPriorityHigh() throws Exception {
         when(mTodo.getPriority()).thenReturn(Priority.HIGH);
-        assertEquals("HIGH", mDecorator.getPriority());
+        assertEquals(Priority.HIGH, mDecorator.getPriority());
     }
 
     @Test
