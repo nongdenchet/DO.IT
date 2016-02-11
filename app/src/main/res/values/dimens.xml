@@ -7,6 +7,7 @@
     <dimen name="subtitle_size">14sp</dimen>
     <dimen name="priority_size">12sp</dimen>
     <dimen name="large_space">16dp</dimen>
+    <dimen name="extra_space">24dp</dimen>
     <dimen name="medium_space">12dp</dimen>
     <dimen name="small_space">8dp</dimen>
 </resources>

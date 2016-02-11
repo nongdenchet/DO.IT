@@ -13,6 +13,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@drawable/shadow_reverse"
+            android:visibility="@{decorator.actionVisibility}"/>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -83,9 +89,9 @@
                 app:check="@{decorator.isCompleted}"/>
 
             <View
+                android:id="@+id/disable_layer"
                 android:layout_width="match_parent"
                 android:layout_height="78dp"
-                android:id="@+id/disable_layer"
                 android:background="@color/disable_color"
                 android:visibility="@{decorator.disableVisibility}"/>
         </RelativeLayout>
