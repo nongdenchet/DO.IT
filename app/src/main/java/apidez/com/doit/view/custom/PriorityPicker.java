@@ -13,9 +13,7 @@ import rx.subjects.BehaviorSubject;
  * Created by nongdenchet on 2/11/16.
  */
 public class PriorityPicker extends LinearLayout {
-    private PriorityView mHighPriorityView;
-    private PriorityView mMediumPriorityView;
-    private PriorityView mLowPriorityView;
+    private PriorityView mHighPriorityView, mMediumPriorityView, mLowPriorityView;
 
     /**
      * Contains all the priority views

@@ -5,22 +5,34 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.TextView;
+
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+
+import java.util.Calendar;
 
 import apidez.com.doit.R;
 import apidez.com.doit.model.Todo;
-import butterknife.ButterKnife;
+import apidez.com.doit.view.custom.DueDatePicker;
+import butterknife.InjectView;
 
 /**
  * Created by nongdenchet on 2/11/16.
  */
-public class TodoDialogFragment extends DialogFragment {
+public class TodoDialogFragment extends BaseDialogFragment implements DueDatePicker.ListenerPickDate {
     public static final String TAG = TodoDialogFragment.class.getSimpleName();
+
+    @InjectView(R.id.due_date_picker)
+    DueDatePicker mDueDatePicker;
+
+    @InjectView(R.id.discard)
+    TextView mDiscardButton;
+
+    @InjectView(R.id.save)
+    TextView mSaveButton;
 
     public static TodoDialogFragment newInstance() {
         Bundle args = new Bundle();
@@ -36,12 +48,16 @@ public class TodoDialogFragment extends DialogFragment {
         return fragment;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_dialog_todo, container, false);
-        ButterKnife.inject(this, rootView);
-        return rootView;
+    protected void onSetUpView(View rootView) {
+        mDueDatePicker.setListenerPickDate(this);
+        mDiscardButton.setOnClickListener(v -> {});
+        mSaveButton.setOnClickListener(v -> {});
+    }
+
+    @Override
+    protected int layout() {
+        return R.layout.fragment_dialog_todo;
     }
 
     @NonNull
@@ -60,5 +76,17 @@ public class TodoDialogFragment extends DialogFragment {
             dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
+    }
+
+    @Override
+    public void pickDate(DueDatePicker.CallbackPickDate callbackPickDate) {
+        Calendar now = Calendar.getInstance();
+        DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(
+                (view, year, monthOfYear, dayOfMonth) -> callbackPickDate.onDatePicked(year, monthOfYear, dayOfMonth),
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH)
+        );
+        datePickerDialog.show(getActivity().getFragmentManager(), "DatePickerDialog");
     }
 }

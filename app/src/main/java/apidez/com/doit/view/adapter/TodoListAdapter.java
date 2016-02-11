@@ -59,7 +59,7 @@ public class TodoListAdapter extends SlideInAnimationAdapter<TodoDecorator> {
                 EventBus.getDefault().post(new DeleteActionItemEvent(indexOf(decorator))));
     }
 
-    private void resetState() {
+    public void resetState() {
         for (TodoDecorator todoDecorator : mItems) {
             todoDecorator.resetState();
         }

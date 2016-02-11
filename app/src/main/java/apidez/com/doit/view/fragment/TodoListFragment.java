@@ -97,6 +97,10 @@ public class TodoListFragment extends BaseFragment {
         TodoDialogFragment.newInstance().show(getFragmentManager(), TodoDialogFragment.TAG);
     }
 
+    private void showTodoDialog(Todo todo) {
+        TodoDialogFragment.newInstance(todo).show(getFragmentManager(), TodoDialogFragment.TAG);
+    }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -121,11 +125,8 @@ public class TodoListFragment extends BaseFragment {
         showTodoDialog(event.todo);
     }
 
-    private void showTodoDialog(Todo todo) {
-        TodoDialogFragment.newInstance(todo).show(getFragmentManager(), TodoDialogFragment.TAG);
-    }
-
     public void onEvent(TodoListAdapter.DeleteActionItemEvent event) {
         mViewModel.getTodoItems().remove(event.position);
+        mTodoListAdapter.resetState();
     }
 }

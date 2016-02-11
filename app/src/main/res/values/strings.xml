@@ -12,4 +12,10 @@
     <string name="priority">Priority</string>
     <string name="discard">DISCARD</string>
     <string name="save">SAVE</string>
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="no">NO</string>
+    <string name="pick">PICK</string>
+    <string name="a_day">a day</string>
+    <string name="no_due_date">deal date</string>
 </resources>

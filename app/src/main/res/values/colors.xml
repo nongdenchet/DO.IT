@@ -17,4 +17,7 @@
     <color name="empty_title_color">#9E9E9E</color>
     <color name="empty_subtitle_color">#BDBDBD</color>
     <color name="hint_color">#757575</color>
+    <color name="due_date_border">#C0C0C0</color>
+    <color name="due_date_disable">#DDDDDD</color>
+    <color name="due_date_enable">#ffffff</color>
 </resources>

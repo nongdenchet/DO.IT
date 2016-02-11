@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/alert_title"
                 android:textColor="@color/empty_title_color"
-                android:textSize="@dimen/alert_title_size"/>
+                android:textSize="@dimen/extra_title_size"/>
 
             <TextView
                 android:layout_width="wrap_content"

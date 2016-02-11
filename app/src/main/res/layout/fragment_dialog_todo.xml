@@ -38,6 +38,12 @@
         android:textColor="@color/hint_color"
         android:textSize="@dimen/small_sub_size"/>
 
+    <apidez.com.doit.view.custom.DueDatePicker
+        android:id="@+id/due_date_picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/small_space"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -55,11 +61,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
+        android:clickable="true"
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/discard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
             android:fontFamily="sans-serif-medium"
             android:padding="@dimen/large_space"
             android:text="@string/discard"
@@ -67,8 +76,10 @@
             android:textSize="@dimen/subtitle_size"/>
 
         <TextView
+            android:id="@+id/save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
             android:fontFamily="sans-serif-medium"
             android:padding="@dimen/large_space"
             android:text="@string/save"

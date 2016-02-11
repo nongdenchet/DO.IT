@@ -45,4 +45,5 @@ ext {
     rxandroidVersion = '1.1.0'
     eventbusVersion = '2.4.0'
     circleImageViewVersion = '2.0.0'
+    datePickerVersion = '2.1.1'
 }

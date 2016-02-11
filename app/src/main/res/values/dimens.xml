@@ -4,7 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="title_size">16sp</dimen>
-    <dimen name="alert_title_size">20sp</dimen>
+    <dimen name="extra_title_size">20sp</dimen>
     <dimen name="subtitle_size">14sp</dimen>
     <dimen name="small_sub_size">12sp</dimen>
     <dimen name="large_space">16dp</dimen>
@@ -12,4 +12,5 @@
     <dimen name="medium_space">12dp</dimen>
     <dimen name="small_space">8dp</dimen>
     <dimen name="dialog_corner_radius">2dp</dimen>
+    <dimen name="dute_date_item_height">72dp</dimen>
 </resources>

@@ -3,7 +3,7 @@ package apidez.com.doit.view.fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,17 +20,19 @@ import rx.schedulers.Schedulers;
 import rx.subjects.BehaviorSubject;
 
 /**
- * Created by nongdenchet on 2/8/16.
+ * Created by nongdenchet on 2/12/16.
  */
-public abstract class BaseFragment extends Fragment {
-    private BehaviorSubject<BaseFragment> mCreateView = BehaviorSubject.create();
-    private BehaviorSubject<BaseFragment> mDestroyView = BehaviorSubject.create();
+
+// TODO: remove duplication between BaseDialogFragment and BaseFragment
+public abstract class BaseDialogFragment extends DialogFragment {
+    private BehaviorSubject<BaseDialogFragment> mCreateView = BehaviorSubject.create();
+    private BehaviorSubject<BaseDialogFragment> mDestroyView = BehaviorSubject.create();
     private ProgressDialog mProgressDialog;
 
-    public BehaviorSubject<BaseFragment> postCreateView() {
+    public BehaviorSubject<BaseDialogFragment> postCreateView() {
         return mCreateView;
     }
-    public BehaviorSubject<BaseFragment> preDestroyView() {
+    public BehaviorSubject<BaseDialogFragment> preDestroyView() {
         return mDestroyView;
     }
 
