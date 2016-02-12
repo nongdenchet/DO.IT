@@ -6,13 +6,15 @@ import android.databinding.ObservableInt;
 import android.text.format.DateFormat;
 import android.view.View;
 
+import java.io.Serializable;
+
 import apidez.com.doit.model.Priority;
 import apidez.com.doit.model.Todo;
 
 /**
  * Created by nongdenchet on 2/8/16.
  */
-public class TodoItemViewModel extends BaseObservable {
+public class TodoItemViewModel extends BaseObservable implements Serializable {
     private final String NO_DUE_DATE = "No due date";
 
     private ObservableBoolean mEnableState = new ObservableBoolean(true);

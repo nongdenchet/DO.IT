@@ -1,5 +1,7 @@
 package apidez.com.doit.repository;
 
+import com.google.common.collect.Lists;
+
 import java.util.List;
 
 import apidez.com.doit.model.Todo;
@@ -44,6 +46,6 @@ public class TodoRepositoryImpl implements TodoRepository {
 
     @Override
     public Observable<List<Todo>> getAll() {
-        return Observable.just(Todo.listAll(Todo.class));
+        return Observable.just(Lists.reverse(Todo.listAll(Todo.class)));
     }
 }

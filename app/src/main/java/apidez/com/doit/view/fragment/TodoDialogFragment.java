@@ -35,7 +35,7 @@ import butterknife.InjectView;
 public class TodoDialogFragment extends BaseDialogFragment implements DueDatePicker.ListenerPickDate {
     public static final String TAG = TodoDialogFragment.class.getSimpleName();
     private static final String TODO = "todo";
-    private DialogInterface.OnDismissListener mDismissListener;
+    private CallbackSuccess mCallbackSuccess;
 
     @InjectView(R.id.discard)
     TextView mDiscardButton;
@@ -55,19 +55,25 @@ public class TodoDialogFragment extends BaseDialogFragment implements DueDatePic
     @Inject
     TodoDialogViewModel mViewModel;
 
-    public static TodoDialogFragment newInstance(DialogInterface.OnDismissListener listener) {
+    public interface CallbackSuccess {
+        void onSuccess();
+    }
+
+    public void setCallbackSuccess(CallbackSuccess callbackSuccess) {
+        this.mCallbackSuccess = callbackSuccess;
+    }
+
+    public static TodoDialogFragment newInstance() {
         Bundle args = new Bundle();
         TodoDialogFragment fragment = new TodoDialogFragment();
-        fragment.mDismissListener = listener;
         fragment.setArguments(args);
         return fragment;
     }
 
-    public static TodoDialogFragment newInstance(Todo todo, DialogInterface.OnDismissListener listener) {
+    public static TodoDialogFragment newInstance(Todo todo) {
         Bundle args = new Bundle();
         args.putSerializable(TODO, todo);
         TodoDialogFragment fragment = new TodoDialogFragment();
-        fragment.mDismissListener = listener;
         fragment.setArguments(args);
         return fragment;
     }
@@ -119,19 +125,23 @@ public class TodoDialogFragment extends BaseDialogFragment implements DueDatePic
     private void bindViewModel() {
         // Save action
         mSaveButton.setOnClickListener(v -> startObserveInBackground(mViewModel.save()).subscribe(id -> {
+            mCallbackSuccess.onSuccess();
             dismiss();
         }, throwable -> {
             showShortToast(throwable.getMessage());
         }));
 
+        // Bind due date
         startObserve(mDueDatePicker.date()).subscribe(date -> {
             mViewModel.setDate(date);
         });
 
+        // Bind priority
         startObserve(mPriorityPicker.priority()).subscribe(priority -> {
             mViewModel.setPriority(priority);
         });
 
+        // Bind title
         mTitleEditText.addTextChangedListener(new TextChangeAdapter() {
             @Override
             public void onTextChanged(String title) {
@@ -139,6 +149,7 @@ public class TodoDialogFragment extends BaseDialogFragment implements DueDatePic
             }
         });
 
+        // Bind toast
         startObserve(mViewModel.toast()).subscribe(this::showShortToast);
     }
 
@@ -153,7 +164,6 @@ public class TodoDialogFragment extends BaseDialogFragment implements DueDatePic
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        mDismissListener.onDismiss(dialog);
     }
 
     @Override

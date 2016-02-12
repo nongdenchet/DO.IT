@@ -1,8 +1,6 @@
 package apidez.com.doit.view.adapter;
 
 import android.databinding.ObservableList;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.v7.widget.RecyclerView;
 
 import java.lang.ref.WeakReference;
@@ -60,7 +58,6 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
 
     private static class WeakReferenceOnListChangedCallback<T> extends ObservableList.OnListChangedCallback<ObservableList<T>> {
         final WeakReference<BaseRecyclerViewAdapter<T>> adapterRef;
-        private final Handler mHandler = new Handler(Looper.getMainLooper());
 
         WeakReferenceOnListChangedCallback(BaseRecyclerViewAdapter<T> adapter) {
             this.adapterRef = new WeakReference<>(adapter);

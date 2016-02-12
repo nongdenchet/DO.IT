@@ -1,6 +1,5 @@
 package apidez.com.doit.view.fragment;
 
-import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,16 +17,16 @@ import apidez.com.doit.DoItApp;
 import apidez.com.doit.R;
 import apidez.com.doit.databinding.FragmentTodoListBinding;
 import apidez.com.doit.dependency.module.TodoListModule;
-import apidez.com.doit.view.adapter.TodoListAdapter;
-import apidez.com.doit.view.adapter.DisableLinearLayoutManager;
-import apidez.com.doit.viewmodel.TodoListViewModel;
 import apidez.com.doit.model.Todo;
+import apidez.com.doit.view.adapter.DisableLinearLayoutManager;
+import apidez.com.doit.view.adapter.TodoListAdapter;
+import apidez.com.doit.viewmodel.TodoListViewModel;
 import butterknife.InjectView;
 
 /**
  * Created by nongdenchet on 2/8/16.
  */
-public class TodoListFragment extends BaseFragment implements DialogInterface.OnDismissListener {
+public class TodoListFragment extends BaseFragment implements TodoDialogFragment.CallbackSuccess {
     private TodoListAdapter mTodoListAdapter;
     private FragmentTodoListBinding mBinding;
     private TodoDialogFragment mTodoDialogFragment;
@@ -96,20 +95,41 @@ public class TodoListFragment extends BaseFragment implements DialogInterface.On
     }
 
     private void showTodoDialog() {
-        mTodoDialogFragment = TodoDialogFragment.newInstance(this);
-        mTodoDialogFragment.show(getFragmentManager(), TodoDialogFragment.TAG);
+        mTodoDialogFragment = TodoDialogFragment.newInstance();
+        setCallbackAndShowDialog();
     }
 
     private void showTodoDialog(Todo todo) {
-        mTodoDialogFragment = TodoDialogFragment.newInstance(todo, this);
-        mTodoDialogFragment.show(getFragmentManager(), TodoDialogFragment.TAG);
+        mTodoDialogFragment = TodoDialogFragment.newInstance(todo);
+        setCallbackAndShowDialog();
+    }
+
+    private void setCallbackAndShowDialog() {
+        if (mTodoDialogFragment != null) {
+            mTodoDialogFragment.setCallbackSuccess(this);
+            mTodoDialogFragment.show(getFragmentManager(), TodoDialogFragment.TAG);
+        }
+    }
+
+    @Override
+    public void onSuccess() {
+        fetchAllTodo();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        setActionBar();
+        fetchAllTodo();
+    }
+
+    private void setActionBar() {
         ((AppCompatActivity) getActivity()).setSupportActionBar(mBinding.toolbar);
-        startObserve(mViewModel.fetchAllTodo()).subscribe(response -> {});
+    }
+
+    private void fetchAllTodo() {
+        startObserve(mViewModel.fetchAllTodo()).subscribe(response -> {
+        });
     }
 
     // Events
@@ -136,10 +156,5 @@ public class TodoListFragment extends BaseFragment implements DialogInterface.On
         }, throwable -> {
             showShortToast(throwable.getMessage());
         });
-    }
-
-    @Override
-    public void onDismiss(DialogInterface dialog) {
-        startObserve(mViewModel.fetchAllTodo()).subscribe(response -> {});
     }
 }

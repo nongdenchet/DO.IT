@@ -57,7 +57,7 @@ public class TodoListAdapter extends SlideInAnimationAdapter<TodoItemViewModel> 
 
         // Update click
         viewHolder.editButton.setOnClickListener(v ->
-                EventBus.getDefault().post(new UpdateActionItemEvent(indexOf(viewModel), viewModel.getTodo())));
+                EventBus.getDefault().post(new UpdateActionItemEvent(viewModel.getTodo())));
 
         // Delete click
         viewHolder.deleteButton.setOnClickListener(v ->
@@ -86,10 +86,6 @@ public class TodoListAdapter extends SlideInAnimationAdapter<TodoItemViewModel> 
         });
     }
 
-    public int calculateHeight() {
-        return mItemViewHeight * mItems.size();
-    }
-
     // Callbacks
     public interface CheckCallBack {
         void onCheckChange(boolean complete);
@@ -106,11 +102,10 @@ public class TodoListAdapter extends SlideInAnimationAdapter<TodoItemViewModel> 
         }
     }
 
-    public class UpdateActionItemEvent extends ItemEvent {
+    public class UpdateActionItemEvent {
         public Todo todo;
 
-        public UpdateActionItemEvent(int position, Todo todo) {
-            super(position);
+        public UpdateActionItemEvent(Todo todo) {
             this.todo = todo;
         }
     }
