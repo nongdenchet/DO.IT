@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -24,6 +25,7 @@ import butterknife.InjectView;
  */
 public class TodoDialogFragment extends BaseDialogFragment implements DueDatePicker.ListenerPickDate {
     public static final String TAG = TodoDialogFragment.class.getSimpleName();
+    private static final String TODO = "todo";
 
     @InjectView(R.id.due_date_picker)
     DueDatePicker mDueDatePicker;
@@ -35,17 +37,21 @@ public class TodoDialogFragment extends BaseDialogFragment implements DueDatePic
     TextView mSaveButton;
 
     public static TodoDialogFragment newInstance() {
+        return new TodoDialogFragment();
+    }
+
+    public static TodoDialogFragment newInstance(Todo todo) {
         Bundle args = new Bundle();
+        args.putSerializable(TODO, todo);
         TodoDialogFragment fragment = new TodoDialogFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
-    public static TodoDialogFragment newInstance(Todo todo) {
-        Bundle args = new Bundle();
-        TodoDialogFragment fragment = new TodoDialogFragment();
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Todo todo = (Todo) getArguments().getSerializable(TODO);
     }
 
     @Override

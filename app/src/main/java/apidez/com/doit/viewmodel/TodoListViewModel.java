@@ -3,7 +3,6 @@ package apidez.com.doit.viewmodel;
 import android.databinding.ObservableInt;
 import android.databinding.ObservableList;
 
-import apidez.com.doit.model.Todo;
 import rx.Observable;
 
 /**
@@ -23,7 +22,12 @@ public interface TodoListViewModel {
     /**
      * Check complete
      */
-    Observable<Boolean> checkChangeItem(Todo todo);
+    Observable<Long> checkChangeItem(TodoItemViewModel todoItemViewModel);
+
+    /**
+     * Delete object
+     */
+    Observable<Boolean> deleteItem(int position);
 
     /**
      * Alert visibility

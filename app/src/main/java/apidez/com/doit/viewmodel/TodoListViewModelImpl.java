@@ -7,14 +7,11 @@ import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
 import android.view.View;
 
-import java.util.List;
-
 import apidez.com.doit.model.Todo;
 import apidez.com.doit.repository.TodoRepository;
 import apidez.com.doit.utils.RxUtils;
 import apidez.com.doit.utils.TransformUtils;
 import rx.Observable;
-import rx.Subscriber;
 
 /**
  * Created by nongdenchet on 2/8/16.
@@ -24,13 +21,18 @@ public class TodoListViewModelImpl extends BaseViewModel implements TodoListView
     private TodoRepository mRepository;
     private ObservableList<TodoItemViewModel> mTodoItems = new ObservableArrayList<>();
 
-    private ObservableInt mAlertVisibility = new ObservableInt(View.GONE);
-
     public TodoListViewModelImpl(@NonNull Context mContext, @NonNull TodoRepository todoRepository,
                                  @NonNull RxUtils.SchedulerHolder schedulerHolder) {
         super(schedulerHolder);
         this.mContext = mContext;
         this.mRepository = todoRepository;
+    }
+
+    private ObservableInt mAlertVisibility = new ObservableInt(View.GONE);
+
+    @Override
+    public ObservableInt getAlertVisibility() {
+        return mAlertVisibility;
     }
 
     @Override
@@ -41,14 +43,7 @@ public class TodoListViewModelImpl extends BaseViewModel implements TodoListView
     @Override
     @SuppressWarnings("Anonymous2MethodRef")
     public Observable fetchAllTodo() {
-        return configWithScheduler(Observable.create(new Observable.OnSubscribe<List<Todo>>() {
-            @Override
-            public void call(Subscriber<? super List<Todo>> subscriber) {
-                List<Todo> items = mRepository.getAll();
-                subscriber.onNext(items);
-                subscriber.onCompleted();
-            }
-        })).doOnNext(items -> {
+        return configWithScheduler(mRepository.getAll()).doOnNext(items -> {
             mTodoItems.clear();
             mTodoItems.addAll(TransformUtils.map(items, new TransformUtils.Map<Todo>() {
                 @Override
@@ -61,26 +56,39 @@ public class TodoListViewModelImpl extends BaseViewModel implements TodoListView
     }
 
     @Override
-    public Observable<Boolean> checkChangeItem(Todo todo) {
-        return configWithScheduler(Observable.create((Observable.OnSubscribe<Boolean>) subscriber -> {
-            try {
-                todo.switchComplete();
-                mRepository.update(todo);
-                subscriber.onNext(todo.isCompleted());
-                subscriber.onCompleted();
-            } catch (Exception ex) {
-                todo.switchComplete();
-                subscriber.onError(ex);
+    public Observable<Long> checkChangeItem(TodoItemViewModel todoItemViewModel) {
+        Todo todo = todoItemViewModel.getTodo();
+        return configWithScheduler(mRepository.createOrUpdate(todo))
+                .doOnSubscribe(todo::switchComplete)
+                .doOnError(throwable -> todo.switchComplete())
+                .doOnNext(id -> mTodoItems.set(mTodoItems.indexOf(todoItemViewModel), todoItemViewModel));
+    }
+
+//    @Override
+//    public Observable<Long> updateItem(TodoItemViewModel todoItemViewModel) {
+//        return configWithScheduler(mRepository.createOrUpdate(todoItemViewModel.getTodo()))
+//                .doOnNext(id -> mTodoItems.set(mTodoItems.indexOf(todoItemViewModel), todoItemViewModel));
+//    }
+//
+//    @Override
+//    public Observable<Long> createItem(Todo todo) {
+//        return configWithScheduler(mRepository.createOrUpdate(todo))
+//                .doOnNext(id -> mTodoItems.add(new TodoItemViewModel(todo)));
+//    }
+
+
+    @Override
+    public Observable<Boolean> deleteItem(int position) {
+        TodoItemViewModel todoItemViewModel = mTodoItems.get(position);
+        return mRepository.delete(todoItemViewModel.getTodo().getId()).doOnNext(success -> {
+            if (success) {
+                mTodoItems.remove(todoItemViewModel);
+                checkEmptyAndShowAlert();
             }
-        }));
+        });
     }
 
     private void checkEmptyAndShowAlert() {
         mAlertVisibility.set(mTodoItems.isEmpty() ? View.VISIBLE : View.GONE);
-    }
-
-    @Override
-    public ObservableInt getAlertVisibility() {
-        return mAlertVisibility;
     }
 }

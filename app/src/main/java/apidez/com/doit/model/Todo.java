@@ -1,29 +1,24 @@
 package apidez.com.doit.model;
 
-import java.util.Date;
+import com.orm.SugarRecord;
 
-import apidez.com.doit.utils.StringUtils;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by nongdenchet on 2/2/16.
  */
-public class Todo {
-    private String id;
-    private Priority priority;
-    private String title;
-    private Date dueDate;
-    private boolean completed;
+public class Todo extends SugarRecord implements Serializable {
+    Priority priority;
+    String title;
+    Date dueDate;
+    boolean completed;
 
-    private Todo(String id, String title, Date dueDate, boolean completed, Priority priority) {
-        this.id = id;
+    public Todo(String title, Date dueDate, boolean completed, Priority priority) {
         this.title = title;
         this.dueDate = dueDate;
         this.completed = completed;
         this.priority = priority;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public void switchComplete() {
@@ -86,12 +81,8 @@ public class Todo {
             return this;
         }
 
-        private String generateId() {
-            return StringUtils.nextSessionId();
-        }
-
         public Todo build() {
-            return new Todo(generateId(), title, dueDate, completed, priority);
+            return new Todo(title, dueDate, completed, priority);
         }
     }
 }

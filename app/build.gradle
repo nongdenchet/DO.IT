@@ -22,10 +22,20 @@ android {
         abortOnError false
     }
 
+    signingConfigs {
+        release {
+            storeFile file("keystore.jks")
+            storePassword "developer"
+            keyAlias "nongdenchet"
+            keyPassword "developer"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
         debug {
             testCoverageEnabled true
@@ -66,7 +76,7 @@ android {
         test.java.srcDir 'src/unitTest/java'
 
         // Functional tests
-        androidTest.java.srcDir 'src/functionalTest/java'
+        androidTest.java.srcDir 'src/uiTest/java'
     }
 }
 
@@ -99,6 +109,7 @@ dependencies {
     compile "de.greenrobot:eventbus:$rootProject.eventbusVersion"
     compile "de.hdodenhof:circleimageview:$rootProject.circleImageViewVersion"
     compile "com.wdullaer:materialdatetimepicker:$rootProject.datePickerVersion"
+    compile "com.github.satyan:sugar:$rootProject.sugarORMVersion"
 
     // Unit Test
     testCompile "org.assertj:assertj-core:$rootProject.assertjVersion"

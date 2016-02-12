@@ -53,7 +53,7 @@ public class TodoListAdapter extends SlideInAnimationAdapter<TodoItemViewModel> 
 
         // Checkbox click
         viewHolder.popCheckBox.setOnClickListener(v ->
-                EventBus.getDefault().post(new CheckItemEvent(viewModel.getTodo(), viewHolder::animateCheckChange)));
+                EventBus.getDefault().post(new CheckItemEvent(viewModel, viewHolder::animateCheckChange)));
 
         // Update click
         viewHolder.editButton.setOnClickListener(v ->
@@ -94,10 +94,10 @@ public class TodoListAdapter extends SlideInAnimationAdapter<TodoItemViewModel> 
     // Events
     public class CheckItemEvent {
         public CheckCallBack callBack;
-        public Todo todo;
+        public TodoItemViewModel viewModel;
 
-        public CheckItemEvent(Todo todo, CheckCallBack callBack) {
-            this.todo = todo;
+        public CheckItemEvent(TodoItemViewModel viewModel, CheckCallBack callBack) {
+            this.viewModel = viewModel;
             this.callBack = callBack;
         }
     }

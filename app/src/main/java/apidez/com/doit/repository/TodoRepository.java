@@ -3,28 +3,27 @@ package apidez.com.doit.repository;
 import java.util.List;
 
 import apidez.com.doit.model.Todo;
+import rx.Observable;
 
 /**
  * Created by nongdenchet on 2/8/16.
  */
 public interface TodoRepository {
     /**
-     * Create a new to-do
+     * Create a new to-do or update old one
+     * @return the id of the to-do
      */
-    Todo create(Todo todo);
+    Observable<Long> createOrUpdate(Todo todo);
 
     /**
      * Get all to-do items
+     * @return list of to-do
      */
-    List<Todo> getAll();
+    Observable<List<Todo>> getAll();
 
     /**
      * Delete a to-do base on id
+     * @return return boolean success or not
      */
-    boolean delete(String id);
-
-    /**
-     * Update a to-do item
-     */
-    boolean update(Todo todo) throws Exception;
+    Observable<Boolean> delete(Long id);
 }

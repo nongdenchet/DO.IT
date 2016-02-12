@@ -110,8 +110,8 @@ public class TodoListFragment extends BaseFragment {
 
     // Events
     public void onEvent(TodoListAdapter.CheckItemEvent event) {
-        startObserve(mViewModel.checkChangeItem(event.todo)).subscribe(checked -> {
-            event.callBack.onCheckChange(checked);
+        startObserve(mViewModel.checkChangeItem(event.viewModel)).subscribe(id -> {
+            event.callBack.onCheckChange(event.viewModel.isCompleted());
         }, throwable -> {
             showShortToast(throwable.getMessage());
         });
@@ -126,7 +126,10 @@ public class TodoListFragment extends BaseFragment {
     }
 
     public void onEvent(TodoListAdapter.DeleteActionItemEvent event) {
-        mViewModel.getTodoItems().remove(event.position);
-        mTodoListAdapter.resetState();
+        startObserve(mViewModel.deleteItem(event.position)).subscribe(success -> {
+            if (success) mTodoListAdapter.resetState();
+        }, throwable -> {
+            showShortToast(throwable.getMessage());
+        });
     }
 }
