@@ -19,7 +19,7 @@ public class FakeTodoRepositoryImpl implements TodoRepository {
 
     @Override
     public Observable<List<Todo>> getAll() {
-        return Observable.just(DataUtils.provideMockTodoList());
+        return Observable.just(DataUtils.provideLongMockTodoList());
     }
 
     @Override

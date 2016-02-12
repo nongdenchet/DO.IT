@@ -22,6 +22,7 @@ import apidez.com.doit.view.adapter.DisableLinearLayoutManager;
 import apidez.com.doit.view.adapter.TodoListAdapter;
 import apidez.com.doit.viewmodel.TodoListViewModel;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 /**
  * Created by nongdenchet on 2/8/16.
@@ -131,6 +132,12 @@ public class TodoListFragment extends BaseFragment implements TodoDialogFragment
         startObserve(mViewModel.fetchAllTodo()).subscribe(response -> {});
     }
 
+    @OnClick(R.id.extra_view)
+    public void onExtraViewClick(View view) {
+        mTodoListAdapter.resetState();
+        mViewModel.setEnableBackground(true);
+    }
+
     // Events
     public void onEvent(TodoListAdapter.CheckItemEvent event) {
         startObserve(mViewModel.checkChangeItem(event.viewModel)).subscribe(id -> {
@@ -143,6 +150,10 @@ public class TodoListFragment extends BaseFragment implements TodoDialogFragment
     public void onEvent(TodoListAdapter.ShowActionItemEvent event) {
         mViewModel.switchEnable();
         mTodoList.getLayoutManager().smoothScrollToPosition(mTodoList, null, event.position);
+    }
+
+    public void onEvent(TodoListAdapter.EnableEvent enableEvent) {
+        mViewModel.setEnableBackground(true);
     }
 
     public void onEvent(TodoListAdapter.UpdateActionItemEvent event) {

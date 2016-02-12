@@ -49,7 +49,10 @@ public class TodoListAdapter extends SlideInAnimationAdapter<TodoItemViewModel> 
         viewHolder.todoView.setOnClickListener(v -> handleChooseItem(viewHolder.itemView, viewModel));
 
         // Disable layer click
-        viewHolder.disableLayer.setOnClickListener(v -> resetState());
+        viewHolder.disableLayer.setOnClickListener(v -> {
+            resetState();
+            EventBus.getDefault().post(new EnableEvent());
+        });
 
         // Checkbox click
         viewHolder.popCheckBox.setOnClickListener(v ->
@@ -108,6 +111,9 @@ public class TodoListAdapter extends SlideInAnimationAdapter<TodoItemViewModel> 
         public UpdateActionItemEvent(Todo todo) {
             this.todo = todo;
         }
+    }
+
+    public class EnableEvent {
     }
 
     public class DeleteActionItemEvent extends ItemEvent {
