@@ -10,7 +10,6 @@ import android.view.animation.LinearInterpolator;
 import java.util.List;
 
 import apidez.com.doit.utils.UiUtils;
-import apidez.com.doit.view.custom.AnimationAdapter;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 

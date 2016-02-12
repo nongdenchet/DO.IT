@@ -48,8 +48,11 @@ public class PriorityPicker extends LinearLayout {
 
     private void initViews() {
         mHighPriorityView = (PriorityView) findViewById(R.id.priority_high);
+        mHighPriorityView.setPriority(Priority.HIGH);
         mMediumPriorityView = (PriorityView) findViewById(R.id.priority_medium);
+        mMediumPriorityView.setPriority(Priority.MED);
         mLowPriorityView = (PriorityView) findViewById(R.id.priority_low);
+        mLowPriorityView.setPriority(Priority.LOW);
         mPriorityViews = new PriorityView[]{mHighPriorityView, mMediumPriorityView, mLowPriorityView};
     }
 
@@ -76,7 +79,11 @@ public class PriorityPicker extends LinearLayout {
         }
     }
 
-    public Observable<Priority> getPriority() {
+    public void setPriority(Priority priority) {
+        selectPriority(mPriorityViews[priority.ordinal()]);
+    }
+
+    public Observable<Priority> priority() {
         return mPriority.asObservable();
     }
 }

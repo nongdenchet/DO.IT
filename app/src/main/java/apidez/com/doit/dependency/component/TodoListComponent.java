@@ -2,6 +2,7 @@ package apidez.com.doit.dependency.component;
 
 import apidez.com.doit.dependency.module.TodoListModule;
 import apidez.com.doit.dependency.scope.ViewScope;
+import apidez.com.doit.view.fragment.TodoDialogFragment;
 import apidez.com.doit.view.fragment.TodoListFragment;
 import dagger.Subcomponent;
 
@@ -12,4 +13,5 @@ import dagger.Subcomponent;
 @Subcomponent(modules = {TodoListModule.class})
 public interface TodoListComponent {
     void inject(TodoListFragment todoListFragment);
+    void inject(TodoDialogFragment todoDialogFragment);
 }

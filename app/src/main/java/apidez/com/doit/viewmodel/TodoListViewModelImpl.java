@@ -64,19 +64,6 @@ public class TodoListViewModelImpl extends BaseViewModel implements TodoListView
                 .doOnNext(id -> mTodoItems.set(mTodoItems.indexOf(todoItemViewModel), todoItemViewModel));
     }
 
-//    @Override
-//    public Observable<Long> updateItem(TodoItemViewModel todoItemViewModel) {
-//        return configWithScheduler(mRepository.createOrUpdate(todoItemViewModel.getTodo()))
-//                .doOnNext(id -> mTodoItems.set(mTodoItems.indexOf(todoItemViewModel), todoItemViewModel));
-//    }
-//
-//    @Override
-//    public Observable<Long> createItem(Todo todo) {
-//        return configWithScheduler(mRepository.createOrUpdate(todo))
-//                .doOnNext(id -> mTodoItems.add(new TodoItemViewModel(todo)));
-//    }
-
-
     @Override
     public Observable<Boolean> deleteItem(int position) {
         TodoItemViewModel todoItemViewModel = mTodoItems.get(position);

@@ -1,16 +1,21 @@
 package apidez.com.doit.model;
 
+import com.orm.SugarRecord;
+
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by nongdenchet on 2/2/16.
  */
-public class Todo implements Serializable {
+public class Todo extends SugarRecord implements Serializable {
     Priority priority;
     String title;
     Date dueDate;
     boolean completed;
+
+    public Todo() {
+    }
 
     public Todo(String title, Date dueDate, boolean completed, Priority priority) {
         this.title = title;
@@ -53,10 +58,6 @@ public class Todo implements Serializable {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
-    }
-
-    public Long getId() {
-        return 0L;
     }
 
     /**

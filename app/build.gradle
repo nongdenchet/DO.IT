@@ -102,6 +102,7 @@ dependencies {
     compile "com.wdullaer:materialdatetimepicker:$rootProject.datePickerVersion"
     compile "com.google.code.gson:gson:$rootProject.gsonVersion"
     compile "io.reactivex:rxandroid:$rootProject.rxandroidVersion"
+    compile "com.github.satyan:sugar:$rootProject.sugarVersion"
 
     // Unit Test
     testCompile "org.assertj:assertj-core:$rootProject.assertjVersion"

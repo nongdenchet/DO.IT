@@ -18,4 +18,5 @@
     <string name="pick">PICK</string>
     <string name="a_day">a day</string>
     <string name="no_due_date">deal date</string>
+    <string name="title_require">Title is required</string>
 </resources>

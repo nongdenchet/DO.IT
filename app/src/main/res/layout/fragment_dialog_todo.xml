@@ -23,7 +23,7 @@
         android:layout_marginBottom="@dimen/small_space">
 
         <EditText
-            android:id="@+id/creditCard"
+            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_title"
@@ -53,6 +53,7 @@
         android:textSize="@dimen/small_sub_size"/>
 
     <apidez.com.doit.view.custom.PriorityPicker
+        android:id="@+id/priority_picker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/extra_space"/>

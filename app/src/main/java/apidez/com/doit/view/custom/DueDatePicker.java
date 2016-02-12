@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import apidez.com.doit.R;
+import apidez.com.doit.utils.DateUtils;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 
@@ -19,7 +20,7 @@ public class DueDatePicker extends RelativeLayout {
     private DueDateView[] mDueDateViews;
     private ListenerPickDate mListenerPickDate;
 
-    private BehaviorSubject<Date> mDueDate = BehaviorSubject.create();
+    private BehaviorSubject<Date> mDueDate = BehaviorSubject.create(new Date());
 
     public interface CallbackPickDate {
         void onDatePicked(int year, int monthOfYear, int dayOfMonth);
@@ -68,15 +69,35 @@ public class DueDatePicker extends RelativeLayout {
         initTomorrow();
     }
 
-    private void initTomorrow() {
+    public void setDueDate(Date dueDate) {
+        if (dueDate == null) {
+            clearAndSelectView(mNoDateView);
+        } else if (DateUtils.isToday(dueDate)) {
+            clearAndSelectView(mTodayView);
+        } else if (DateUtils.isTomorrow(dueDate)) {
+            clearAndSelectView(mTomorrowView);
+        } else {
+            setDateForPicker(dueDate);
+        }
+    }
+
+    private void setDateForPicker(Date dueDate) {
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
-        calendar.add(Calendar.DATE, 1);
-        mTomorrowView.setDate(calendar.getTime());
+        calendar.setTime(dueDate);
+        mDayPicker.setPickDate(
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+        );
+        clearAndSelectView(mDayPicker);
+    }
+
+    private void initTomorrow() {
+        mTomorrowView.setDefaultDate(DateUtils.getTomorrow());
     }
 
     private void initToday() {
-        mTodayView.setDate(new Date());
+        mTodayView.setDefaultDate(new Date());
     }
 
     private void initActions() {

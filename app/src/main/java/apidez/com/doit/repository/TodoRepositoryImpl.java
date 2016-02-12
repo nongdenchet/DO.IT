@@ -17,7 +17,7 @@ public class TodoRepositoryImpl implements TodoRepository {
             @Override
             public void call(Subscriber<? super Long> subscriber) {
                 try {
-                    // subscriber.onNext(todo.save());
+                    subscriber.onNext(todo.save());
                     subscriber.onCompleted();
                 } catch (Exception ex) {
                     subscriber.onError(ex);
@@ -32,6 +32,8 @@ public class TodoRepositoryImpl implements TodoRepository {
             @Override
             public void call(Subscriber<? super Boolean> subscriber) {
                 try {
+                    Todo todo = Todo.findById(Todo.class, id);
+                    subscriber.onNext(todo.delete());
                     subscriber.onCompleted();
                 } catch (Exception ex) {
                     subscriber.onError(ex);
@@ -42,6 +44,6 @@ public class TodoRepositoryImpl implements TodoRepository {
 
     @Override
     public Observable<List<Todo>> getAll() {
-        return null;
+        return Observable.just(Todo.listAll(Todo.class));
     }
 }

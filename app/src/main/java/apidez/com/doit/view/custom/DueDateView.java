@@ -56,7 +56,7 @@ public class DueDateView extends RelativeLayout {
         return mDate;
     }
 
-    public void setDate(Date date) {
+    public void setDefaultDate(Date date) {
         this.mDate = date;
         setDayTitle(DateUtils.getDayFromDate(mDate));
     }

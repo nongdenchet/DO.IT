@@ -1,6 +1,7 @@
 package apidez.com.doit.view.fragment;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -9,15 +10,23 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.Calendar;
 
+import javax.inject.Inject;
+
+import apidez.com.doit.DoItApp;
 import apidez.com.doit.R;
-import apidez.com.doit.view.custom.DueDatePicker;
+import apidez.com.doit.dependency.module.TodoListModule;
 import apidez.com.doit.model.Todo;
+import apidez.com.doit.view.adapter.TextChangeAdapter;
+import apidez.com.doit.view.custom.DueDatePicker;
+import apidez.com.doit.view.custom.PriorityPicker;
+import apidez.com.doit.viewmodel.TodoDialogViewModel;
 import butterknife.InjectView;
 
 /**
@@ -26,9 +35,7 @@ import butterknife.InjectView;
 public class TodoDialogFragment extends BaseDialogFragment implements DueDatePicker.ListenerPickDate {
     public static final String TAG = TodoDialogFragment.class.getSimpleName();
     private static final String TODO = "todo";
-
-    @InjectView(R.id.due_date_picker)
-    DueDatePicker mDueDatePicker;
+    private DialogInterface.OnDismissListener mDismissListener;
 
     @InjectView(R.id.discard)
     TextView mDiscardButton;
@@ -36,34 +43,103 @@ public class TodoDialogFragment extends BaseDialogFragment implements DueDatePic
     @InjectView(R.id.save)
     TextView mSaveButton;
 
-    public static TodoDialogFragment newInstance() {
-        return new TodoDialogFragment();
+    @InjectView(R.id.title)
+    EditText mTitleEditText;
+
+    @InjectView(R.id.priority_picker)
+    PriorityPicker mPriorityPicker;
+
+    @InjectView(R.id.due_date_picker)
+    DueDatePicker mDueDatePicker;
+
+    @Inject
+    TodoDialogViewModel mViewModel;
+
+    public static TodoDialogFragment newInstance(DialogInterface.OnDismissListener listener) {
+        Bundle args = new Bundle();
+        TodoDialogFragment fragment = new TodoDialogFragment();
+        fragment.mDismissListener = listener;
+        fragment.setArguments(args);
+        return fragment;
     }
 
-    public static TodoDialogFragment newInstance(Todo todo) {
+    public static TodoDialogFragment newInstance(Todo todo, DialogInterface.OnDismissListener listener) {
         Bundle args = new Bundle();
         args.putSerializable(TODO, todo);
         TodoDialogFragment fragment = new TodoDialogFragment();
+        fragment.mDismissListener = listener;
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
+    protected int layout() {
+        return R.layout.fragment_dialog_todo;
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Todo todo = (Todo) getArguments().getSerializable(TODO);
+        DoItApp.app().component()
+                .plus(new TodoListModule())
+                .inject(this);
     }
 
     @Override
     protected void onSetUpView(View rootView) {
         mDueDatePicker.setListenerPickDate(this);
-        mDiscardButton.setOnClickListener(v -> {});
-        mSaveButton.setOnClickListener(v -> {});
+        mDiscardButton.setOnClickListener(v -> dismiss());
+        restoreTodo();
+    }
+
+    private void restoreTodo() {
+        Todo todo = (Todo) getArguments().getSerializable(TODO);
+        if (todo != null) {
+            restoreViewModel(todo);
+            restoreView(todo);
+        }
+    }
+
+    private void restoreViewModel(Todo todo) {
+        mViewModel.restore(todo);
+    }
+
+    private void restoreView(Todo todo) {
+        mTitleEditText.setText(todo.getTitle());
+        mPriorityPicker.setPriority(todo.getPriority());
+        mDueDatePicker.setDueDate(todo.getDueDate());
     }
 
     @Override
-    protected int layout() {
-        return R.layout.fragment_dialog_todo;
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        bindViewModel();
+    }
+
+    private void bindViewModel() {
+        // Save action
+        mSaveButton.setOnClickListener(v -> startObserveInBackground(mViewModel.save()).subscribe(id -> {
+            dismiss();
+        }, throwable -> {
+            showShortToast(throwable.getMessage());
+        }));
+
+        startObserve(mDueDatePicker.date()).subscribe(date -> {
+            mViewModel.setDate(date);
+        });
+
+        startObserve(mPriorityPicker.priority()).subscribe(priority -> {
+            mViewModel.setPriority(priority);
+        });
+
+        mTitleEditText.addTextChangedListener(new TextChangeAdapter() {
+            @Override
+            public void onTextChanged(String title) {
+                mViewModel.setTitle(title);
+            }
+        });
+
+        startObserve(mViewModel.toast()).subscribe(this::showShortToast);
     }
 
     @NonNull
@@ -72,6 +148,12 @@ public class TodoDialogFragment extends BaseDialogFragment implements DueDatePic
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         return dialog;
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        mDismissListener.onDismiss(dialog);
     }
 
     @Override

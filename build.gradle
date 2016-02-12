@@ -46,4 +46,5 @@ ext {
     eventbusVersion = '2.4.0'
     circleImageViewVersion = '2.0.0'
     datePickerVersion = '2.1.1'
+    sugarVersion = '1.4'
 }
