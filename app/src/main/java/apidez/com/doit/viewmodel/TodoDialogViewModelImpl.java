@@ -19,12 +19,14 @@ import rx.subjects.BehaviorSubject;
  */
 public class TodoDialogViewModelImpl extends BaseViewModel implements TodoDialogViewModel {
     private Context mContext;
+    private boolean isUpdate = false;
     private TodoRepository mRepository;
     private BehaviorSubject<String> mToast = BehaviorSubject.create();
 
     private Priority mPriority;
     private Date mDueDate;
     private String mTitle;
+    private Todo mTodo;
 
     public TodoDialogViewModelImpl(@NonNull Context context, @NonNull TodoRepository todoRepository,
                                    @NonNull RxUtils.SchedulerHolder schedulerHolder) {
@@ -50,6 +52,8 @@ public class TodoDialogViewModelImpl extends BaseViewModel implements TodoDialog
 
     @Override
     public void restore(Todo todo) {
+        isUpdate = true;
+        mTodo = todo;
         mTitle = todo.getTitle();
         mDueDate = todo.getDueDate();
         mPriority = todo.getPriority();
@@ -71,12 +75,23 @@ public class TodoDialogViewModelImpl extends BaseViewModel implements TodoDialog
                 .build();
     }
 
+    private Todo updateTodo() {
+        mTodo.setDueDate(mDueDate);
+        mTodo.setPriority(mPriority);
+        mTodo.setTitle(mTitle);
+        return mTodo;
+    }
+
+    private Todo prepareTodo() {
+        return isUpdate ? updateTodo() : createTodo();
+    }
+
     @Override
     public Observable<Long> save() {
         if (emptyTitle()) {
             mToast.onNext(mContext.getString(R.string.title_require));
             return Observable.empty();
         }
-        return mRepository.createOrUpdate(createTodo());
+        return mRepository.createOrUpdate(prepareTodo());
     }
 }

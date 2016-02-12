@@ -86,6 +86,10 @@ public class TodoListAdapter extends SlideInAnimationAdapter<TodoItemViewModel> 
         });
     }
 
+    public int calculateHeight() {
+        return mItemViewHeight * mItems.size();
+    }
+
     // Callbacks
     public interface CheckCallBack {
         void onCheckChange(boolean complete);

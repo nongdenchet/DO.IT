@@ -23,7 +23,7 @@ public abstract class SlideInAnimationAdapter<T> extends BaseRecyclerViewAdapter
     private final int FADE_DURATION = 300;
 
     private int mLastPosition = -1;
-    private int mItemViewHeight = 0;
+    protected int mItemViewHeight = 0;
     protected Context mContext;
 
     public SlideInAnimationAdapter(Context mContext) {
