@@ -1,4 +1,4 @@
-package apidez.com.domain.model;
+package apidez.com.doit.model;
 
 import java.io.Serializable;
 import java.util.Date;

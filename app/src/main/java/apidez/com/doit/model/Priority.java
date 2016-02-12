@@ -1,4 +1,4 @@
-package apidez.com.domain.model;
+package apidez.com.doit.model;
 
 /**
  * Created by nongdenchet on 2/2/16.

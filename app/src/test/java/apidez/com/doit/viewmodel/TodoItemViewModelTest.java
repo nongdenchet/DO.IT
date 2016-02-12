@@ -14,8 +14,8 @@ import java.util.Date;
 
 import apidez.com.doit.BuildConfig;
 import apidez.com.doit.DefaultConfig;
-import apidez.com.domain.model.Priority;
-import apidez.com.domain.model.Todo;
+import apidez.com.doit.model.Priority;
+import apidez.com.doit.model.Todo;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;

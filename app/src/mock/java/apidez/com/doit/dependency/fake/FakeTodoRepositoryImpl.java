@@ -2,9 +2,9 @@ package apidez.com.doit.dependency.fake;
 
 import java.util.List;
 
-import apidez.com.domain.repository.TodoRepository;
+import apidez.com.doit.repository.TodoRepository;
 import apidez.com.doit.utils.DataUtils;
-import apidez.com.domain.model.Todo;
+import apidez.com.doit.model.Todo;
 import rx.Observable;
 
 /**

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/nongdenchet/Android-SDK/sdk/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="8d680ba5a623724d1fb0e81c36a790f023a6cede">
+        <dex dex="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/pre-dexed/mock/debug/support-annotations-23.1.1_5e1d92378fd56c9a2af429b9f4717c6d7a1fb2c8.jar" />
+    </item>
+    <item
+        jar="/Users/nongdenchet/.gradle/caches/modules-2/files-2.1/com.jakewharton/butterknife/6.1.0/63735f48b82bcd24cdd33821342428252eb1ca5a/butterknife-6.1.0.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="63735f48b82bcd24cdd33821342428252eb1ca5a">
+        <dex dex="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/pre-dexed/mock/debug/butterknife-6.1.0_45bc438ccae0fd4b396cee003cb927930bab7e3f.jar" />
+    </item>
+    <item
+        jar="/Users/nongdenchet/.gradle/caches/modules-2/files-2.1/org.glassfish/javax.annotation/10.0-b28/30eb3b3cc9cb0863a4edaea5a7575f8ace1b96ba/javax.annotation-10.0-b28.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="30eb3b3cc9cb0863a4edaea5a7575f8ace1b96ba">
+        <dex dex="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/pre-dexed/mock/debug/javax.annotation-10.0-b28_f0d4a0e14d9ea42c371d9c42a392fe1b83450036.jar" />
+    </item>
+    <item
+        jar="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/exploded-aar/io.reactivex/rxandroid/1.1.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="d4c4b83de2f6412072d2a29b1b7a5b03edaad5ff">
+        <dex dex="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/pre-dexed/mock/debug/io.reactivex-rxandroid-1.1.0_b9b81a966061485eedcf4244fac95d116d940b60.jar" />
+    </item>
+    <item
+        jar="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/exploded-aar/com.android.support/design/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="379471b2bd17d9737c050345c08e8c7d16589784">
+        <dex dex="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/pre-dexed/mock/debug/com.android.support-design-23.1.1_baaf81cf6899b191006b8448a85e1957b2c626e5.jar" />
+    </item>
+    <item
+        jar="/Users/nongdenchet/.gradle/caches/modules-2/files-2.1/com.google.dagger/dagger/2.0.2/de8416eda7b2fd7c25836b140c39e1cbf10542f6/dagger-2.0.2.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="de8416eda7b2fd7c25836b140c39e1cbf10542f6">
+        <dex dex="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/pre-dexed/mock/debug/dagger-2.0.2_8cff56bf3751c12e42e4b9eda92503b42fc241d1.jar" />
+    </item>
+    <item
+        jar="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/exploded-aar/de.hdodenhof/circleimageview/2.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="031e8b3ab2df4ab43b1017f84417d7e10dfbb8d2">
+        <dex dex="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/pre-dexed/mock/debug/de.hdodenhof-circleimageview-2.0.0_0b1cf05a80e6c435f468ec52e44572b4218fc25b.jar" />
+    </item>
+    <item
+        jar="/Users/nongdenchet/.gradle/caches/modules-2/files-2.1/io.reactivex/rxjava/1.1.0/748f0546d5c3c27f1aef07270ffea0c45f0c42a4/rxjava-1.1.0.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="748f0546d5c3c27f1aef07270ffea0c45f0c42a4">
+        <dex dex="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/pre-dexed/mock/debug/rxjava-1.1.0_d1eb35e802663ba5131a9d82b3bc4c49e2c52095.jar" />
+    </item>
+    <item
+        jar="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/jacoco/jacocoagent.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="ea73283d55c98ab1fccb8c23d76c68b7d7ecbd83">
+        <dex dex="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/pre-dexed/mock/debug/jacocoagent_be58c666683d0f3ac8f6d27105c4c0f36eecd49f.jar" />
+    </item>
+    <item
+        jar="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="6cbc7773921fcfedbe55657578f0cbfe614778dc">
+        <dex dex="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/pre-dexed/mock/debug/com.android.support-support-v4-23.1.1_7a8564b591b86447d7a00dce6725aa945c589e54.jar" />
+    </item>
+    <item
+        jar="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="5c5699834e9722f1c288fea2de82725d078ba127">
+        <dex dex="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/pre-dexed/mock/debug/com.android.support-appcompat-v7-23.1.1_98b25714a0f660092aab0d40bd7571ed338168b7.jar" />
+    </item>
+    <item
+        jar="/Users/nongdenchet/.gradle/caches/modules-2/files-2.1/javax.inject/javax.inject/1/6975da39a7040257bd51d21a231b76c915872d38/javax.inject-1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="6975da39a7040257bd51d21a231b76c915872d38">
+        <dex dex="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/pre-dexed/mock/debug/javax.inject-1_355b514bd340b7a436a9af4de2fe30123a5c5451.jar" />
+    </item>
+    <item
+        jar="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/exploded-aar/com.android.support.test.espresso/espresso-idling-resource/2.2.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="83e81537012f1975aa902eedbdb8da5aa515aea5">
+        <dex dex="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/pre-dexed/mock/debug/com.android.support.test.espresso-espresso-idling-resource-2.2.1_edd88df17946ff2008c199bd5020dd5d5847af27.jar" />
+    </item>
+    <item
+        jar="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="09c5e804bc67fc0580360043dff067df574a60d4">
+        <dex dex="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/pre-dexed/mock/debug/com.android.support-recyclerview-v7-23.1.1_9c587016ea015ccec77c64f2c9982092436eca05.jar" />
+    </item>
+    <item
+        jar="/Users/nongdenchet/.gradle/caches/modules-2/files-2.1/de.greenrobot/eventbus/2.4.0/ddd166d01b3158d1c00576d29f7ed15c030df719/eventbus-2.4.0.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="ddd166d01b3158d1c00576d29f7ed15c030df719">
+        <dex dex="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/pre-dexed/mock/debug/eventbus-2.4.0_582e120e7a33b1dd102cfda21b3a0b6954b86a82.jar" />
+    </item>
+    <item
+        jar="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/exploded-aar/com.android.databinding/adapters/1.0-rc5/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="09804ef3ea3b68a21f819f06e68877fe441f958c">
+        <dex dex="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/pre-dexed/mock/debug/com.android.databinding-adapters-1.0-rc5_d1db6ca087bb9701c8a955974febe1cef265ec37.jar" />
+    </item>
+    <item
+        jar="/Applications/Android Studio.app/Contents/gradle/m2repository/com/android/databinding/baseLibrary/2.0.0-beta2/baseLibrary-2.0.0-beta2.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="4da6968c4754e0229a9a80d8435d4e1aeb93bfec">
+        <dex dex="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/pre-dexed/mock/debug/baseLibrary-2.0.0-beta2_9495c04325ff136730b0b500810f12a627504adb.jar" />
+    </item>
+    <item
+        jar="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/exploded-aar/com.wdullaer/materialdatetimepicker/2.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="2e940c2cd75fac9e34219d4c249efd037257e1a1">
+        <dex dex="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/pre-dexed/mock/debug/com.wdullaer-materialdatetimepicker-2.1.1_07da81787c37d01cb3516f4f7c087a22040138e9.jar" />
+    </item>
+    <item
+        jar="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="5e412e954a24c5310a459c09870e4e2081aceb03">
+        <dex dex="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/pre-dexed/mock/debug/com.android.support-cardview-v7-23.1.1_b13dc36297c3813ba75533480ce11703c980e68a.jar" />
+    </item>
+    <item
+        jar="/Users/nongdenchet/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.4/695b63d702f505b9b916e02272e3b6381bade7f/gson-2.4.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="0695b63d702f505b9b916e02272e3b6381bade7f">
+        <dex dex="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/pre-dexed/mock/debug/gson-2.4_ddf6d330159521532d4800a442da748c9dab9861.jar" />
+    </item>
+    <item
+        jar="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/libs/internal_impl-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
+        <dex dex="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/pre-dexed/mock/debug/internal_impl-23.1.1_7f4ceb5b27b9960116be49fe3ddc5712553e65a2.jar" />
+    </item>
+    <item
+        jar="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/exploded-aar/com.android.databinding/library/1.0-rc5/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="83118a37ee518f1068b6aefab176a83a25761e52">
+        <dex dex="/Users/nongdenchet/Java/Projects/DO.IT/app/build/intermediates/pre-dexed/mock/debug/com.android.databinding-library-1.0-rc5_bbaf1a2ddbf1ef99b35e46a5bd3ff58f43f1b59e.jar" />
+    </item>
+
+</items>

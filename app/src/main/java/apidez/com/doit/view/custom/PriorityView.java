@@ -8,7 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import apidez.com.doit.R;
-import apidez.com.domain.model.Priority;
+import apidez.com.doit.model.Priority;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**

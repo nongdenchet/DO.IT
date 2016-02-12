@@ -7,7 +7,7 @@ import apidez.com.doit.dependency.scope.ViewScope;
 import apidez.com.doit.utils.RxUtils;
 import apidez.com.doit.viewmodel.TodoListViewModel;
 import apidez.com.doit.viewmodel.TodoListViewModelImpl;
-import apidez.com.domain.repository.TodoRepository;
+import apidez.com.doit.repository.TodoRepository;
 import dagger.Module;
 import dagger.Provides;
 

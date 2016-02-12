@@ -1,4 +1,4 @@
-package apidez.com.domain.model;
+package apidez.com.doit.model;
 
 import android.test.suitebuilder.annotation.SmallTest;
 

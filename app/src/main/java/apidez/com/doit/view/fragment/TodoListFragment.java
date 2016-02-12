@@ -20,7 +20,7 @@ import apidez.com.doit.dependency.module.TodoListModule;
 import apidez.com.doit.view.adapter.TodoListAdapter;
 import apidez.com.doit.view.custom.DisableLinearLayoutManager;
 import apidez.com.doit.viewmodel.TodoListViewModel;
-import apidez.com.domain.model.Todo;
+import apidez.com.doit.model.Todo;
 import butterknife.InjectView;
 
 /**

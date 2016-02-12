@@ -1,8 +1,8 @@
-package apidez.com.domain.repository;
+package apidez.com.doit.repository;
 
 import java.util.List;
 
-import apidez.com.domain.model.Todo;
+import apidez.com.doit.model.Todo;
 import rx.Observable;
 
 /**

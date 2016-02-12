@@ -82,7 +82,6 @@ configurations {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(path: ':domain')
 
     // Support library
     compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"

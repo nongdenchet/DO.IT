@@ -1,7 +1,7 @@
 package apidez.com.doit.dependency.module;
 
-import apidez.com.domain.repository.TodoRepository;
-import apidez.com.domain.repository.TodoRepositoryImpl;
+import apidez.com.doit.repository.TodoRepository;
+import apidez.com.doit.repository.TodoRepositoryImpl;
 import dagger.Module;
 import dagger.Provides;
 
