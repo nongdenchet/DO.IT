@@ -4,7 +4,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,6 +17,7 @@ import apidez.com.doit.R;
 import apidez.com.doit.databinding.FragmentTodoListBinding;
 import apidez.com.doit.dependency.module.TodoListModule;
 import apidez.com.doit.model.Todo;
+import apidez.com.doit.view.adapter.CustomLinearLayoutManager;
 import apidez.com.doit.view.adapter.DisableLinearLayoutManager;
 import apidez.com.doit.view.adapter.TodoListAdapter;
 import apidez.com.doit.viewmodel.TodoListViewModel;
@@ -69,7 +69,7 @@ public class TodoListFragment extends BaseFragment implements TodoDialogFragment
         mTodoListAdapter = new TodoListAdapter(getContext());
         mTodoList.setAdapter(mTodoListAdapter);
         startObserve(mTodoListAdapter.animationEnd()).subscribe(done -> {
-            if (done) mTodoList.setLayoutManager(new LinearLayoutManager(getContext()));
+            if (done) mTodoList.setLayoutManager(new CustomLinearLayoutManager(getContext()));
         });
     }
 
@@ -128,8 +128,7 @@ public class TodoListFragment extends BaseFragment implements TodoDialogFragment
     }
 
     private void fetchAllTodo() {
-        startObserve(mViewModel.fetchAllTodo()).subscribe(response -> {
-        });
+        startObserve(mViewModel.fetchAllTodo()).subscribe(response -> {});
     }
 
     // Events
