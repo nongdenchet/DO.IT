@@ -16,8 +16,8 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import java.util.Calendar;
 
 import apidez.com.doit.R;
-import apidez.com.doit.model.Todo;
 import apidez.com.doit.view.custom.DueDatePicker;
+import apidez.com.domain.model.Todo;
 import butterknife.InjectView;
 
 /**

@@ -69,14 +69,7 @@ android {
     }
 
     sourceSets {
-        // Prod source
         prod.java.srcDirs = ['src/main/java', 'src/data/java']
-
-        // Unit tests
-        test.java.srcDir 'src/unitTest/java'
-
-        // Functional tests
-        androidTest.java.srcDir 'src/uiTest/java'
     }
 }
 
@@ -89,6 +82,7 @@ configurations {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(path: ':domain')
 
     // Support library
     compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
@@ -104,12 +98,11 @@ dependencies {
 
     // Others
     compile "com.jakewharton:butterknife:$rootProject.butterknifeVersion"
-    compile "com.google.code.gson:gson:$rootProject.gsonVersion"
-    compile "io.reactivex:rxandroid:$rootProject.rxandroidVersion"
     compile "de.greenrobot:eventbus:$rootProject.eventbusVersion"
     compile "de.hdodenhof:circleimageview:$rootProject.circleImageViewVersion"
     compile "com.wdullaer:materialdatetimepicker:$rootProject.datePickerVersion"
-    compile "com.github.satyan:sugar:$rootProject.sugarORMVersion"
+    compile "com.google.code.gson:gson:$rootProject.gsonVersion"
+    compile "io.reactivex:rxandroid:$rootProject.rxandroidVersion"
 
     // Unit Test
     testCompile "org.assertj:assertj-core:$rootProject.assertjVersion"

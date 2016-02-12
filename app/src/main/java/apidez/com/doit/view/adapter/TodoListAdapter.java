@@ -10,9 +10,9 @@ import android.view.ViewTreeObserver;
 
 import apidez.com.doit.R;
 import apidez.com.doit.databinding.TodoItemBinding;
-import apidez.com.doit.viewmodel.TodoItemViewModel;
-import apidez.com.doit.model.Todo;
 import apidez.com.doit.view.viewholder.TodoItemViewHolder;
+import apidez.com.doit.viewmodel.TodoItemViewModel;
+import apidez.com.domain.model.Todo;
 import de.greenrobot.event.EventBus;
 import rx.android.schedulers.AndroidSchedulers;
 

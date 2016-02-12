@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import apidez.com.doit.model.Priority;
-import apidez.com.doit.model.Todo;
+import apidez.com.domain.model.Priority;
+import apidez.com.domain.model.Todo;
 
 /**
  * Created by nongdenchet on 2/8/16.

@@ -7,10 +7,10 @@ import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
 import android.view.View;
 
-import apidez.com.doit.model.Todo;
-import apidez.com.doit.repository.TodoRepository;
+import apidez.com.domain.repository.TodoRepository;
 import apidez.com.doit.utils.RxUtils;
 import apidez.com.doit.utils.TransformUtils;
+import apidez.com.domain.model.Todo;
 import rx.Observable;
 
 /**

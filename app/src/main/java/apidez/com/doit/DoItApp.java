@@ -1,8 +1,7 @@
 package apidez.com.doit;
 
+import android.app.Application;
 import android.content.Context;
-
-import com.orm.SugarApp;
 
 import apidez.com.doit.dependency.component.AppComponent;
 import apidez.com.doit.dependency.component.DaggerAppComponent;
@@ -11,7 +10,7 @@ import apidez.com.doit.dependency.module.AppModule;
 /**
  * Created by nongdenchet on 2/8/16.
  */
-public class DoItApp extends SugarApp {
+public class DoItApp extends Application {
     private AppComponent mAppComponent;
     private static Context mContext;
 

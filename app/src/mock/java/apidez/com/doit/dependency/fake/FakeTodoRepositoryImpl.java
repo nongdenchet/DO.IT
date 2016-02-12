@@ -2,9 +2,10 @@ package apidez.com.doit.dependency.fake;
 
 import java.util.List;
 
-import apidez.com.doit.model.Todo;
-import apidez.com.doit.repository.TodoRepository;
+import apidez.com.domain.repository.TodoRepository;
 import apidez.com.doit.utils.DataUtils;
+import apidez.com.domain.model.Todo;
+import rx.Observable;
 
 /**
  * Created by nongdenchet on 2/8/16.
@@ -12,22 +13,17 @@ import apidez.com.doit.utils.DataUtils;
 public class FakeTodoRepositoryImpl implements TodoRepository {
 
     @Override
-    public Todo create(Todo todo) {
-        return todo;
+    public Observable<Long> createOrUpdate(Todo todo) {
+        return Observable.just(0L);
     }
 
     @Override
-    public List<Todo> getAll() {
-        return DataUtils.provideLongMockTodoList();
+    public Observable<List<Todo>> getAll() {
+        return Observable.just(DataUtils.provideLongMockTodoList());
     }
 
     @Override
-    public boolean delete(String id) {
-        return true;
-    }
-
-    @Override
-    public boolean update(Todo todo) throws Exception {
-        return true;
+    public Observable<Boolean> delete(Long id) {
+        return Observable.just(true);
     }
 }

@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
 import apidez.com.doit.R;
-import apidez.com.doit.model.Priority;
+import apidez.com.domain.model.Priority;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 
