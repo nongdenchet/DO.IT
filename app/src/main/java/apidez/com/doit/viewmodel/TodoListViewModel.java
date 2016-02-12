@@ -33,4 +33,19 @@ public interface TodoListViewModel {
      * Alert visibility
      */
     ObservableInt getAlertVisibility();
+
+    /**
+     * Observe background color
+     */
+    ObservableInt backgroundColor();
+
+    /**
+     * Set background disable/enable
+     */
+    void setEnableBackground(boolean enable);
+
+    /**
+     * Switch background disable/enable
+     */
+    void switchEnable();
 }

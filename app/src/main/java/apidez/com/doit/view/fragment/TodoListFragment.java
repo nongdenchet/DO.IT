@@ -122,6 +122,7 @@ public class TodoListFragment extends BaseFragment implements DialogInterface.On
     }
 
     public void onEvent(TodoListAdapter.ShowActionItemEvent event) {
+        mViewModel.switchEnable();
         mTodoList.getLayoutManager().smoothScrollToPosition(mTodoList, null, event.position);
     }
 

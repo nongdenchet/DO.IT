@@ -15,6 +15,11 @@
         android:background="@android:color/white"
         android:fitsSystemWindows="true">
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@{viewModel.backgroundColor}"/>
+
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -26,6 +31,7 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/todoList"
+            android:background="@android:color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/toolbar"
