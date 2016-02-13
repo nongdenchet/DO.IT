@@ -1,6 +1,6 @@
 language: android
 jdk:
-  - oraclejdk7
+  - oraclejdk8
 android:
   components:
     - tools
@@ -14,7 +14,7 @@ before_install:
   - export JAVA_HOME=$JAVA8_HOME
 script:
   - ./gradlew jacocoTestReport coveralls
-  - ./gradlew assembleDebug
+  - ./gradlew assembleProd
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
 cache:
