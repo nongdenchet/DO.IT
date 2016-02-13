@@ -41,7 +41,6 @@ ext {
     espressoVersion = '2.2.1'
     daggerVersion = '2.0.2'
     annotaionVersion = '10.0-b28'
-    gsonVersion = '2.4'
     rxandroidVersion = '1.1.0'
     eventbusVersion = '2.4.0'
     circleImageViewVersion = '2.0.0'

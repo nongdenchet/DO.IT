@@ -99,10 +99,15 @@ dependencies {
     // Others
     compile "com.jakewharton:butterknife:$rootProject.butterknifeVersion"
     compile "de.greenrobot:eventbus:$rootProject.eventbusVersion"
+
+    // UI
     compile "de.hdodenhof:circleimageview:$rootProject.circleImageViewVersion"
     compile "com.wdullaer:materialdatetimepicker:$rootProject.datePickerVersion"
-    compile "com.google.code.gson:gson:$rootProject.gsonVersion"
+
+    // RxAndroid
     compile "io.reactivex:rxandroid:$rootProject.rxandroidVersion"
+
+    // Database ORM
     compile "com.github.satyan:sugar:$rootProject.sugarVersion"
 
     // Unit Test
