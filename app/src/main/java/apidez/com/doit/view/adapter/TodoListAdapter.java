@@ -56,19 +56,14 @@ public class TodoListAdapter extends SlideInAnimationAdapter<TodoItemViewModel> 
     }
 
     private void bindFooter(RecyclerView.ViewHolder holder) {
+        TodoFooterViewHolder viewHolder = (TodoFooterViewHolder) holder;
         mFooter = holder.itemView;
         mFooter.setOnClickListener(v -> resetState());
-        footerHeight().subscribe(this::setFooterHeight);
+        footerHeight().subscribe(viewHolder::setFooterHeight);
     }
 
     private Observable<Integer> footerHeight() {
         return Observable.combineLatest(listSize, itemHeight, this::calculateFooterHeight);
-    }
-
-    private void setFooterHeight(int footerHeight) {
-        ViewGroup.LayoutParams layoutParams = mFooter.getLayoutParams();
-        layoutParams.height = footerHeight;
-        mFooter.setLayoutParams(layoutParams);
     }
 
     private int calculateFooterHeight(int listSize, int itemHeight) {
@@ -83,9 +78,7 @@ public class TodoListAdapter extends SlideInAnimationAdapter<TodoItemViewModel> 
         viewHolder.bind(mItems.get(position));
         animateItem(viewHolder.itemView, position);
         animationEnd().observeOn(AndroidSchedulers.mainThread()).subscribe(done -> {
-            if (done) {
-                bindAction(viewHolder, mItems.get(position));
-            }
+            if (done) bindAction(viewHolder, mItems.get(position));
         });
     }
 
