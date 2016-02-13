@@ -5,6 +5,7 @@ import android.text.format.DateFormat;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 
 /**
  * Created by nongdenchet on 2/11/16.
@@ -57,5 +58,10 @@ public class DateUtils {
         calendar.set(Calendar.MONTH, monthOfYear);
         calendar.set(Calendar.DATE, dayOfMonth);
         return calendar.getTime();
+    }
+
+    public static Date createRandomDate() {
+        Random random = new Random();
+        return create(random.nextInt(21) + 2000, random.nextInt(12) + 1, random.nextInt(20) + 1);
     }
 }

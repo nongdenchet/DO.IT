@@ -45,7 +45,6 @@ android {
 
     productFlavors {
         prod {
-            applicationIdSuffix = ".prod"
             resValue "string", "app_name", "Do.it"
         }
         mock {
@@ -116,6 +115,10 @@ dependencies {
     testCompile "org.hamcrest:hamcrest-core:$rootProject.hamcrestVersion"
     testCompile "org.mockito:mockito-core:$rootProject.mockitoVersion"
     testCompile "org.robolectric:robolectric:$rootProject.robolectricVersion"
+    testCompile "org.powermock:powermock-module-junit4:$rootProject.powerMockVersion"
+    testCompile "org.powermock:powermock-module-junit4-rule:$rootProject.powerMockVersion"
+    testCompile "org.powermock:powermock-api-mockito:$rootProject.powerMockVersion"
+    testCompile "org.powermock:powermock-classloading-xstream:$rootProject.powerMockVersion"
 
     // Android Test
     androidTestCompile "org.mockito:mockito-core:$rootProject.mockitoVersion"

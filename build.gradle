@@ -46,4 +46,5 @@ ext {
     circleImageViewVersion = '2.0.0'
     datePickerVersion = '2.1.1'
     sugarVersion = '1.4'
+    powerMockVersion = '1.6.2'
 }

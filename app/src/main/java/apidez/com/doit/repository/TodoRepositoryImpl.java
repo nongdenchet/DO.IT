@@ -1,9 +1,12 @@
 package apidez.com.doit.repository;
 
+import android.content.Context;
+
 import com.google.common.collect.Lists;
 
 import java.util.List;
 
+import apidez.com.doit.R;
 import apidez.com.doit.model.Todo;
 import rx.Observable;
 import rx.Subscriber;
@@ -12,6 +15,11 @@ import rx.Subscriber;
  * Created by nongdenchet on 2/8/16.
  */
 public class TodoRepositoryImpl implements TodoRepository {
+    private Context mContext;
+
+    public TodoRepositoryImpl(Context context) {
+        this.mContext = context;
+    }
 
     @Override
     public Observable<Todo> createOrUpdate(Todo todo) {
@@ -19,7 +27,8 @@ public class TodoRepositoryImpl implements TodoRepository {
             @Override
             public void call(Subscriber<? super Todo> subscriber) {
                 try {
-                    todo.save();
+                    long id = todo.save();
+                    if (id == -1L) throw new Exception(mContext.getString(R.string.problem_save));
                     subscriber.onNext(todo);
                     subscriber.onCompleted();
                 } catch (Exception ex) {
@@ -36,7 +45,9 @@ public class TodoRepositoryImpl implements TodoRepository {
             public void call(Subscriber<? super Boolean> subscriber) {
                 try {
                     Todo todo = Todo.findById(Todo.class, id);
-                    subscriber.onNext(todo.delete());
+                    if (todo == null) throw new Exception(mContext.getString(R.string.problem_find));
+                    if (!todo.delete()) throw new Exception(mContext.getString(R.string.problem_delete));
+                    subscriber.onNext(true);
                     subscriber.onCompleted();
                 } catch (Exception ex) {
                     subscriber.onError(ex);

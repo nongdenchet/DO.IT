@@ -37,6 +37,32 @@ public class TodoTest {
     }
 
     @Test
+    public void testEqualDifferetType() throws Exception {
+        assertFalse(mTodo.equals(new Object()));
+    }
+
+    @Test
+    public void testEqual() throws Exception {
+        mTodo.setId(100L);
+        Todo todo = new Todo();
+        todo.setId(100L);
+        assertTrue(mTodo.equals(todo));
+    }
+
+    @Test
+    public void testNotEqual() throws Exception {
+        mTodo.setId(100L);
+        assertFalse(mTodo.equals(new Todo()));
+    }
+
+    @Test
+    public void testSwitchCompleteTwice() throws Exception {
+        mTodo.switchComplete();
+        mTodo.switchComplete();
+        assertTrue(mTodo.isCompleted());
+    }
+
+    @Test
     public void testGetPriority() throws Exception {
         assertEquals(Priority.LOW, mTodo.getPriority());
     }

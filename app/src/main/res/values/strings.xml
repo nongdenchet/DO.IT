@@ -19,6 +19,9 @@
     <string name="a_day">a day</string>
     <string name="no_due_date">deal date</string>
     <string name="title_require">Title is required</string>
+    <string name="problem_save">Can not save todo</string>
+    <string name="problem_find">Can not find todo</string>
+    <string name="problem_delete">Can not delete todo</string>
     <string name="update">UPDATE</string>
     <string name="delete">DELETE</string>
 </resources>

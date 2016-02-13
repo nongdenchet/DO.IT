@@ -1,5 +1,7 @@
 package apidez.com.doit.dependency.module;
 
+import android.content.Context;
+
 import apidez.com.doit.repository.TodoRepository;
 import apidez.com.doit.repository.TodoRepositoryImpl;
 import dagger.Module;
@@ -12,7 +14,7 @@ import dagger.Provides;
 public class StorageModule {
 
     @Provides
-    public TodoRepository provideTodoRepository() {
-        return new TodoRepositoryImpl();
+    public TodoRepository provideTodoRepository(Context context) {
+        return new TodoRepositoryImpl(context);
     }
 }

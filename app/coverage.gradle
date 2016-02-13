@@ -14,7 +14,7 @@ jacoco {
 }
 
 def coverageSourceDirs = [
-        '/src/main/java'
+        '../src/main/java'
 ]
 
 task jacocoTestReport(type: JacocoReport, dependsOn: "testProdDebugUnitTest") {
@@ -28,6 +28,8 @@ task jacocoTestReport(type: JacocoReport, dependsOn: "testProdDebugUnitTest") {
                        '**/R$*.class',
                        '**/*$ViewInjector*.*',
                        '**/*$ViewBinder*.*',
+                       '**/*BR*.*',
+                       '**/*App*.*',
                        '**/BuildConfig.*',
                        '**/Manifest*.*',
                        '**/view/**',
