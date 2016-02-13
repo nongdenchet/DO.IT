@@ -27,6 +27,9 @@ public class DataUtils {
         todoList.add(new Todo.Builder("Android", Priority.HIGH).dueDate(new Date()).build());
         todoList.add(new Todo.Builder("iOS", Priority.MED).dueDate(new Date()).build());
         todoList.add(new Todo.Builder("Ruby on Rails", Priority.LOW).dueDate(new Date()).build());
+        for (int i = 0; i < 3; i++) {
+            todoList.get(i).setId((long) i);
+        }
         return todoList;
     }
 

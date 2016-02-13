@@ -23,7 +23,7 @@ public class TodoDialogViewModelImpl extends BaseViewModel implements TodoDialog
     private TodoRepository mRepository;
     private BehaviorSubject<String> mToast = BehaviorSubject.create();
 
-    private Priority mPriority;
+    private Priority mPriority = Priority.HIGH;
     private Date mDueDate;
     private String mTitle;
     private Todo mTodo;
@@ -59,31 +59,9 @@ public class TodoDialogViewModelImpl extends BaseViewModel implements TodoDialog
         mPriority = todo.getPriority();
     }
 
-    private boolean emptyTitle() {
-        return TextUtils.isEmpty(mTitle);
-    }
-
     @Override
     public Observable<String> toast() {
         return mToast.asObservable();
-    }
-
-    private Todo createTodo() {
-        return new Todo.Builder(mTitle, mPriority)
-                .dueDate(mDueDate)
-                .completed(false)
-                .build();
-    }
-
-    private Todo updateTodo() {
-        mTodo.setDueDate(mDueDate);
-        mTodo.setPriority(mPriority);
-        mTodo.setTitle(mTitle);
-        return mTodo;
-    }
-
-    private Todo prepareTodo() {
-        return isUpdate ? updateTodo() : createTodo();
     }
 
     @Override
@@ -93,5 +71,27 @@ public class TodoDialogViewModelImpl extends BaseViewModel implements TodoDialog
             return Observable.empty();
         }
         return mRepository.createOrUpdate(prepareTodo());
+    }
+
+    private boolean emptyTitle() {
+        return TextUtils.isEmpty(mTitle);
+    }
+
+    private Todo prepareTodo() {
+        return isUpdate ? updateTodo() : createTodo();
+    }
+
+    private Todo updateTodo() {
+        mTodo.setDueDate(mDueDate);
+        mTodo.setPriority(mPriority);
+        mTodo.setTitle(mTitle);
+        return mTodo;
+    }
+
+    private Todo createTodo() {
+        return new Todo.Builder(mTitle, mPriority)
+                .dueDate(mDueDate)
+                .completed(false)
+                .build();
     }
 }

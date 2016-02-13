@@ -17,9 +17,6 @@ public abstract class BaseViewModel extends BaseObservable {
         this.mIOThread = schedulerHolder.ioScheduler;
     }
 
-    public BaseViewModel() {
-    }
-
     public <T> Observable<T> configWithScheduler(Observable<T> observable) {
         return observable.subscribeOn(mIOThread)
                 .observeOn(mMainThread);
