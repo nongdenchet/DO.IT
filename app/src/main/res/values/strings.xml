@@ -19,4 +19,6 @@
     <string name="a_day">a day</string>
     <string name="no_due_date">deal date</string>
     <string name="title_require">Title is required</string>
+    <string name="update">UPDATE</string>
+    <string name="delete">DELETE</string>
 </resources>
