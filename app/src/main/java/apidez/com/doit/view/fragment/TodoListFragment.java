@@ -2,6 +2,8 @@ package apidez.com.doit.view.fragment;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,6 +32,7 @@ public class TodoListFragment extends BaseFragment implements TodoDialogFragment
     private TodoListAdapter mTodoListAdapter;
     private FragmentTodoListBinding mBinding;
     private TodoDialogFragment mTodoDialogFragment;
+    private Handler mHandler = new Handler(Looper.getMainLooper());
 
     @InjectView(R.id.todoList)
     RecyclerView mTodoList;
@@ -146,6 +149,7 @@ public class TodoListFragment extends BaseFragment implements TodoDialogFragment
     @Override
     public void onCreateSuccess(Todo todo) {
         mViewModel.insert(todo);
+        mTodoList.smoothScrollToPosition(0);
     }
 
     @Override

@@ -16,6 +16,7 @@ import apidez.com.doit.BuildConfig;
 import apidez.com.doit.DefaultConfig;
 import apidez.com.doit.model.Priority;
 import apidez.com.doit.model.Todo;
+import apidez.com.doit.utils.DataUtils;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
@@ -93,6 +94,13 @@ public class TodoItemViewModelTest {
         assertEquals(View.GONE, mViewModel.getActionVisibility().get());
         assertEquals(View.VISIBLE, mViewModel.getDividerVisibility().get());
         assertTrue(mViewModel.getEnableState().get());
+    }
+
+    @Test
+    public void testSetTodo() throws Exception {
+        Todo todo = DataUtils.provideTodo();
+        mViewModel.setTodo(todo);
+        assertEquals("title", mViewModel.getTitle());
     }
 
     @Test
