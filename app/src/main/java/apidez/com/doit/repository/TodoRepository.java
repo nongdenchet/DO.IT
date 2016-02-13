@@ -13,7 +13,7 @@ public interface TodoRepository {
      * Create a new to-do or update old one
      * @return the id of the to-do
      */
-    Observable<Long> createOrUpdate(Todo todo);
+    Observable<Todo> createOrUpdate(Todo todo);
 
     /**
      * Get all to-do items

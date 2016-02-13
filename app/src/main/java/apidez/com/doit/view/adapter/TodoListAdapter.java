@@ -11,9 +11,12 @@ import android.view.ViewTreeObserver;
 import apidez.com.doit.R;
 import apidez.com.doit.databinding.TodoItemBinding;
 import apidez.com.doit.model.Todo;
+import apidez.com.doit.utils.UiUtils;
+import apidez.com.doit.view.viewholder.TodoFooterViewHolder;
 import apidez.com.doit.view.viewholder.TodoItemViewHolder;
 import apidez.com.doit.viewmodel.TodoItemViewModel;
 import de.greenrobot.event.EventBus;
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 
 /**
@@ -21,6 +24,8 @@ import rx.android.schedulers.AndroidSchedulers;
  */
 public class TodoListAdapter extends SlideInAnimationAdapter<TodoItemViewModel> {
     private boolean isAnimate = true;
+    private View mFooter;
+    private final int ITEM = 0, FOOTER = 1;
 
     public TodoListAdapter(Context context) {
         super(context);
@@ -28,12 +33,52 @@ public class TodoListAdapter extends SlideInAnimationAdapter<TodoItemViewModel> 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        TodoItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(mContext), R.layout.todo_item, parent, false);
-        return new TodoItemViewHolder(binding);
+        switch (viewType) {
+            case FOOTER:
+                View footer = LayoutInflater.from(mContext).inflate(R.layout.todo_item_footer, parent, false);
+                return new TodoFooterViewHolder(footer);
+            default:
+                TodoItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(mContext), R.layout.todo_item, parent, false);
+                return new TodoItemViewHolder(binding);
+        }
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        switch (getItemViewType(position)) {
+            case ITEM:
+                bindItemView(holder, position);
+                break;
+            case FOOTER:
+                bindFooter(holder);
+                break;
+        }
+    }
+
+    private void bindFooter(RecyclerView.ViewHolder holder) {
+        mFooter = holder.itemView;
+        mFooter.setOnClickListener(v -> resetState());
+        footerHeight().subscribe(this::setFooterHeight);
+    }
+
+    private Observable<Integer> footerHeight() {
+        return Observable.combineLatest(listSize, itemHeight, this::calculateFooterHeight);
+    }
+
+    private void setFooterHeight(int footerHeight) {
+        ViewGroup.LayoutParams layoutParams = mFooter.getLayoutParams();
+        layoutParams.height = footerHeight;
+        mFooter.setLayoutParams(layoutParams);
+    }
+
+    private int calculateFooterHeight(int listSize, int itemHeight) {
+        if (listSize == 0) return 0;
+        int contentHeight = UiUtils.getContentHeightWithoutToolbar(mContext);
+        int contentListHeight = listSize * itemHeight;
+        return contentHeight > contentListHeight ? (contentHeight - contentListHeight) : 0;
+    }
+
+    private void bindItemView(RecyclerView.ViewHolder holder, int position) {
         TodoItemViewHolder viewHolder = (TodoItemViewHolder) holder;
         viewHolder.bind(mItems.get(position));
         animateItem(viewHolder.itemView, position);
@@ -49,10 +94,7 @@ public class TodoListAdapter extends SlideInAnimationAdapter<TodoItemViewModel> 
         viewHolder.todoView.setOnClickListener(v -> handleChooseItem(viewHolder.itemView, viewModel));
 
         // Disable layer click
-        viewHolder.disableLayer.setOnClickListener(v -> {
-            resetState();
-            EventBus.getDefault().post(new EnableEvent());
-        });
+        viewHolder.disableLayer.setOnClickListener(v -> resetState());
 
         // Checkbox click
         viewHolder.popCheckBox.setOnClickListener(v ->
@@ -68,8 +110,15 @@ public class TodoListAdapter extends SlideInAnimationAdapter<TodoItemViewModel> 
     }
 
     public void resetState() {
+        setFooterColorWhenClickItem(false);
         for (TodoItemViewModel todoItemViewModel : mItems) {
             todoItemViewModel.resetState();
+        }
+    }
+
+    private void setFooterColorWhenClickItem(boolean actionEnable) {
+        if (mFooter != null) {
+            mFooter.setBackgroundResource(actionEnable ? R.color.footer_disable : R.color.footer_enable);
         }
     }
 
@@ -80,6 +129,7 @@ public class TodoListAdapter extends SlideInAnimationAdapter<TodoItemViewModel> 
                 todoItemViewModel.switchEnableWhenNotChoose();
             }
         }
+        setFooterColorWhenClickItem(decorator.getActionVisibility().get() == View.VISIBLE);
         itemView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -87,6 +137,19 @@ public class TodoListAdapter extends SlideInAnimationAdapter<TodoItemViewModel> 
                 itemView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (position == mItems.size()) {
+            return FOOTER;
+        }
+        return ITEM;
+    }
+
+    @Override
+    public int getItemCount() {
+        return mItems.size() + 1;
     }
 
     // Callbacks
@@ -111,9 +174,6 @@ public class TodoListAdapter extends SlideInAnimationAdapter<TodoItemViewModel> 
         public UpdateActionItemEvent(Todo todo) {
             this.todo = todo;
         }
-    }
-
-    public class EnableEvent {
     }
 
     public class DeleteActionItemEvent extends ItemEvent {

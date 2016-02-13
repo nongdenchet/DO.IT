@@ -60,6 +60,11 @@ public class Todo extends SugarRecord implements Serializable {
         this.completed = completed;
     }
 
+    @Override
+    public boolean equals(Object object) {
+        return object instanceof Todo && this.getId().equals(((Todo) object).getId());
+    }
+
     /**
      * Builder class
      */

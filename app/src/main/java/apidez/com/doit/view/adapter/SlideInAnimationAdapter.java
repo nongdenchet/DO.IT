@@ -26,12 +26,17 @@ public abstract class SlideInAnimationAdapter<T> extends BaseRecyclerViewAdapter
     protected int mItemViewHeight = 0;
     protected Context mContext;
 
+    protected BehaviorSubject<Integer> itemHeight = BehaviorSubject.create();
+    protected BehaviorSubject<Integer> listSize = BehaviorSubject.create();
+    protected BehaviorSubject<Boolean> mAnimationEndEvent = BehaviorSubject.create(false);
+
     public SlideInAnimationAdapter(Context mContext) {
         this.mContext = mContext;
     }
 
     @Override
     public void setItems(List<T> items) {
+        listSize.onNext(items.size());
         if (mLastPosition == lastAnimatePosition() || mAnimationEndEvent.getValue()) { // Animation end
             super.setItems(items);
         } else {
@@ -39,8 +44,6 @@ public abstract class SlideInAnimationAdapter<T> extends BaseRecyclerViewAdapter
             notifyDataSetChanged();
         }
     }
-
-    protected BehaviorSubject<Boolean> mAnimationEndEvent = BehaviorSubject.create(false);
 
     public Observable<Boolean> animationEnd() {
         return mAnimationEndEvent.asObservable();
@@ -54,14 +57,25 @@ public abstract class SlideInAnimationAdapter<T> extends BaseRecyclerViewAdapter
             @Override
             public void onGlobalLayout() {
                 mItemViewHeight = view.getHeight();
-                if (position > mLastPosition && position <= lastAnimatePosition()) {
-                    mLastPosition = position;
-                    runFadeInAnimation(view, position);
-                    runSlideInAnimation(view, position, slideAnimListener());
-                }
+                emitItemHeightIfNot();
+                executeAnimation(view, position);
                 view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
+    }
+
+    private void executeAnimation(View view, int position) {
+        if (position > mLastPosition && position <= lastAnimatePosition()) {
+            mLastPosition = position;
+            runFadeInAnimation(view, position);
+            runSlideInAnimation(view, position, slideAnimListener());
+        }
+    }
+
+    private void emitItemHeightIfNot() {
+        if (itemHeight.getValue() == null) {
+            itemHeight.onNext(mItemViewHeight);
+        }
     }
 
     protected Animator.AnimatorListener slideAnimListener() {
@@ -99,8 +113,8 @@ public abstract class SlideInAnimationAdapter<T> extends BaseRecyclerViewAdapter
      * Calculate the last item position (from 0) that the recycler view can display at the beginning
      */
     private int lastAnimatePosition() {
-        if (mItemViewHeight == 0) return getItemCount() - 1;
-        return Math.min(getItemCount(), (int) Math.ceil(
-                (float) UiUtils.getContentHeightWithoutToolbar(mContext) / mItemViewHeight)) - 1;
+        if (mItemViewHeight == 0) return mItems.size() - 1;
+        return Math.min(mItems.size(),
+                (int) Math.ceil((float) UiUtils.getContentHeightWithoutToolbar(mContext) / mItemViewHeight)) - 1;
     }
 }

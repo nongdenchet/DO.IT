@@ -15,12 +15,6 @@
         android:background="@android:color/white"
         android:fitsSystemWindows="true">
 
-        <View
-            android:id="@+id/extra_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@{viewModel.backgroundColor}"/>
-
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"

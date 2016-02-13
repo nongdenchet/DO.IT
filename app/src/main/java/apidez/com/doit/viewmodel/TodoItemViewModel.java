@@ -52,6 +52,10 @@ public class TodoItemViewModel extends BaseObservable implements Serializable {
 
     // Action
 
+    public void setTodo(Todo todo) {
+        this.mTodo = todo;
+    }
+
     public void resetState() {
         mEnableState.set(true);
         mActionVisibility.set(View.GONE);

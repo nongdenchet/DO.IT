@@ -3,6 +3,7 @@ package apidez.com.doit.viewmodel;
 import android.databinding.ObservableInt;
 import android.databinding.ObservableList;
 
+import apidez.com.doit.model.Todo;
 import rx.Observable;
 
 /**
@@ -22,7 +23,7 @@ public interface TodoListViewModel {
     /**
      * Check complete
      */
-    Observable<Long> checkChangeItem(TodoItemViewModel todoItemViewModel);
+    Observable<Todo> checkChangeItem(TodoItemViewModel todoItemViewModel);
 
     /**
      * Delete object
@@ -35,17 +36,12 @@ public interface TodoListViewModel {
     ObservableInt getAlertVisibility();
 
     /**
-     * Observe background color
+     * Insert a new to-do
      */
-    ObservableInt backgroundColor();
+    void insert(Todo todo);
 
     /**
-     * Set background disable/enable
+     * Update a todo
      */
-    void setEnableBackground(boolean enable);
-
-    /**
-     * Switch background disable/enable
-     */
-    void switchEnable();
+    void update(Todo todo);
 }

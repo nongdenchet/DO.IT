@@ -14,12 +14,13 @@ import rx.Subscriber;
 public class TodoRepositoryImpl implements TodoRepository {
 
     @Override
-    public Observable<Long> createOrUpdate(Todo todo) {
-        return Observable.create(new Observable.OnSubscribe<Long>() {
+    public Observable<Todo> createOrUpdate(Todo todo) {
+        return Observable.create(new Observable.OnSubscribe<Todo>() {
             @Override
-            public void call(Subscriber<? super Long> subscriber) {
+            public void call(Subscriber<? super Todo> subscriber) {
                 try {
-                    subscriber.onNext(todo.save());
+                    todo.save();
+                    subscriber.onNext(todo);
                     subscriber.onCompleted();
                 } catch (Exception ex) {
                     subscriber.onError(ex);

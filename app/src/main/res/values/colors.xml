@@ -20,4 +20,6 @@
     <color name="due_date_border">#C0C0C0</color>
     <color name="due_date_disable">#DDDDDD</color>
     <color name="due_date_enable">#ffffff</color>
+    <color name="footer_enable">#ffffff</color>
+    <color name="footer_disable">#80B1B1B1</color>
 </resources>

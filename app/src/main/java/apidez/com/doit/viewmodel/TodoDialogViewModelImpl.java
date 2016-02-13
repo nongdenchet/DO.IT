@@ -87,7 +87,7 @@ public class TodoDialogViewModelImpl extends BaseViewModel implements TodoDialog
     }
 
     @Override
-    public Observable<Long> save() {
+    public Observable<Todo> save() {
         if (emptyTitle()) {
             mToast.onNext(mContext.getString(R.string.title_require));
             return Observable.empty();

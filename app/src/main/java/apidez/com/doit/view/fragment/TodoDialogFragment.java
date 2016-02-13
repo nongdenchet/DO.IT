@@ -35,6 +35,7 @@ import butterknife.InjectView;
 public class TodoDialogFragment extends BaseDialogFragment implements DueDatePicker.ListenerPickDate {
     public static final String TAG = TodoDialogFragment.class.getSimpleName();
     private static final String TODO = "todo";
+    private boolean isRestore = false;
     private CallbackSuccess mCallbackSuccess;
 
     @InjectView(R.id.discard)
@@ -56,7 +57,8 @@ public class TodoDialogFragment extends BaseDialogFragment implements DueDatePic
     TodoDialogViewModel mViewModel;
 
     public interface CallbackSuccess {
-        void onSuccess();
+        void onCreateSuccess(Todo todo);
+        void onUpdateSuccess(Todo todo);
     }
 
     public void setCallbackSuccess(CallbackSuccess callbackSuccess) {
@@ -101,6 +103,7 @@ public class TodoDialogFragment extends BaseDialogFragment implements DueDatePic
     private void restoreTodo() {
         Todo todo = (Todo) getArguments().getSerializable(TODO);
         if (todo != null) {
+            isRestore = true;
             restoreViewModel(todo);
             restoreView(todo);
         }
@@ -122,10 +125,18 @@ public class TodoDialogFragment extends BaseDialogFragment implements DueDatePic
         bindViewModel();
     }
 
+    private void sendCallbackSuccess(Todo todo) {
+        if (isRestore) {
+            mCallbackSuccess.onUpdateSuccess(todo);
+        } else {
+            mCallbackSuccess.onCreateSuccess(todo);
+        }
+    }
+
     private void bindViewModel() {
         // Save action
-        mSaveButton.setOnClickListener(v -> startObserveInBackground(mViewModel.save()).subscribe(id -> {
-            mCallbackSuccess.onSuccess();
+        mSaveButton.setOnClickListener(v -> startObserveInBackground(mViewModel.save()).subscribe(todo -> {
+            sendCallbackSuccess(todo);
             dismiss();
         }, throwable -> {
             showShortToast(throwable.getMessage());

@@ -13,13 +13,13 @@ import rx.Observable;
 public class FakeTodoRepositoryImpl implements TodoRepository {
 
     @Override
-    public Observable<Long> createOrUpdate(Todo todo) {
-        return Observable.just(0L);
+    public Observable<Todo> createOrUpdate(Todo todo) {
+        return Observable.just(todo);
     }
 
     @Override
     public Observable<List<Todo>> getAll() {
-        return Observable.just(DataUtils.provideLongMockTodoList());
+        return Observable.just(DataUtils.provideMockTodoList());
     }
 
     @Override

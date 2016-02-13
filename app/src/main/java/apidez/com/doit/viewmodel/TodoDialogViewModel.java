@@ -27,7 +27,7 @@ public interface TodoDialogViewModel {
     void setTitle(String title);
 
     /**
-     * Restore todo
+     * Restore to-do
      */
     void restore(Todo todo);
 
@@ -39,5 +39,5 @@ public interface TodoDialogViewModel {
     /**
      * Save action
      */
-    Observable<Long> save();
+    Observable<Todo> save();
 }

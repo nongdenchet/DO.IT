@@ -7,7 +7,6 @@ import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
 import android.view.View;
 
-import apidez.com.doit.R;
 import apidez.com.doit.model.Todo;
 import apidez.com.doit.repository.TodoRepository;
 import apidez.com.doit.utils.RxUtils;
@@ -20,8 +19,6 @@ import rx.Observable;
 public class TodoListViewModelImpl extends BaseViewModel implements TodoListViewModel {
     private Context mContext;
     private TodoRepository mRepository;
-    private boolean mEnableState = true;
-    private ObservableInt mBackgroundColor = new ObservableInt(android.R.color.white);
     private ObservableList<TodoItemViewModel> mTodoItems = new ObservableArrayList<>();
 
     public TodoListViewModelImpl(@NonNull Context mContext, @NonNull TodoRepository todoRepository,
@@ -36,11 +33,6 @@ public class TodoListViewModelImpl extends BaseViewModel implements TodoListView
     @Override
     public ObservableInt getAlertVisibility() {
         return mAlertVisibility;
-    }
-
-    @Override
-    public ObservableInt backgroundColor() {
-        return mBackgroundColor;
     }
 
     @Override
@@ -64,7 +56,7 @@ public class TodoListViewModelImpl extends BaseViewModel implements TodoListView
     }
 
     @Override
-    public Observable<Long> checkChangeItem(TodoItemViewModel todoItemViewModel) {
+    public Observable<Todo> checkChangeItem(TodoItemViewModel todoItemViewModel) {
         Todo todo = todoItemViewModel.getTodo();
         return configWithScheduler(mRepository.createOrUpdate(todo))
                 .doOnSubscribe(todo::switchComplete)
@@ -73,26 +65,31 @@ public class TodoListViewModelImpl extends BaseViewModel implements TodoListView
     }
 
     @Override
+    public void insert(Todo todo) {
+        mTodoItems.add(0, new TodoItemViewModel(todo));
+        checkEmptyAndShowAlert();
+    }
+
+    @Override
+    public void update(Todo todo) {
+        for (TodoItemViewModel todoItemViewModel : mTodoItems) {
+            if (todoItemViewModel.getTodo().equals(todo)) {
+                todoItemViewModel.setTodo(todo);
+                mTodoItems.set(mTodoItems.indexOf(todoItemViewModel), todoItemViewModel);
+                break;
+            }
+        }
+    }
+
+    @Override
     public Observable<Boolean> deleteItem(int position) {
         TodoItemViewModel todoItemViewModel = mTodoItems.get(position);
         return mRepository.delete(todoItemViewModel.getTodo().getId()).doOnNext(success -> {
             if (success) {
-                setEnableBackground(true);
                 mTodoItems.remove(todoItemViewModel);
                 checkEmptyAndShowAlert();
             }
         });
-    }
-
-    @Override
-    public void setEnableBackground(boolean enable) {
-        mEnableState = enable;
-        mBackgroundColor.set(enable ? android.R.color.white : R.color.disable_color);
-    }
-
-    @Override
-    public void switchEnable() {
-        setEnableBackground(!mEnableState);
     }
 
     private void checkEmptyAndShowAlert() {

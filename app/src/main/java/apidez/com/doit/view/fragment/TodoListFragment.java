@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,12 +18,10 @@ import apidez.com.doit.R;
 import apidez.com.doit.databinding.FragmentTodoListBinding;
 import apidez.com.doit.dependency.module.TodoListModule;
 import apidez.com.doit.model.Todo;
-import apidez.com.doit.view.adapter.CustomLinearLayoutManager;
 import apidez.com.doit.view.adapter.DisableLinearLayoutManager;
 import apidez.com.doit.view.adapter.TodoListAdapter;
 import apidez.com.doit.viewmodel.TodoListViewModel;
 import butterknife.InjectView;
-import butterknife.OnClick;
 
 /**
  * Created by nongdenchet on 2/8/16.
@@ -70,7 +69,7 @@ public class TodoListFragment extends BaseFragment implements TodoDialogFragment
         mTodoListAdapter = new TodoListAdapter(getContext());
         mTodoList.setAdapter(mTodoListAdapter);
         startObserve(mTodoListAdapter.animationEnd()).subscribe(done -> {
-            if (done) mTodoList.setLayoutManager(new CustomLinearLayoutManager(getContext()));
+            if (done) mTodoList.setLayoutManager(new LinearLayoutManager(getContext()));
         });
     }
 
@@ -113,47 +112,23 @@ public class TodoListFragment extends BaseFragment implements TodoDialogFragment
     }
 
     @Override
-    public void onSuccess() {
-        fetchAllTodo();
-    }
-
-    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setActionBar();
-        fetchAllTodo();
-    }
-
-    private void setActionBar() {
         ((AppCompatActivity) getActivity()).setSupportActionBar(mBinding.toolbar);
-    }
-
-    private void fetchAllTodo() {
         startObserve(mViewModel.fetchAllTodo()).subscribe(response -> {});
-    }
-
-    @OnClick(R.id.extra_view)
-    public void onExtraViewClick(View view) {
-        mTodoListAdapter.resetState();
-        mViewModel.setEnableBackground(true);
     }
 
     // Events
     public void onEvent(TodoListAdapter.CheckItemEvent event) {
-        startObserve(mViewModel.checkChangeItem(event.viewModel)).subscribe(id -> {
-            event.callBack.onCheckChange(event.viewModel.isCompleted());
+        startObserve(mViewModel.checkChangeItem(event.viewModel)).subscribe(todo -> {
+            event.callBack.onCheckChange(todo.isCompleted());
         }, throwable -> {
             showShortToast(throwable.getMessage());
         });
     }
 
     public void onEvent(TodoListAdapter.ShowActionItemEvent event) {
-        mViewModel.switchEnable();
         mTodoList.getLayoutManager().smoothScrollToPosition(mTodoList, null, event.position);
-    }
-
-    public void onEvent(TodoListAdapter.EnableEvent enableEvent) {
-        mViewModel.setEnableBackground(true);
     }
 
     public void onEvent(TodoListAdapter.UpdateActionItemEvent event) {
@@ -166,5 +141,15 @@ public class TodoListFragment extends BaseFragment implements TodoDialogFragment
         }, throwable -> {
             showShortToast(throwable.getMessage());
         });
+    }
+
+    @Override
+    public void onCreateSuccess(Todo todo) {
+        mViewModel.insert(todo);
+    }
+
+    @Override
+    public void onUpdateSuccess(Todo todo) {
+        mViewModel.update(todo);
     }
 }
