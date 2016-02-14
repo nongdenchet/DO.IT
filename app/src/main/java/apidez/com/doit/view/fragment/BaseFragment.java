@@ -1,6 +1,5 @@
 package apidez.com.doit.view.fragment;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import apidez.com.doit.R;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.EventBusException;
@@ -25,7 +23,6 @@ import rx.subjects.BehaviorSubject;
 public abstract class BaseFragment extends Fragment {
     private BehaviorSubject<BaseFragment> mCreateView = BehaviorSubject.create();
     private BehaviorSubject<BaseFragment> mDestroyView = BehaviorSubject.create();
-    private ProgressDialog mProgressDialog;
 
     public BehaviorSubject<BaseFragment> postCreateView() {
         return mCreateView;
@@ -37,14 +34,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initProgressDialog();
         mCreateView.onNext(this);
-    }
-
-    private void initProgressDialog() {
-        mProgressDialog = new ProgressDialog(getContext());
-        mProgressDialog.setCancelable(false);
-        mProgressDialog.setMessage(getString(R.string.loading_message));
     }
 
     @Nullable
@@ -91,9 +81,6 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mProgressDialog != null) {
-            mProgressDialog.dismiss();
-        }
     }
 
     public <T> Observable<T> startObserve(Observable<T> observable) {
@@ -104,23 +91,6 @@ public abstract class BaseFragment extends Fragment {
     public <T> Observable<T> startObserveInBackground(Observable<T> observable) {
         return observable.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .takeUntil(preDestroyView());
-    }
-
-    public <T> Observable<T> startObserveWithProgress(Observable<T> observable) {
-        return observable.observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(() -> mProgressDialog.show())
-                .doOnError(throwable -> mProgressDialog.hide())
-                .doOnCompleted(() -> mProgressDialog.hide())
-                .takeUntil(preDestroyView());
-    }
-
-    public <T> Observable<T> startObserveWithProgressInBackground(Observable<T> observable) {
-        return observable.observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .doOnSubscribe(() -> mProgressDialog.show())
-                .doOnError(throwable -> mProgressDialog.hide())
-                .doOnCompleted(() -> mProgressDialog.hide())
                 .takeUntil(preDestroyView());
     }
 

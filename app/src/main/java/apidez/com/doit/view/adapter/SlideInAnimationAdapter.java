@@ -56,8 +56,7 @@ public abstract class SlideInAnimationAdapter<T> extends BaseRecyclerViewAdapter
         view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                mItemViewHeight = view.getHeight();
-                emitItemHeightIfNot();
+                emitItemHeightIfNot(view);
                 executeAnimation(view, position);
                 view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
@@ -72,8 +71,9 @@ public abstract class SlideInAnimationAdapter<T> extends BaseRecyclerViewAdapter
         }
     }
 
-    private void emitItemHeightIfNot() {
-        if (itemHeight.getValue() == null) {
+    private void emitItemHeightIfNot(View view) {
+        if (mItemViewHeight == 0) {
+            mItemViewHeight = view.getHeight();
             itemHeight.onNext(mItemViewHeight);
         }
     }
@@ -114,7 +114,7 @@ public abstract class SlideInAnimationAdapter<T> extends BaseRecyclerViewAdapter
      */
     private int lastAnimatePosition() {
         if (mItemViewHeight == 0) return mItems.size() - 1;
-        return Math.min(mItems.size(),
-                (int) Math.ceil((float) UiUtils.getContentHeightWithoutToolbar(mContext) / mItemViewHeight)) - 1;
+        return Math.min(mItems.size(), (int) Math.ceil((float)
+                UiUtils.getContentHeightWithoutToolbar(mContext) / mItemViewHeight)) - 1;
     }
 }

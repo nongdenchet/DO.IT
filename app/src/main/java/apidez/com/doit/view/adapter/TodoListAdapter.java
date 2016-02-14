@@ -23,9 +23,10 @@ import rx.android.schedulers.AndroidSchedulers;
  * Created by nongdenchet on 2/8/16.
  */
 public class TodoListAdapter extends SlideInAnimationAdapter<TodoItemViewModel> {
+    private final int ITEM = 0;
+    private final int FOOTER = 1;
     private boolean isAnimate = true;
     private View mFooter;
-    private final int ITEM = 0, FOOTER = 1;
 
     public TodoListAdapter(Context context) {
         super(context);
@@ -103,26 +104,34 @@ public class TodoListAdapter extends SlideInAnimationAdapter<TodoItemViewModel> 
     }
 
     public void resetState() {
-        setFooterColorWhenClickItem(false);
+        updateFooterWhenClickItem(false);
         for (TodoItemViewModel todoItemViewModel : mItems) {
             todoItemViewModel.resetState();
         }
     }
 
-    private void setFooterColorWhenClickItem(boolean actionEnable) {
+    private void handleChooseItem(View itemView, TodoItemViewModel decorator) {
+        updateListWhenClickItem(decorator);
+        updateFooterWhenClickItem(decorator.actionShowing());
+        waitForLayoutCompleteFireEvent(itemView, decorator);
+    }
+
+    private void updateFooterWhenClickItem(boolean actionShowing) {
         if (mFooter != null) {
-            mFooter.setBackgroundResource(actionEnable ? R.color.footer_disable : R.color.footer_enable);
+            mFooter.setBackgroundResource(actionShowing ? R.color.footer_disable : R.color.footer_enable);
         }
     }
 
-    private void handleChooseItem(View itemView, TodoItemViewModel decorator) {
+    private void updateListWhenClickItem(TodoItemViewModel decorator) {
         decorator.switchActionVisibility();
         for (TodoItemViewModel todoItemViewModel : mItems) {
             if (todoItemViewModel != decorator) {
                 todoItemViewModel.switchEnableWhenNotChoose();
             }
         }
-        setFooterColorWhenClickItem(decorator.getActionVisibility().get() == View.VISIBLE);
+    }
+
+    private void waitForLayoutCompleteFireEvent(View itemView, TodoItemViewModel decorator) {
         itemView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -170,12 +179,14 @@ public class TodoListAdapter extends SlideInAnimationAdapter<TodoItemViewModel> 
     }
 
     public class DeleteActionItemEvent extends ItemEvent {
+
         public DeleteActionItemEvent(int position) {
             super(position);
         }
     }
 
     public class ShowActionItemEvent extends ItemEvent {
+
         public ShowActionItemEvent(int position) {
             super(position);
         }

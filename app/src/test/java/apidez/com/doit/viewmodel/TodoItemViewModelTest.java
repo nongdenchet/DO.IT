@@ -155,4 +155,17 @@ public class TodoItemViewModelTest {
         when(mTodo.getPriority()).thenReturn(Priority.HIGH);
         assertEquals(Priority.HIGH, mViewModel.getPriority());
     }
+
+    @Test
+    public void testActionShowingTrue() throws Exception {
+        mViewModel.switchActionVisibility();
+        assertTrue(mViewModel.actionShowing());
+    }
+
+    @Test
+    public void testActionShowingFalse() throws Exception {
+        mViewModel.switchActionVisibility();
+        mViewModel.switchActionVisibility();
+        assertFalse(mViewModel.actionShowing());
+    }
 }

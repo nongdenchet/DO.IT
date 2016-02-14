@@ -79,6 +79,10 @@ public class TodoItemViewModel extends BaseObservable implements Serializable {
 
     // Properties
 
+    public boolean actionShowing() {
+        return mActionVisibility.get() == View.VISIBLE;
+    }
+
     public float getOpacity() {
         return mTodo.isCompleted() ? 0.5f : 1.0f;
     }
