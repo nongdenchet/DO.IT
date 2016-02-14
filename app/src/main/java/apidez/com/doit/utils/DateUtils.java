@@ -13,6 +13,9 @@ import java.util.Random;
 public class DateUtils {
     private static long fakeCurrentMilis = 1455423466991L;
 
+    private DateUtils() {
+    }
+
     public static String getDayFromDate(Date date) {
         String formatDate = DateFormat.format("dd/MM/yyyy", date).toString();
         return formatDate.substring(0, 2);
