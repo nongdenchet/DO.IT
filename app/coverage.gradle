@@ -35,7 +35,6 @@ task jacocoTestReport(type: JacocoReport, dependsOn: "testProdDebugUnitTest") {
                        '**/activity/**',
                        '**/adapter/**',
                        '**/fragment/**',
-                       '**/utils/**',
                        '**/databinding/**',
                        '**/*$Lambda$*.*',
                        '**/*Module.*',

@@ -37,19 +37,9 @@ public class DateUtils {
         return calendar.getTime();
     }
 
-    public static String getMonthFromDate(Date date) {
-        String formatDate = DateFormat.format("dd/MM/yyyy", date).toString();
-        return formatDate.substring(3, 5);
-    }
-
     public static String getMonthYearFromDate(Date date) {
         String formatDate = DateFormat.format("dd/MM/yyyy", date).toString();
         return formatDate.substring(3, 10);
-    }
-
-    public static String getYearFromDate(Date date) {
-        String formatDate = DateFormat.format("dd/MM/yyyy", date).toString();
-        return formatDate.substring(6, 10);
     }
 
     public static Date create(int year, int monthOfYear, int dayOfMonth) {
@@ -64,6 +54,11 @@ public class DateUtils {
     public static Date createRandomDate() {
         Random random = new Random();
         return create(random.nextInt(21) + 2000, random.nextInt(12) + 1, random.nextInt(20) + 1);
+    }
+
+    public static Date createPastDate() {
+        Random random = new Random();
+        return create(2000, 9, 10);
     }
 
     public static Date fakeDate() {

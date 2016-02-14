@@ -81,6 +81,10 @@ public class DueDatePicker extends RelativeLayout {
         }
     }
 
+    public Observable<Date> date() {
+        return mDueDate.asObservable();
+    }
+
     private void setDateForPicker(Date dueDate) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(dueDate);
@@ -133,9 +137,5 @@ public class DueDatePicker extends RelativeLayout {
         for (DueDateView dueDateView : mDueDateViews) {
             dueDateView.select(false);
         }
-    }
-
-    public Observable<Date> date() {
-        return mDueDate.asObservable();
     }
 }
