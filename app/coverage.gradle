@@ -32,6 +32,7 @@ task jacocoTestReport(type: JacocoReport, dependsOn: "testProdDebugUnitTest") {
                        '**/*App*.*',
                        '**/BuildConfig.*',
                        '**/Manifest*.*',
+                       '**/utils/view/**',
                        '**/activity/**',
                        '**/adapter/**',
                        '**/fragment/**',

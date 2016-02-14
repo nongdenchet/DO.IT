@@ -1,4 +1,4 @@
-package apidez.com.doit.utils;
+package apidez.com.doit.utils.view;
 
 import android.content.Context;
 import android.graphics.Point;

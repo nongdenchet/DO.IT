@@ -9,7 +9,7 @@ import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 
 import apidez.com.doit.R;
-import apidez.com.doit.utils.UiUtils;
+import apidez.com.doit.utils.view.UiUtils;
 import apidez.com.doit.view.fragment.TodoListFragment;
 
 /**

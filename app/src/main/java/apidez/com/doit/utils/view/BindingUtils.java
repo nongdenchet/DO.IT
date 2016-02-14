@@ -1,4 +1,4 @@
-package apidez.com.doit.utils;
+package apidez.com.doit.utils.view;
 
 import android.databinding.BindingAdapter;
 import android.os.Build;

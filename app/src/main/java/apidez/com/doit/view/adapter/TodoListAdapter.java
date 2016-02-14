@@ -11,7 +11,7 @@ import android.view.ViewTreeObserver;
 import apidez.com.doit.R;
 import apidez.com.doit.databinding.TodoItemBinding;
 import apidez.com.doit.model.Todo;
-import apidez.com.doit.utils.UiUtils;
+import apidez.com.doit.utils.view.UiUtils;
 import apidez.com.doit.view.adapter.viewholder.TodoFooterViewHolder;
 import apidez.com.doit.view.adapter.viewholder.TodoItemViewHolder;
 import apidez.com.doit.viewmodel.TodoItemViewModel;

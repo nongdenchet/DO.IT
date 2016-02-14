@@ -6,7 +6,7 @@ import android.view.View;
 import apidez.com.doit.R;
 import apidez.com.doit.databinding.TodoItemBinding;
 import apidez.com.doit.viewmodel.TodoItemViewModel;
-import apidez.com.doit.utils.AnimationUtils;
+import apidez.com.doit.utils.view.AnimationUtils;
 import apidez.com.doit.view.custom.PopCheckBox;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
