@@ -7,9 +7,6 @@ import rx.Scheduler;
  */
 public class RxUtils {
 
-    private RxUtils() {
-    }
-
     public static class SchedulerHolder {
         public Scheduler mainScheduler;
         public Scheduler ioScheduler;

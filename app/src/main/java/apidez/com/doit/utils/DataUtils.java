@@ -22,9 +22,6 @@ public class DataUtils {
             Priority.HIGH, Priority.LOW, Priority.LOW, Priority.MED, Priority.HIGH, Priority.MED
     };
 
-    private DataUtils() {
-    }
-
     public static List<Todo> provideMockTodoList() {
         List<Todo> todoList = new ArrayList<>();
         todoList.add(new Todo.Builder("Android", Priority.HIGH).dueDate(new Date()).build());

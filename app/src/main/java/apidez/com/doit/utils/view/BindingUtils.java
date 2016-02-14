@@ -16,9 +16,6 @@ import apidez.com.doit.view.adapter.BaseRecyclerViewAdapter;
  */
 public class BindingUtils {
 
-    private BindingUtils() {
-    }
-
     @BindingAdapter("items")
     public static <T> void setItems(RecyclerView recyclerView, List<T> items) {
         BaseRecyclerViewAdapter<T> adapter = (BaseRecyclerViewAdapter<T>) recyclerView.getAdapter();

@@ -13,9 +13,6 @@ import android.view.WindowManager;
 public class UiUtils {
     public static int CONTENT_HEIGHT;
 
-    private UiUtils() {
-    }
-
     public static int getScreenHeight(Context context) {
         return getSize(context).y;
     }

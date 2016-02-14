@@ -8,9 +8,6 @@ import java.util.Collection;
  */
 public class TransformUtils {
 
-    private TransformUtils() {
-    }
-
     public interface Predicate<T> {
         Boolean condition(T item);
     }

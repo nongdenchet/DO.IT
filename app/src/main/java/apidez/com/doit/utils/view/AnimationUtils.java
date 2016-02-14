@@ -8,9 +8,6 @@ import android.view.animation.LinearInterpolator;
  */
 public class AnimationUtils {
 
-    private AnimationUtils() {
-    }
-
     /**
      * Animate the alpha of view
      * @param view : view to animate
