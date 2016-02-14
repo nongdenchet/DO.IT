@@ -3,6 +3,8 @@ package apidez.com.doit.view.custom;
 import android.view.View;
 import android.widget.TextView;
 
+import junit.framework.Assert;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,6 +38,11 @@ public class DueDateViewTest {
         mDayTitle = (TextView) mDueDateView.findViewById(R.id.dayTitle);
         mSubtitle = (TextView) mDueDateView.findViewById(R.id.subtitle);
         mBackground = mDueDateView.findViewById(R.id.content);
+    }
+
+    @Test
+    public void testConstructor() throws Exception {
+        Assert.assertNotNull(new DueDateView(RuntimeEnvironment.application, null, 0));
     }
 
     @Test

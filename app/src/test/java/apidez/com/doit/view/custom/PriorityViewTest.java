@@ -46,6 +46,11 @@ public class PriorityViewTest {
     }
 
     @Test
+    public void testConstructor() throws Exception {
+        assertNotNull(new PriorityView(RuntimeEnvironment.application, null, 0));
+    }
+
+    @Test
     public void testInflateLayout() throws Exception {
         assertNotNull(mTitle);
         assertNotNull(mBackground);

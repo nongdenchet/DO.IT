@@ -5,6 +5,8 @@ import android.view.ViewPropertyAnimator;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.ImageView;
 
+import junit.framework.Assert;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -57,6 +59,12 @@ public class PopCheckBoxTest {
         setUpMock(mMockAnimatorCheckBox);
         field.set(mCheckBox, mMockAnimatorCheckBox);
         field.set(mCheckBoxFill, mMockAnimatorCheckBoxFill);
+    }
+
+    @Test
+    public void testConstructor() throws Exception {
+        Assert.assertNotNull(new PopCheckBox(RuntimeEnvironment.application, null));
+        Assert.assertNotNull(new PopCheckBox(RuntimeEnvironment.application, null, 0));
     }
 
     @Test
