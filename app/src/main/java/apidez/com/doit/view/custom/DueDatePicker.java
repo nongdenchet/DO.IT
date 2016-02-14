@@ -93,11 +93,11 @@ public class DueDatePicker extends RelativeLayout {
     }
 
     private void initTomorrow() {
-        mTomorrowView.setDefaultDate(DateUtils.getTomorrow());
+        mTomorrowView.setInitDate(DateUtils.getTomorrow());
     }
 
     private void initToday() {
-        mTodayView.setDefaultDate(new Date());
+        mTodayView.setInitDate(new Date());
     }
 
     private void initActions() {

@@ -19,7 +19,6 @@ import apidez.com.doit.utils.DateUtils;
 public class DueDateView extends RelativeLayout {
     private TextView mDayTitle, mSubtitle;
     private View mBackground;
-    private boolean isSelected;
     private Date mDate = null;
 
     public DueDateView(Context context, AttributeSet attrs) {
@@ -47,7 +46,6 @@ public class DueDateView extends RelativeLayout {
     }
 
     public void select(boolean isSelected) {
-        this.isSelected = isSelected;
         mBackground.setBackgroundColor(ContextCompat.getColor(getContext(),
                 isSelected ? R.color.due_date_enable : R.color.due_date_disable));
     }
@@ -56,13 +54,9 @@ public class DueDateView extends RelativeLayout {
         return mDate;
     }
 
-    public void setDefaultDate(Date date) {
+    public void setInitDate(Date date) {
         this.mDate = date;
         setDayTitle(DateUtils.getDayFromDate(mDate));
-    }
-
-    public boolean isSelected() {
-        return isSelected;
     }
 
     private void initViews() {

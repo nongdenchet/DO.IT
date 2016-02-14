@@ -155,40 +155,4 @@ public class TodoItemViewModelTest {
         when(mTodo.getPriority()).thenReturn(Priority.HIGH);
         assertEquals(Priority.HIGH, mViewModel.getPriority());
     }
-
-//    @Test
-//    public void testGetPriorityMediumColor() throws Exception {
-//        when(mTodo.getPriority()).thenReturn(Priority.MED);
-//        assertEquals(R.color.bg_priority_medium, mViewModel.getPriorityColor());
-//    }
-//
-//    @Test
-//    public void testGetPriorityHighColor() throws Exception {
-//        when(mTodo.getPriority()).thenReturn(Priority.HIGH);
-//        assertEquals(R.color.bg_priority_high, mViewModel.getPriorityColor());
-//    }
-//
-//    @Test
-//    public void testGetPriorityLowColor() throws Exception {
-//        when(mTodo.getPriority()).thenReturn(Priority.LOW);
-//        assertEquals(R.color.bg_priority_low, mViewModel.getPriorityColor());
-//    }
-//
-//    @Test
-//    public void testGetPriorityLowTitleColor() throws Exception {
-//        when(mTodo.getPriority()).thenReturn(Priority.LOW);
-//        assertEquals(android.R.color.black, mViewModel.getPriorityTitleColor());
-//    }
-//
-//    @Test
-//    public void testGetPriorityMediumTitleColor() throws Exception {
-//        when(mTodo.getPriority()).thenReturn(Priority.MED);
-//        assertEquals(android.R.color.black, mViewModel.getPriorityTitleColor());
-//    }
-//
-//    @Test
-//    public void testGetPriorityHighTitleColor() throws Exception {
-//        when(mTodo.getPriority()).thenReturn(Priority.HIGH);
-//        assertEquals(android.R.color.white, mViewModel.getPriorityTitleColor());
-//    }
 }

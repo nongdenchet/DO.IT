@@ -60,29 +60,9 @@ public class PopCheckBoxTest {
     }
 
     @Test
-    public void testConstructorCallInit1() {
-        mPopCheckBox = new PopCheckBox(RuntimeEnvironment.application, null);
-        mCheckBox = (ImageView) mPopCheckBox.findViewById(R.id.checkbox);
-        mCheckBoxFill = (ImageView) mPopCheckBox.findViewById(R.id.checkbox_fill);
-        assertViewsNotNull();
-    }
-
-    @Test
-    public void testConstructorCallInit2() {
-        mPopCheckBox = new PopCheckBox(RuntimeEnvironment.application, null, 0);
-        mCheckBox = (ImageView) mPopCheckBox.findViewById(R.id.checkbox);
-        mCheckBoxFill = (ImageView) mPopCheckBox.findViewById(R.id.checkbox_fill);
-        assertViewsNotNull();
-    }
-
-    private void assertViewsNotNull() {
+    public void testInitViews() throws Exception {
         assertNotNull(mCheckBox);
         assertNotNull(mCheckBoxFill);
-    }
-
-    @Test
-    public void testInitViews() throws Exception {
-        assertViewsNotNull();
     }
 
     @Test

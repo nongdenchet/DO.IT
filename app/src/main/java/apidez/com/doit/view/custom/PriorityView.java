@@ -16,8 +16,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class PriorityView extends RelativeLayout {
     private int mTitleColor;
-    private boolean isChecked = false;
-    private boolean isSelected = true;
     private Priority mPriority;
 
     private int[] mPriorityColor = new int[]{
@@ -74,14 +72,12 @@ public class PriorityView extends RelativeLayout {
         mTitle.setTextColor(ContextCompat.getColor(getContext(), mTitleColor));
         mBackground.setVisibility(VISIBLE);
         mBackgroundDisable.setVisibility(GONE);
-        isSelected = true;
     }
 
     public void unSelect() {
         mTitle.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
         mBackground.setVisibility(GONE);
         mBackgroundDisable.setVisibility(VISIBLE);
-        isSelected = false;
     }
 
     public void setPriority(Priority priority) {

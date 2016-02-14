@@ -70,6 +70,13 @@ android {
 
     sourceSets {
         prod.java.srcDirs = ['src/main/java', 'src/data/java']
+        main {
+            res.srcDirs = [
+                'src/main/res',
+                'src/main/res/layouts/custom',
+                'src/main/res/layouts/todo'
+            ]
+        }
     }
 }
 

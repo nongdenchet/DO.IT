@@ -11,6 +11,7 @@ import java.util.Random;
  * Created by nongdenchet on 2/11/16.
  */
 public class DateUtils {
+    private static long fakeCurrentMilis = 1455423466991L;
 
     public static String getDayFromDate(Date date) {
         String formatDate = DateFormat.format("dd/MM/yyyy", date).toString();
@@ -63,5 +64,9 @@ public class DateUtils {
     public static Date createRandomDate() {
         Random random = new Random();
         return create(random.nextInt(21) + 2000, random.nextInt(12) + 1, random.nextInt(20) + 1);
+    }
+
+    public static Date fakeDate() {
+        return new Date(fakeCurrentMilis);
     }
 }
