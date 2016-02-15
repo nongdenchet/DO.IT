@@ -21,7 +21,7 @@ import rx.subjects.BehaviorSubject;
  * Created by nongdenchet on 2/15/16.
  */
 public class TodoListController {
-    private View mFooter;
+    private View mFooterView;
     private EventBus mEventBus;
     private Context mContext;
 
@@ -49,8 +49,8 @@ public class TodoListController {
 
     // Footer
     public void bindFooterAction(TodoFooterViewHolder holder) {
-        mFooter = holder.itemView;
-        mFooter.setOnClickListener(v -> resetState());
+        mFooterView = holder.itemView;
+        mFooterView.setOnClickListener(v -> resetState());
         footerHeight().subscribe(holder::setFooterHeight);
     }
 
@@ -78,10 +78,16 @@ public class TodoListController {
         itemView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                mItemHeight.onNext(itemView.getHeight());
+                emitItemHeightIfNot(itemView);
                 itemView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
+    }
+
+    private void emitItemHeightIfNot(View itemView) {
+        if (mItemHeight.getValue() == 0) {
+            mItemHeight.onNext(itemView.getHeight());
+        }
     }
 
     public void resetState() {
@@ -98,8 +104,8 @@ public class TodoListController {
     }
 
     private void updateFooterWhenClickItem(boolean actionShowing) {
-        if (mFooter != null) {
-            mFooter.setBackgroundResource(actionShowing ? R.color.footer_disable : R.color.footer_enable);
+        if (mFooterView != null) {
+            mFooterView.setBackgroundResource(actionShowing ? R.color.footer_disable : R.color.footer_enable);
         }
     }
 

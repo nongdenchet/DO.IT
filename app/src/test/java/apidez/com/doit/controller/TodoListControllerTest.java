@@ -21,6 +21,7 @@ import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +41,7 @@ import static apidez.com.doit.AssertUtils.assertViewBackgroundRes;
 import static apidez.com.doit.AssertUtils.clickView;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doAnswer;
@@ -111,6 +113,14 @@ public class TodoListControllerTest {
     }
 
     @Test
+    public void testObserveHeightExistOnlyFirstTime() throws Exception {
+        mTodoListController.observeItemHeight(mFooterView);
+        when(mFooterView.getHeight()).thenReturn(100);
+        mTodoListController.observeItemHeight(mFooterView);
+        assertEquals(1010, mFooterView.getLayoutParams().height);
+    }
+
+    @Test
     public void testObserveHeightNonExist() throws Exception {
         mTodoListController.setItems(new ArrayList<>());
         mTodoListController.observeItemHeight(mFooterView);
@@ -151,6 +161,20 @@ public class TodoListControllerTest {
         assertEnableItem(0);
         assertDisableItem(1);
         assertDisableItem(2);
+    }
+
+    @Test
+    public void testNotThrowExceptionWhenFooterNull() throws Exception {
+        Exception exception = null;
+        try {
+            Field field = TodoListController.class.getDeclaredField("mFooterView");
+            field.setAccessible(true);
+            field.set(mTodoListController, null);
+            clickView(mTodoItemViewHolder.todoView);
+        } catch (Exception ex) {
+            exception = ex;
+        }
+        assertNull(exception);
     }
 
     @Test
