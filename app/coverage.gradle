@@ -29,6 +29,7 @@ task jacocoTestReport(type: JacocoReport, dependsOn: "testProdDebugUnitTest") {
                        '**/*$ViewInjector*.*',
                        '**/*$ViewBinder*.*',
                        '**/*BR*.*',
+                       '**/*Fake*.*',
                        '**/*App*.*',
                        '**/BuildConfig.*',
                        '**/Manifest*.*',

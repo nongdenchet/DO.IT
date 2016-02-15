@@ -21,8 +21,11 @@ import java.lang.reflect.Field;
 import apidez.com.doit.BuildConfig;
 import apidez.com.doit.DefaultConfig;
 import apidez.com.doit.R;
+import apidez.com.doit.view.adapter.AnimationAdapter;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyFloat;
@@ -102,6 +105,18 @@ public class PopCheckBoxTest {
     }
 
     @Test
+    public void testIsChecked() throws Exception {
+        mPopCheckBox.setCheck(true);
+        assertTrue(mPopCheckBox.isChecked());
+    }
+
+    @Test
+    public void testIsNotChecked() throws Exception {
+        mPopCheckBox.setCheck(false);
+        assertFalse(mPopCheckBox.isChecked());
+    }
+
+    @Test
     public void testAnimateCheckedNoAnimation() throws Exception {
         mPopCheckBox.animateChecked(false);
         verify(mMockAnimatorCheckBox, never()).start();
@@ -124,6 +139,7 @@ public class PopCheckBoxTest {
     }
 
     private void setUpMock(ViewPropertyAnimator animator) {
+        when(animator.setListener(any(AnimationAdapter.class))).thenReturn(animator);
         when(animator.setInterpolator(any())).thenReturn(animator);
         when(animator.setStartDelay(anyInt())).thenReturn(animator);
         when(animator.setDuration(anyInt())).thenReturn(animator);
@@ -133,6 +149,7 @@ public class PopCheckBoxTest {
 
     private void verifyCallAnimation(ViewPropertyAnimator animator, int delay, float scale) {
         verify(animator).setInterpolator(any(AccelerateInterpolator.class));
+        verify(animator).setListener(any(AnimationAdapter.class));
         verify(animator).setDuration(75);
         verify(animator).setStartDelay(delay);
         verify(animator).scaleX(scale);

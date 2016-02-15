@@ -75,6 +75,7 @@ public abstract class SlideInAnimationAdapter<T> extends BaseRecyclerViewAdapter
         return new AnimationAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
                 mAnimationEndEvent.onNext(true);
             }
         };

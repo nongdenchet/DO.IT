@@ -2,6 +2,8 @@ package apidez.com.doit.view.activity;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.IdlingResource;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 
 import apidez.com.doit.R;
+import apidez.com.doit.utils.view.EspressoIdlingResource;
 import apidez.com.doit.utils.view.UiUtils;
 import apidez.com.doit.view.fragment.TodoListFragment;
 
@@ -48,5 +51,10 @@ public class TodoActivity extends AppCompatActivity {
                 content.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
+    }
+
+    @VisibleForTesting
+    public IdlingResource getCountingIdlingResource() {
+        return EspressoIdlingResource.getIdlingResource();
     }
 }

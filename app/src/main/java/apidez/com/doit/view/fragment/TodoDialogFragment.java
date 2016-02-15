@@ -43,7 +43,7 @@ public class TodoDialogFragment extends BaseDialogFragment implements DueDatePic
     @InjectView(R.id.save)
     TextView mSaveButton;
 
-    @InjectView(R.id.title)
+    @InjectView(R.id.title_edit_text)
     EditText mTitleEditText;
 
     @InjectView(R.id.priority_picker)

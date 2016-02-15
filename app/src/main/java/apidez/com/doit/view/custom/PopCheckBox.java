@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import apidez.com.doit.R;
+import apidez.com.doit.view.adapter.AnimationAdapter;
 
 /**
  * Created by nongdenchet on 2/8/16.
@@ -19,7 +20,7 @@ public class PopCheckBox extends RelativeLayout {
     private final int DELAY_DURATION = 75;
     private final int ANIM_DURATION = 75;
 
-    private boolean mCheck = false;
+    private boolean isChecked = false;
     private ImageView mCheckBox;
     private ImageView mCheckBoxFill;
 
@@ -49,23 +50,27 @@ public class PopCheckBox extends RelativeLayout {
     }
 
     public void setCheck(boolean isChecked) {
-        mCheck = isChecked;
-        if (mCheck) {
+        this.isChecked = isChecked;
+        if (this.isChecked) {
             stateCheck();
         } else {
             stateUnCheck();
         }
     }
 
+    public boolean isChecked() {
+        return isChecked;
+    }
+
     public void animateChecked(boolean isChecked) {
-        if (mCheck != isChecked) {
-            mCheck = isChecked;
+        if (this.isChecked != isChecked) {
+            this.isChecked = isChecked;
             doAnimation();
         }
     }
 
     private void doAnimation() {
-        if (mCheck) {
+        if (isChecked) {
             checkAnimation();
         } else {
             unCheckAnimation();
@@ -101,6 +106,7 @@ public class PopCheckBox extends RelativeLayout {
                 .scaleX(scale)
                 .scaleY(scale)
                 .setStartDelay(delay)
+                .setListener(new AnimationAdapter())
                 .setDuration(ANIM_DURATION);
     }
 }

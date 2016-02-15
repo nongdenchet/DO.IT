@@ -1,7 +1,7 @@
 package apidez.com.doit.dependency.module;
 
+import apidez.com.doit.repository.FakeTodoRepositoryImpl;
 import apidez.com.doit.repository.TodoRepository;
-import apidez.com.doit.dependency.fake.FakeTodoRepositoryImpl;
 import dagger.Module;
 import dagger.Provides;
 
