@@ -17,6 +17,7 @@ import javax.inject.Inject;
 
 import apidez.com.doit.DoItApp;
 import apidez.com.doit.R;
+import apidez.com.doit.controller.TodoListController;
 import apidez.com.doit.databinding.FragmentTodoListBinding;
 import apidez.com.doit.dependency.module.TodoListModule;
 import apidez.com.doit.model.Todo;
@@ -121,31 +122,6 @@ public class TodoListFragment extends BaseFragment implements TodoDialogFragment
         startObserve(mViewModel.fetchAllTodo()).subscribe(response -> {});
     }
 
-    // Events
-    public void onEvent(TodoListAdapter.CheckItemEvent event) {
-        startObserve(mViewModel.checkChangeItem(event.viewModel)).subscribe(todo -> {
-            event.callBack.onCheckChange(todo.isCompleted());
-        }, throwable -> {
-            showShortToast(throwable.getMessage());
-        });
-    }
-
-    public void onEvent(TodoListAdapter.ShowActionItemEvent event) {
-        mTodoList.getLayoutManager().smoothScrollToPosition(mTodoList, null, event.position);
-    }
-
-    public void onEvent(TodoListAdapter.UpdateActionItemEvent event) {
-        showTodoDialog(event.todo);
-    }
-
-    public void onEvent(TodoListAdapter.DeleteActionItemEvent event) {
-        startObserve(mViewModel.deleteItem(event.position)).subscribe(success -> {
-            if (success) mTodoListAdapter.resetState();
-        }, throwable -> {
-            showShortToast(throwable.getMessage());
-        });
-    }
-
     @Override
     public void onCreateSuccess(Todo todo) {
         mViewModel.insert(todo);
@@ -155,5 +131,30 @@ public class TodoListFragment extends BaseFragment implements TodoDialogFragment
     @Override
     public void onUpdateSuccess(Todo todo) {
         mViewModel.update(todo);
+    }
+
+    // Events
+    public void onEvent(TodoListController.CheckItemEvent event) {
+        startObserve(mViewModel.checkChangeItem(event.viewModel)).subscribe(todo -> {
+            event.callBack.onCheckChange(todo.isCompleted());
+        }, throwable -> {
+            showShortToast(throwable.getMessage());
+        });
+    }
+
+    public void onEvent(TodoListController.ShowActionItemEvent event) {
+        mTodoList.getLayoutManager().smoothScrollToPosition(mTodoList, null, event.position);
+    }
+
+    public void onEvent(TodoListController.UpdateActionItemEvent event) {
+        showTodoDialog(event.todo);
+    }
+
+    public void onEvent(TodoListController.DeleteActionItemEvent event) {
+        startObserve(mViewModel.deleteItem(event.position)).subscribe(success -> {
+            if (success) mTodoListAdapter.resetState();
+        }, throwable -> {
+            showShortToast(throwable.getMessage());
+        });
     }
 }

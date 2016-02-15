@@ -11,7 +11,7 @@ import rx.Observable;
  */
 public interface TodoListViewModel {
     /**
-     * Get all to-do decorator
+     * Get all to-do viewModel
      */
     ObservableList<TodoItemViewModel> getTodoItems();
 

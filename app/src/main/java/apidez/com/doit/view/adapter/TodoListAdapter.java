@@ -6,17 +6,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
+
+import java.util.List;
 
 import apidez.com.doit.R;
+import apidez.com.doit.controller.TodoListController;
 import apidez.com.doit.databinding.TodoItemBinding;
-import apidez.com.doit.model.Todo;
-import apidez.com.doit.utils.view.UiUtils;
 import apidez.com.doit.view.adapter.viewholder.TodoFooterViewHolder;
 import apidez.com.doit.view.adapter.viewholder.TodoItemViewHolder;
 import apidez.com.doit.viewmodel.TodoItemViewModel;
 import de.greenrobot.event.EventBus;
-import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 
 /**
@@ -25,11 +24,30 @@ import rx.android.schedulers.AndroidSchedulers;
 public class TodoListAdapter extends SlideInAnimationAdapter<TodoItemViewModel> {
     private final int ITEM = 0;
     private final int FOOTER = 1;
-    private boolean isAnimate = true;
-    private View mFooter;
+    private TodoListController mTodoListController;
 
     public TodoListAdapter(Context context) {
         super(context);
+        mTodoListController = new TodoListController(context, mItems, EventBus.getDefault());
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (position == mItems.size()) {
+            return FOOTER;
+        }
+        return ITEM;
+    }
+
+    @Override
+    public int getItemCount() {
+        return mItems.size() + 1;
+    }
+
+    @Override
+    public void setItems(List<TodoItemViewModel> items) {
+        mTodoListController.setItems(items);
+        super.setItems(items);
     }
 
     @Override
@@ -51,144 +69,31 @@ public class TodoListAdapter extends SlideInAnimationAdapter<TodoItemViewModel> 
                 bindItemView(holder, position);
                 break;
             case FOOTER:
-                bindFooter(holder);
+                bindFooterView(holder, position);
                 break;
         }
     }
 
-    private void bindFooter(RecyclerView.ViewHolder holder) {
+    private void bindFooterView(RecyclerView.ViewHolder holder, int position) {
         TodoFooterViewHolder viewHolder = (TodoFooterViewHolder) holder;
-        mFooter = holder.itemView;
-        mFooter.setOnClickListener(v -> resetState());
-        footerHeight().subscribe(viewHolder::setFooterHeight);
-    }
-
-    private Observable<Integer> footerHeight() {
-        return Observable.combineLatest(listSize, itemHeight, this::calculateFooterHeight);
-    }
-
-    private int calculateFooterHeight(int listSize, int itemHeight) {
-        if (listSize == 0) return 0;
-        int contentHeight = UiUtils.getContentHeightWithoutToolbar(mContext);
-        int contentListHeight = listSize * itemHeight;
-        return contentHeight > contentListHeight ? (contentHeight - contentListHeight) : 0;
+        mTodoListController.bindFooterAction(viewHolder);
     }
 
     private void bindItemView(RecyclerView.ViewHolder holder, int position) {
         TodoItemViewHolder viewHolder = (TodoItemViewHolder) holder;
         viewHolder.bind(mItems.get(position));
-        animateItem(viewHolder.itemView, position);
-        animationEnd().observeOn(AndroidSchedulers.mainThread()).subscribe(done -> {
-            if (done) bindAction(viewHolder, mItems.get(position));
-        });
+        mTodoListController.observeItemHeight(viewHolder.itemView);
+        startAnimateItemView(viewHolder, position);
     }
 
-    public void bindAction(TodoItemViewHolder viewHolder, TodoItemViewModel viewModel) {
-        // Item click
-        viewHolder.todoView.setOnClickListener(v -> handleChooseItem(viewHolder.itemView, viewModel));
-
-        // Disable layer click
-        viewHolder.disableLayer.setOnClickListener(v -> resetState());
-
-        // Checkbox click
-        viewHolder.popCheckBox.setOnClickListener(v ->
-                EventBus.getDefault().post(new CheckItemEvent(viewModel, viewHolder::animateCheckChange)));
-
-        // Update click
-        viewHolder.editButton.setOnClickListener(v ->
-                EventBus.getDefault().post(new UpdateActionItemEvent(viewModel.getTodo())));
-
-        // Delete click
-        viewHolder.deleteButton.setOnClickListener(v ->
-                EventBus.getDefault().post(new DeleteActionItemEvent(indexOf(viewModel))));
+    private void startAnimateItemView(TodoItemViewHolder viewHolder, int position) {
+        animateItemView(viewHolder.itemView, position);
+        animationEnd().observeOn(AndroidSchedulers.mainThread()).subscribe(done -> {
+            if (done) mTodoListController.bindItemAction(viewHolder, mItems.get(position));
+        });
     }
 
     public void resetState() {
-        updateFooterWhenClickItem(false);
-        for (TodoItemViewModel todoItemViewModel : mItems) {
-            todoItemViewModel.resetState();
-        }
-    }
-
-    private void handleChooseItem(View itemView, TodoItemViewModel decorator) {
-        updateListWhenClickItem(decorator);
-        updateFooterWhenClickItem(decorator.actionShowing());
-        waitForLayoutCompleteFireEvent(itemView, decorator);
-    }
-
-    private void updateFooterWhenClickItem(boolean actionShowing) {
-        if (mFooter != null) {
-            mFooter.setBackgroundResource(actionShowing ? R.color.footer_disable : R.color.footer_enable);
-        }
-    }
-
-    private void updateListWhenClickItem(TodoItemViewModel decorator) {
-        decorator.switchActionVisibility();
-        for (TodoItemViewModel todoItemViewModel : mItems) {
-            if (todoItemViewModel != decorator) {
-                todoItemViewModel.switchEnableWhenNotChoose();
-            }
-        }
-    }
-
-    private void waitForLayoutCompleteFireEvent(View itemView, TodoItemViewModel decorator) {
-        itemView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                EventBus.getDefault().post(new ShowActionItemEvent(indexOf(decorator)));
-                itemView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-            }
-        });
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        if (position == mItems.size()) {
-            return FOOTER;
-        }
-        return ITEM;
-    }
-
-    @Override
-    public int getItemCount() {
-        return mItems.size() + 1;
-    }
-
-    // Callbacks
-    public interface CheckCallBack {
-        void onCheckChange(boolean complete);
-    }
-
-    // Events
-    public class CheckItemEvent {
-        public CheckCallBack callBack;
-        public TodoItemViewModel viewModel;
-
-        public CheckItemEvent(TodoItemViewModel viewModel, CheckCallBack callBack) {
-            this.viewModel = viewModel;
-            this.callBack = callBack;
-        }
-    }
-
-    public class UpdateActionItemEvent {
-        public Todo todo;
-
-        public UpdateActionItemEvent(Todo todo) {
-            this.todo = todo;
-        }
-    }
-
-    public class DeleteActionItemEvent extends ItemEvent {
-
-        public DeleteActionItemEvent(int position) {
-            super(position);
-        }
-    }
-
-    public class ShowActionItemEvent extends ItemEvent {
-
-        public ShowActionItemEvent(int position) {
-            super(position);
-        }
+        mTodoListController.resetState();
     }
 }

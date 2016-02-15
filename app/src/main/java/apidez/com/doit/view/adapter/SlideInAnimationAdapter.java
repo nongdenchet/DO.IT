@@ -26,17 +26,18 @@ public abstract class SlideInAnimationAdapter<T> extends BaseRecyclerViewAdapter
     protected int mItemViewHeight = 0;
     protected Context mContext;
 
-    protected BehaviorSubject<Integer> itemHeight = BehaviorSubject.create();
-    protected BehaviorSubject<Integer> listSize = BehaviorSubject.create();
-    protected BehaviorSubject<Boolean> mAnimationEndEvent = BehaviorSubject.create(false);
-
     public SlideInAnimationAdapter(Context mContext) {
         this.mContext = mContext;
     }
 
+    private BehaviorSubject<Boolean> mAnimationEndEvent = BehaviorSubject.create(false);
+
+    public Observable<Boolean> animationEnd() {
+        return mAnimationEndEvent.asObservable();
+    }
+
     @Override
     public void setItems(List<T> items) {
-        listSize.onNext(items.size());
         if (mLastPosition == lastAnimatePosition() || mAnimationEndEvent.getValue()) { // Animation end
             super.setItems(items);
         } else {
@@ -45,18 +46,14 @@ public abstract class SlideInAnimationAdapter<T> extends BaseRecyclerViewAdapter
         }
     }
 
-    public Observable<Boolean> animationEnd() {
-        return mAnimationEndEvent.asObservable();
-    }
-
-    protected void animateItem(View view, int position) {
+    protected void animateItemView(View view, int position) {
         if (position > lastAnimatePosition() || mAnimationEndEvent.getValue()) {
             return;
         }
         view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                emitItemHeightIfNot(view);
+                mItemViewHeight = view.getHeight();
                 executeAnimation(view, position);
                 view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
@@ -68,13 +65,6 @@ public abstract class SlideInAnimationAdapter<T> extends BaseRecyclerViewAdapter
             mLastPosition = position;
             runFadeInAnimation(view, position);
             runSlideInAnimation(view, position, slideAnimListener());
-        }
-    }
-
-    private void emitItemHeightIfNot(View view) {
-        if (mItemViewHeight == 0) {
-            mItemViewHeight = view.getHeight();
-            itemHeight.onNext(mItemViewHeight);
         }
     }
 

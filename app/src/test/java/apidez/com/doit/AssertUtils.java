@@ -47,4 +47,20 @@ public class AssertUtils {
         assertEquals(ContextCompat.getColor(view.getContext(), color),
                 shadowView.getBackgroundColor());
     }
+
+    /**
+     * Helper that assert content color of TextView
+     */
+    public static void assertViewBackgroundRes(View view, int res) {
+        ShadowDrawable shadowDrawable = shadowOf(view.getBackground());
+        assertEquals(res, shadowDrawable.getCreatedFromResId());
+    }
+
+    /**
+     * Click on a view using robolectric
+     */
+    public static void clickView(View view) {
+        ShadowView shadowView = shadowOf(view);
+        shadowView.getOnClickListener().onClick(view);
+    }
 }

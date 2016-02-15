@@ -110,13 +110,4 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
             adapter.notifyItemRangeRemoved(positionStart, itemCount);
         }
     }
-
-    // Events
-    public class ItemEvent {
-        public int position;
-
-        public ItemEvent(int position) {
-            this.position = position;
-        }
-    }
 }

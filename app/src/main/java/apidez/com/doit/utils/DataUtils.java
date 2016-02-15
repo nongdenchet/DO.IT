@@ -1,12 +1,14 @@
 package apidez.com.doit.utils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
 import apidez.com.doit.model.Priority;
 import apidez.com.doit.model.Todo;
+import apidez.com.doit.viewmodel.TodoItemViewModel;
 
 /**
  * Created by nongdenchet on 2/8/16.
@@ -35,6 +37,26 @@ public class DataUtils {
 
     public static Todo provideTodo() {
         return new Todo.Builder("title", Priority.HIGH).build();
+    }
+
+    @SuppressWarnings("Anonymous2MethodRef")
+    public static Collection<TodoItemViewModel> provideListItemViewModel() {
+        return TransformUtils.map(provideMockTodoList(), new TransformUtils.Map<Todo>() {
+            @Override
+            public TodoItemViewModel map(Todo item) {
+                return new TodoItemViewModel(item);
+            }
+        });
+    }
+
+    @SuppressWarnings("Anonymous2MethodRef")
+    public static Collection<TodoItemViewModel> provideLongListItemViewModel() {
+        return TransformUtils.map(provideLongMockTodoList(), new TransformUtils.Map<Todo>() {
+            @Override
+            public TodoItemViewModel map(Todo item) {
+                return new TodoItemViewModel(item);
+            }
+        });
     }
 
     public static List<Todo> provideLongMockTodoList() {
