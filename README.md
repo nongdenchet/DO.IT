@@ -42,7 +42,7 @@ Challenges encountered while building the app:
 
 ## License
 
-    Copyright [2016] [nongdenchet]
+    Copyright 2016 nongdenchet
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
