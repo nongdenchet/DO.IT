@@ -4,7 +4,7 @@
 
 Submitted by: **Vũ Huy Quân**
 
-Time spent: **1** week spent in total
+Time spent: **28** hours spent in total
 
 ## User Stories
 
