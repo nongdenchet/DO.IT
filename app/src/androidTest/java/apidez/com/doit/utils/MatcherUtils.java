@@ -14,8 +14,12 @@ import org.hamcrest.TypeSafeMatcher;
 
 import apidez.com.doit.R;
 import apidez.com.doit.model.Priority;
+import apidez.com.doit.view.custom.DueDatePicker;
+import apidez.com.doit.view.custom.DueDateView;
 import apidez.com.doit.view.custom.PopCheckBox;
+import apidez.com.doit.view.custom.PriorityPicker;
 import apidez.com.doit.view.custom.PriorityView;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by nongdenchet on 10/3/15.
@@ -33,7 +37,7 @@ public class MatcherUtils {
                     RecyclerView recyclerView = (RecyclerView) view;
                     RecyclerView.ViewHolder holder = recyclerView.findViewHolderForAdapterPosition(position);
                     View target = holder.itemView.findViewById(id);
-                    return target != null && target.getVisibility() == View.VISIBLE;
+                    return target != null;
                 } catch (Exception exception) {
                     return false;
                 }
@@ -90,6 +94,59 @@ public class MatcherUtils {
             @Override
             public void describeTo(Description description) {
                 description.appendText("item in list not with text");
+            }
+        };
+    }
+
+    /**
+     * Check item background color
+     */
+    public static Matcher<View> dueDateHasBeenChosen(final int dueDateId) {
+        return new TypeSafeMatcher<View>() {
+            @Override
+            protected boolean matchesSafely(View view) {
+                try {
+                    DueDatePicker dueDatePicker = (DueDatePicker) view;
+                    DueDateView dueDateView = (DueDateView) dueDatePicker.findViewById(dueDateId);
+                    final boolean[] match = {false};
+                    dueDatePicker.date().subscribeOn(Schedulers.immediate()).subscribe(date -> {
+                        match[0] = DateUtils.sameDate(date, dueDateView.getDate());
+                    });
+                    return match[0];
+                } catch (Exception exception) {
+                    return false;
+                }
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("due date has been chosen");
+            }
+        };
+    }
+
+    /**
+     * Check item background color
+     */
+    public static Matcher<View> priorityHasBeenChosen(Priority newPriority) {
+        return new TypeSafeMatcher<View>() {
+            @Override
+            protected boolean matchesSafely(View view) {
+                try {
+                    PriorityPicker priorityPicker = (PriorityPicker) view;
+                    final boolean[] match = {false};
+                    priorityPicker.priority().subscribe(priority -> {
+                        match[0] = (priority == newPriority);
+                    });
+                    return match[0];
+                } catch (Exception exception) {
+                    return false;
+                }
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("priority has been chosen");
             }
         };
     }

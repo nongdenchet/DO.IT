@@ -70,7 +70,7 @@ public abstract class SlideInAnimationAdapter<T> extends BaseRecyclerViewAdapter
 
     protected Animator.AnimatorListener slideAnimListener() {
         if (mLastPosition < lastAnimatePosition()) {
-            return null;
+            return new AnimationAdapter();
         }
         return new AnimationAdapter() {
             @Override

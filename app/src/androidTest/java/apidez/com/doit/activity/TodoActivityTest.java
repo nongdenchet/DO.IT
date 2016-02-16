@@ -20,16 +20,19 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static apidez.com.doit.utils.MatcherUtils.clickItemInRecyclerView;
 import static apidez.com.doit.utils.MatcherUtils.clickItemInRecyclerViewWithId;
+import static apidez.com.doit.utils.MatcherUtils.dueDateHasBeenChosen;
 import static apidez.com.doit.utils.MatcherUtils.hasItemCount;
 import static apidez.com.doit.utils.MatcherUtils.itemInListNotWithText;
 import static apidez.com.doit.utils.MatcherUtils.itemInListWithId;
 import static apidez.com.doit.utils.MatcherUtils.itemInListWithPopCheckBox;
 import static apidez.com.doit.utils.MatcherUtils.itemInListWithPriority;
 import static apidez.com.doit.utils.MatcherUtils.itemInListWithText;
+import static apidez.com.doit.utils.MatcherUtils.priorityHasBeenChosen;
 
 /**
  * Created by nongdenchet on 2/15/16.
@@ -63,7 +66,6 @@ public class TodoActivityTest {
 
     @Test
     public void testCheckItem() throws Exception {
-        Thread.sleep(1000);
         onView(withId(R.id.todoList)).check(matches(clickItemInRecyclerViewWithId(0, R.id.pop_checkbox)));
         onView(withId(R.id.todoList)).check(matches(itemInListWithPopCheckBox(0, R.id.pop_checkbox, true)));
         onView(withId(R.id.todoList)).check(matches(clickItemInRecyclerViewWithId(0, R.id.pop_checkbox)));
@@ -72,15 +74,13 @@ public class TodoActivityTest {
 
     @Test
     public void testClickItem() throws Exception {
-        Thread.sleep(1000);
         onView(withId(R.id.todoList)).check(matches(clickItemInRecyclerViewWithId(0, R.id.todo)));
-        onView(withId(R.id.todoList)).check(matches(itemInListWithId(0, R.id.update_image)));
-        onView(withId(R.id.todoList)).check(matches(itemInListWithId(0, R.id.delete_image)));
+        onView(withId(R.id.todoList)).check(matches(itemInListWithId(0, R.id.edit_button)));
+        onView(withId(R.id.todoList)).check(matches(itemInListWithId(0, R.id.delete_button)));
     }
 
     @Test
     public void testClickItemDelete() throws Exception {
-        Thread.sleep(1000);
         onView(withId(R.id.todoList)).check(matches(clickItemInRecyclerView(0)));
         onView(withId(R.id.todoList)).check(matches(clickItemInRecyclerViewWithId(0, R.id.delete_button)));
         Thread.sleep(500);
@@ -89,13 +89,25 @@ public class TodoActivityTest {
 
     @Test
     public void testClickItemUpdate() throws Exception {
-        Thread.sleep(1000);
-        onView(withId(R.id.todoList)).check(matches(clickItemInRecyclerView(1)));
+        onView(withId(R.id.todoList)).check(matches(clickItemInRecyclerViewWithId(1, R.id.todo)));
         onView(withId(R.id.todoList)).check(matches(clickItemInRecyclerViewWithId(1, R.id.edit_button)));
+        onView(withText("iOS")).check(matches(isDisplayed()));
+        onView(withId(R.id.due_date_picker)).check(matches(dueDateHasBeenChosen(R.id.tomorrow)));
+        onView(withId(R.id.priority_picker)).check(matches(priorityHasBeenChosen(Priority.LOW)));
+    }
+
+    @Test
+    public void updateItem() throws Exception {
+        onView(withId(R.id.todoList)).check(matches(clickItemInRecyclerViewWithId(1, R.id.todo)));
+        onView(withId(R.id.todoList)).check(matches(clickItemInRecyclerViewWithId(1, R.id.edit_button)));
+
+        // Edit
         onView(withText("HIGH")).perform(click());
         onView(withText("deal date")).perform(click());
         onView(withText("iOS")).perform(typeText(" developer"));
         onView(withText("SAVE")).perform(click());
+
+        // After edit
         onView(withId(R.id.todoList)).check(matches(itemInListWithText(1, R.id.todoTitle, "iOS developer")));
         onView(withId(R.id.todoList)).check(matches(itemInListWithText(1, R.id.todoSubtitle, "No due date")));
         onView(withId(R.id.todoList)).check(matches(itemInListWithPriority(1, R.id.priority, Priority.HIGH)));
@@ -103,16 +115,17 @@ public class TodoActivityTest {
 
     @Test
     public void testAddItem() throws Exception {
-        Thread.sleep(1000);
         onView(withId(R.id.action_add)).perform(click());
-        onView(withText("MED")).perform(click());
-        onView(withText("deal date")).perform(click());
         onView(withId(R.id.title_edit_text)).perform(typeText("Coder"));
+        onView(withText("deal date")).perform(click());
+        onView(withText("MED")).perform(click());
         onView(withText("SAVE")).perform(click());
+
+        // After add
         Thread.sleep(500);
         onView(withId(R.id.todoList)).check(matches(itemInListWithText(0, R.id.todoTitle, "Coder")));
-        onView(withId(R.id.todoList)).check(matches(itemInListWithText(0, R.id.todoSubtitle, "No due date")));
         onView(withId(R.id.todoList)).check(matches(itemInListWithPriority(0, R.id.priority, Priority.MED)));
+        onView(withId(R.id.todoList)).check(matches(itemInListWithText(0, R.id.todoSubtitle, "No due date")));
     }
 
     @After

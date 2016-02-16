@@ -23,11 +23,15 @@ public class DateUtils {
     }
 
     public static boolean isToday(Date date) {
-        return TextUtils.equals(formatDate(date), formatDate(new Date()));
+        return sameDate(date, new Date());
+    }
+
+    public static boolean sameDate(Date date1, Date date2) {
+        return TextUtils.equals(formatDate(date1), formatDate(date2));
     }
 
     public static boolean isTomorrow(Date date) {
-        return TextUtils.equals(formatDate(date), formatDate(getTomorrow()));
+        return sameDate(date, getTomorrow());
     }
 
     public static Date getTomorrow() {

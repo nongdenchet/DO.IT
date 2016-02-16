@@ -12,6 +12,7 @@ import java.util.List;
 import apidez.com.doit.R;
 import apidez.com.doit.controller.TodoListController;
 import apidez.com.doit.databinding.TodoItemBinding;
+import apidez.com.doit.utils.view.EspressoIdlingResource;
 import apidez.com.doit.view.adapter.viewholder.TodoFooterViewHolder;
 import apidez.com.doit.view.adapter.viewholder.TodoItemViewHolder;
 import apidez.com.doit.viewmodel.TodoItemViewModel;
@@ -28,7 +29,19 @@ public class TodoListAdapter extends SlideInAnimationAdapter<TodoItemViewModel> 
 
     public TodoListAdapter(Context context) {
         super(context);
+        configIdlingResouce();
         mTodoListController = new TodoListController(context, mItems, EventBus.getDefault());
+    }
+
+    private void configIdlingResouce() {
+        EspressoIdlingResource.increment();
+        animationEnd().observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(EspressoIdlingResource::increment)
+                .subscribe(ended -> {
+                    if (ended) {
+                        EspressoIdlingResource.decrement();
+                    }
+                });
     }
 
     @Override
