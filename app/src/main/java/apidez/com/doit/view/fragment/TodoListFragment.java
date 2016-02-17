@@ -13,6 +13,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.common.eventbus.Subscribe;
+
 import javax.inject.Inject;
 
 import apidez.com.doit.DoItApp;
@@ -133,7 +135,7 @@ public class TodoListFragment extends BaseFragment implements TodoDialogFragment
         mViewModel.update(todo);
     }
 
-    // Events
+    @Subscribe
     public void onEvent(TodoListController.CheckItemEvent event) {
         startObserve(mViewModel.checkChangeItem(event.viewModel)).subscribe(todo -> {
             event.callBack.onCheckChange(todo.isCompleted());
@@ -142,14 +144,17 @@ public class TodoListFragment extends BaseFragment implements TodoDialogFragment
         });
     }
 
+    @Subscribe
     public void onEvent(TodoListController.ShowActionItemEvent event) {
         mTodoList.getLayoutManager().smoothScrollToPosition(mTodoList, null, event.position);
     }
 
+    @Subscribe
     public void onEvent(TodoListController.UpdateActionItemEvent event) {
         showTodoDialog(event.todo);
     }
 
+    @Subscribe
     public void onEvent(TodoListController.DeleteActionItemEvent event) {
         startObserve(mViewModel.deleteItem(event.position)).subscribe(success -> {
             if (success) mTodoListAdapter.resetState();

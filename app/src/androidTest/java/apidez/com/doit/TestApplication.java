@@ -1,5 +1,7 @@
 package apidez.com.doit;
 
+import android.content.Context;
+
 import apidez.com.doit.dependency.module.StorageModule;
 import apidez.com.doit.repository.FakeTodoRepositoryImpl;
 import apidez.com.doit.repository.TodoRepository;
@@ -15,7 +17,7 @@ public class TestApplication extends DoItApp {
         return new StorageModule() {
 
             @Override
-            public TodoRepository provideTodoRepository() {
+            public TodoRepository provideTodoRepository(Context context) {
                 return mTodoRepository;
             }
         };

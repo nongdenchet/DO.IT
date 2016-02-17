@@ -63,14 +63,26 @@ public class TodoItemViewModel extends BaseObservable implements Serializable {
         mDisableVisibility.set(View.INVISIBLE);
     }
 
+    private boolean isDisableLayerVisible() {
+        return mDisableVisibility.get() == View.VISIBLE;
+    }
+
+    private boolean isActionVisible() {
+        return mActionVisibility.get() == View.VISIBLE;
+    }
+
+    private boolean isDividerVisible() {
+        return mDividerVisibility.get() == View.VISIBLE;
+    }
+
     public void switchEnableWhenNotChoose() {
-        mDisableVisibility.set(mDisableVisibility.get() == View.INVISIBLE ? View.VISIBLE : View.INVISIBLE);
+        mDisableVisibility.set(isDisableLayerVisible()? View.INVISIBLE : View.VISIBLE);
         mEnableState.set(!mEnableState.get());
     }
 
     public void switchActionVisibility() {
-        mActionVisibility.set(mActionVisibility.get() == View.GONE ? View.VISIBLE : View.GONE);
-        mDividerVisibility.set(mDividerVisibility.get() == View.VISIBLE ? View.INVISIBLE : View.VISIBLE);
+        mActionVisibility.set(isActionVisible() ? View.GONE : View.VISIBLE);
+        mDividerVisibility.set(isDividerVisible() ? View.INVISIBLE : View.VISIBLE);
     }
 
     public boolean isCompleted() {
