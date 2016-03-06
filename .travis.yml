@@ -21,3 +21,6 @@ cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
+addons:
+    code_climate:
+        repo_token: a5636f42c1b82640554024d88baa2eedcb5aab98ae6e4be600576402aebb9380
